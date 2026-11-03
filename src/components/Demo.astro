@@ -7,17 +7,17 @@ const d = t(lang).demo;
 ---
 <section id="demo" class="section alt">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <div><h2>{d.title}</h2><p>{d.lead}</p></div>
     </div>
-    <div class="demo" data-demo data-lang={lang}>
+    <div class="demo" data-demo data-lang={lang} data-reveal>
       <div class="console">
         <div class="bar">
           <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
           <span class="where">survival · Paper 1.21.11 · Themis 1.0.0</span>
           <button type="button" class="reset" data-reset>{d.reset}</button>
         </div>
-        <ol class="log" aria-live="polite" aria-label="Console"></ol>
+        <ol class="log notranslate" translate="no" aria-live="polite" aria-label="Console"></ol>
         <form class="prompt" autocomplete="off">
           <label class="visually-hidden" for={`cmd-${lang}`}>Command</label>
           <span aria-hidden="true">&gt;</span>
@@ -36,7 +36,7 @@ const d = t(lang).demo;
         <div class="pane discord" role="tabpanel" data-pane="discord" id={`p-discord-${lang}`} aria-labelledby={`t-discord-${lang}`} hidden><p class="idle">{d.discordIdle}</p></div>
       </div>
     </div>
-    <div class="chips">
+    <div class="chips notranslate" translate="no">
       {d.chips.map((c) => <button type="button" class="chip" data-chip={c}>{c}</button>)}
     </div>
     <p class="hint">{d.hint}</p>

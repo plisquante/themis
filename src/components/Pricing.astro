@@ -7,14 +7,14 @@ const d = t(Astro.props.lang).pricing;
 ---
 <section class="section alt" id="pricing">
   <div class="wrap split">
-    <div class="card">
+    <div class="card" data-reveal>
       <img src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/logo.png`} width="72" height="72" alt="" loading="lazy" />
-      <p class="price"><span>{d.price}</span><small>{d.per}</small></p>
+      <p class="price"><span class="notranslate" translate="no">{d.price}</span><small>{d.per}</small></p>
       <ul>{d.includes.map((i) => <li><Icon name="check" />{i}</li>)}</ul>
       <a class="btn primary wide" href={BUY_URL}><Icon name="download" />{d.buy}</a>
       <p class="note">{d.note}</p>
     </div>
-    <div>
+    <div data-reveal style="--i:2">
       <h2>{d.title}</h2>
       <p class="muted lead">{d.lead}</p>
       <h3 class="faq-title">{d.faqTitle}</h3>
@@ -27,7 +27,8 @@ const d = t(Astro.props.lang).pricing;
 
 <style>
   .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 56px; align-items: start; }
-  .card { background: var(--surface); border: 1px solid var(--line); box-shadow: 8px 8px 0 var(--accent); padding: 32px; }
+  .card { background: var(--surface); border: 1px solid var(--line); box-shadow: 8px 8px 0 var(--accent); padding: 32px; transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out); }
+  .card:hover { transform: translate(-3px, -3px); box-shadow: 11px 11px 0 var(--accent); }
   .card img { border-radius: 50%; }
   .price { display: flex; flex-direction: column; margin: 20px 0 22px; }
   .price span { font: 700 3.4rem/1 'Geist Variable', sans-serif; letter-spacing: -.05em; }

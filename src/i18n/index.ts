@@ -17,16 +17,26 @@ export function asset(path: string): string {
   return `${base}/${path.replace(/^\//, '')}`;
 }
 
-export const THEMES = [
-  { id: 'themis', name: 'Themis' },
-  { id: 'parchment', name: 'Parchment' },
-  { id: 'marble', name: 'Marble' },
-  { id: 'laurel', name: 'Laurel' },
-  { id: 'bronze', name: 'Bronze' },
-  { id: 'tokyo-night', name: 'Tokyo Night' },
-  { id: 'gruvbox', name: 'Gruvbox' },
-  { id: 'nord', name: 'Nord' },
-  { id: 'latte', name: 'Catppuccin Latte' },
+/** Languages offered in the picker. tr/en are native pages; the rest use Google Translate from English. */
+export const LANGUAGES = [
+  { code: 'tr', name: 'Türkçe' },
+  { code: 'en', name: 'English' },
+  { code: 'de', name: 'Deutsch' },
+  { code: 'es', name: 'Español' },
+  { code: 'fr', name: 'Français' },
+  { code: 'pt', name: 'Português' },
+  { code: 'it', name: 'Italiano' },
+  { code: 'nl', name: 'Nederlands' },
+  { code: 'pl', name: 'Polski' },
+  { code: 'ru', name: 'Русский' },
+  { code: 'uk', name: 'Українська' },
+  { code: 'az', name: 'Azərbaycanca' },
+  { code: 'ar', name: 'العربية' },
+  { code: 'ja', name: '日本語' },
+  { code: 'ko', name: '한국어' },
+  { code: 'zh-CN', name: '简体中文' },
+  { code: 'id', name: 'Bahasa Indonesia' },
+  { code: 'vi', name: 'Tiếng Việt' },
 ] as const;
 
 export const BUY_URL = 'https://builtbybit.com/';

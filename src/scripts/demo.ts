@@ -111,7 +111,7 @@ export function mountDemo(root: HTMLElement) {
   const timed = (t: Type) => t === 'ban' || t === 'mute' || t === 'warn';
   const active = (name: string, type: Type) => list.find((p) => p.type === type && statusOf(p) === 'active'
     && (p.target === name || (p.ipBased && p.ip === players[name.toLowerCase()]?.ip)));
-  const tip = (p: Punishment) => `${typeName(p.type)} · ${S[statusOf(p)]}\n${S.reason}: ${p.reason}\n${S.by}: ${p.issuer}\n${S.length}: ${durationText(p)}`;
+  const tip = (p: Punishment) => `${typeName(p.type)} · ${S.statusWords[statusOf(p)]}\n${S.reason}: ${p.reason}\n${S.by}: ${p.issuer}\n${S.length}: ${durationText(p)}`;
 
   // ---------------------------------------------------------------- side panes
   function json(p: Punishment) {
@@ -134,7 +134,7 @@ export function mountDemo(root: HTMLElement) {
   function embed(event: string, p: Punishment) {
     if (discord.querySelector('.idle')) discord.textContent = '';
     const card = el('article', `embed t-${event === 'punishment.revoked' ? 'revoked' : p.type}`);
-    const verb = event === 'punishment.revoked' ? S.revoked : typeName(p.type);
+    const verb = event === 'punishment.revoked' ? S.revokedWord : typeName(p.type);
     const head = el('div', 'e-head');
     head.append(el('span', 'e-bot', 'Themis'), el('span', 'e-tag', 'BOT'));
     card.append(head, el('h4', 'e-title', `${p.target} · ${verb}`));
@@ -219,7 +219,7 @@ export function mountDemo(root: HTMLElement) {
     }
   }
 
-  function revoke(type: Type, ref: string, reason: string) {
+  function revoke(type: Type, ref: string) {
     let p: Punishment | undefined;
     if (ref.startsWith('#')) {
       p = list.find((x) => x.code === ref.slice(1).toUpperCase() && (x.type === type || (type === 'warn' && x.type === 'note')));
@@ -282,7 +282,7 @@ export function mountDemo(root: HTMLElement) {
   function caseOf(ref?: string) {
     const p = ref ? list.find((x) => x.code === ref.replace('#', '').toUpperCase()) : list[list.length - 1];
     if (!p) return line([['muted', ref ? S.caseNotFound(ref) : S.noCase]]);
-    line([['text', `${S.case} `], ['gold', '#' + p.code], ['muted', ` · ${typeName(p.type)} · ${S[statusOf(p)]}`]]);
+    line([['text', `${S.case} `], ['gold', '#' + p.code], ['muted', ` · ${typeName(p.type)} · ${S.statusWords[statusOf(p)]}`]]);
     line([['muted', `  ${S.reason.padEnd(8)} `], ['text', p.reason]], false);
     line([['muted', `  ${S.by.padEnd(8)} `], ['text', p.issuer]], false);
     line([['muted', `  ${S.length.padEnd(8)} `], ['text', durationText(p)]], false);
@@ -338,9 +338,9 @@ export function mountDemo(root: HTMLElement) {
       case 'warn': return punishCmd('warn', false);
       case 'kick': return punishCmd('kick', false);
       case 'note': return punishCmd('note', false);
-      case 'unban': case 'pardon': return args[0] ? revoke('ban', args[0], args.slice(1).join(' ')) : err(S.usage('/unban <player|#code> [reason]'));
-      case 'unmute': return args[0] ? revoke('mute', args[0], args.slice(1).join(' ')) : err(S.usage('/unmute <player|#code> [reason]'));
-      case 'unwarn': return args[0] ? revoke('warn', args[0], args.slice(1).join(' ')) : err(S.usage('/unwarn <player|#code> [reason]'));
+      case 'unban': case 'pardon': return args[0] ? revoke('ban', args[0]) : err(S.usage('/unban <player|#code> [reason]'));
+      case 'unmute': return args[0] ? revoke('mute', args[0]) : err(S.usage('/unmute <player|#code> [reason]'));
+      case 'unwarn': return args[0] ? revoke('warn', args[0]) : err(S.usage('/unwarn <player|#code> [reason]'));
       case 'punish': case 'p': return args[1] ? punish(args[0], args[1]) : err(S.usage('/punish <player> <template>') + ' · ' + S.templates);
       case 'history': case 'hist': return args[0] ? historyOf(args[0]) : err(S.usage('/history <player>'));
       case 'check': return args[0] ? check(args[0]) : err(S.usage('/check <player>'));
@@ -390,4 +390,37 @@ export function mountDemo(root: HTMLElement) {
   }
 
   reset();
+
+  // Autoplay: when the demo first scrolls into view, type two commands unless the visitor is already using it.
+  let touched = false;
+  const touch = () => { touched = true; };
+  input.addEventListener('pointerdown', touch);
+  input.addEventListener('keydown', touch);
+  root.querySelectorAll('[data-chip]').forEach((b) => b.addEventListener('click', touch));
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const typeRun = async (cmd: string) => {
+    input.value = '';
+    for (const ch of cmd) {
+      if (touched) return;
+      input.value += ch;
+      await sleep(38 + Math.random() * 40);
+    }
+    await sleep(380);
+    if (touched) return;
+    run(cmd);
+    input.value = '';
+  };
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(async (entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      await sleep(600);
+      for (const cmd of ['/punish Steve spam', '/ban Notch 7d x-ray']) {
+        if (touched) return;
+        await typeRun(cmd);
+        await sleep(900);
+      }
+    }, { threshold: 0.45 });
+    io.observe(root);
+  }
 }

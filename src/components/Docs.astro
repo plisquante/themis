@@ -10,7 +10,8 @@ const cmdTable = `<div class="tbl"><table><thead><tr><th>${lang === 'tr' ? 'Komu
   commands.map((c) => `<tr><td><code>${esc(c.cmd)}</code></td><td><code>${esc(c.perm)}</code></td><td>${esc(c[lang])}</td></tr>`).join('')}</tbody></table></div>`;
 const permTable = `<div class="tbl"><table><thead><tr><th>${lang === 'tr' ? 'Yetki' : 'Permission'}</th><th>${lang === 'tr' ? 'Açıklama' : 'Description'}</th></tr></thead><tbody>${
   permissions.map((p) => `<tr><td><code>${esc(p.node)}</code></td><td>${esc(p[lang])}</td></tr>`).join('')}</tbody></table></div>`;
-const sections = d.sections.map((s) => ({ ...s, html: s.html.replace('{{commands}}', cmdTable).replace('{{permissions}}', permTable).replace(/<table>/g, (m) => m) }));
+const noTranslate = (h: string) => h.replace(/<pre>/g, '<pre translate="no" class="notranslate">').replace(/<code>/g, '<code translate="no" class="notranslate">');
+const sections = d.sections.map((s) => ({ ...s, html: noTranslate(s.html.replace('{{commands}}', cmdTable).replace('{{permissions}}', permTable)) }));
 ---
 <div class="wrap docs">
   <aside class="toc">

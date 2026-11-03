@@ -9,16 +9,17 @@ Static [Astro](https://astro.build) site, Turkish (`/`) and English (`/en/`).
 
 ## What's on it
 
-- Pixel-art **THEMIS** wordmark banded in the seal's burgundy → parchment, over a pixel field that reacts to the cursor.
+- **Opening sequence**: the seal blooms in with rings and sparks, the curtains part, and the **THEMIS** wordmark —
+  pixel Roman capitals gilded from parchment to burgundy with a 3D pixel extrusion — assembles from flying pixels,
+  followed by a light sweep. Plays once per session; skipped with a click/key or under reduced motion.
 - **Live demo**: a browser console that understands the plugin's real command syntax (`/ban`, `/mute`, `/punish … spam`,
   `/history`, `/check`, `/alts`, `/case`, …) and shows the player's screen, the REST `/v1/stream` events and the Discord
-  embed side by side.
-- Interactive escalation-ladder walkthrough, developer code tabs (Java API, events, REST, webhook verification, SSE),
-  comparison table, install steps, pricing + FAQ.
-- **9 themes** (Themis, Parchment, Marble, Laurel, Bronze, Tokyo Night, Gruvbox, Nord, Catppuccin Latte). Press **T** to
-  cycle; the choice is remembered. First visit follows the system light/dark preference.
-- Full docs page: install, commands, permissions, storage & sync, ladders, rank limits, REST API, webhooks, Java API,
-  PlaceholderAPI, migration.
+  embed side by side. It types its first commands by itself when scrolled into view.
+- Scroll reveals, counters, a command ticker, interactive escalation ladder, developer code tabs (Java API, events,
+  REST, webhook verification, SSE), comparison table, install steps, pricing + FAQ and a full docs page.
+- **Languages**: Turkish (`/`) and English (`/en/`) are written by hand. Visitors are routed by browser language on
+  their first visit; any other language (German, Spanish, Russian, Arabic, Japanese, …) is translated automatically by
+  Google Translate from the English page, with a "Show original" switch. Code and commands are never translated.
 
 ## Develop
 
@@ -26,10 +27,11 @@ Static [Astro](https://astro.build) site, Turkish (`/`) and English (`/en/`).
 npm install
 npm run dev       # http://localhost:4321
 npm run build     # → dist/
+npm test          # browser smoke test of dist/ (needs Playwright + Chromium)
 ```
 
 Copy lives in `src/i18n/` (`tr.ts`, `en.ts`, `demo.ts`, shared samples in `code.ts`). Colors are tokens in
-`src/styles/themes.css`. Purchase / GitHub / Discord links are in `src/i18n/index.ts`.
+`src/styles/tokens.css`. Purchase / GitHub / Discord links are in `src/i18n/index.ts`.
 
 ## Deploy
 

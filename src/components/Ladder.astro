@@ -6,7 +6,7 @@ const d = t(Astro.props.lang).ladder;
 ---
 <section class="section alt" id="ladders">
   <div class="wrap split">
-    <div>
+    <div data-reveal>
       <h2>{d.title}</h2>
       <p class="muted lead">{d.lead}</p>
       <div class="controls">
@@ -15,7 +15,7 @@ const d = t(Astro.props.lang).ladder;
       </div>
       <p class="count" aria-live="polite"><span data-ladder-count>0</span> × /punish Steve spam</p>
     </div>
-    <div class="ladder" data-ladder>
+    <div class="ladder" data-ladder data-reveal style="--i:2">
       <p class="tpl">{d.template}</p>
       <ol>
         {d.steps.map((s, i) => (

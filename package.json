@@ -7,12 +7,18 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "test": "node tests/smoke.cjs",
+    "verify": "astro check && astro build && node tests/smoke.cjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",
     "@fontsource-variable/geist": "5.3.0",
     "@fontsource-variable/jetbrains-mono": "5.3.0",
     "astro": "7.4.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "typescript": "^5.9.3"
   }
 }

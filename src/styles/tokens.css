@@ -1,0 +1,39 @@
+/* Themis design tokens — one theme, taken from the seal: charcoal, burgundy, parchment, laurel gold.
+   Every color in the site comes from here. */
+:root {
+  color-scheme: dark;
+  --bg: #171414;
+  --bg-2: #1f1a1a;
+  --surface: #261f1f;
+  --surface-2: #2f2626;
+  --ink: #f1e6cf;
+  --ink-2: #b9ac98;
+  --ink-3: #82766a;
+  --line: #3a3030;
+  --line-2: #4a3c3a;
+  --accent: #962a3e;
+  --accent-2: #c2475c;
+  --accent-ink: #fbf1de;
+  --gold: #d6b578;
+  --gold-2: #f0d9a4;
+  --good: #93ba78;
+  --bad: #e2706e;
+  --depth: #3a0d18;
+  --glow: #962a3e;
+  /* wordmark bands, top (sunlit) to bottom (burgundy) */
+  --band-1: #f6ead0;
+  --band-2: #ecd7a8;
+  --band-3: #dab879;
+  --band-4: #c69957;
+  --band-5: #b07a3f;
+  --band-6: #a8463f;
+  --band-7: #9a2a3c;
+  --band-8: #851f39;
+  --band-9: #6c1730;
+  --pixel: #962a3e;
+  --pixel-2: #d6b578;
+  --term-bg: #110e0e;
+  --term-ink: #ece1cb;
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+}

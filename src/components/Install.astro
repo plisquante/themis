@@ -6,10 +6,10 @@ const d = t(Astro.props.lang).install;
 ---
 <section class="section" id="install">
   <div class="wrap">
-    <div class="section-head"><div><h2>{d.title}</h2><p>{d.lead}</p></div></div>
+    <div class="section-head" data-reveal><div><h2>{d.title}</h2><p>{d.lead}</p></div></div>
     <ol class="steps">
       {d.steps.map((s, i) => (
-        <li><span class="n" aria-hidden="true">{i + 1}</span><h3>{s.title}</h3><p>{s.body}</p></li>
+        <li data-reveal style={`--i:${i}`}><span class="n" aria-hidden="true">{i + 1}</span><h3>{s.title}</h3><p>{s.body}</p></li>
       ))}
     </ol>
   </div>
