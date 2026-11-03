@@ -17,15 +17,15 @@ const samples = [
 ---
 <section id="developers" class="section">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <div><h2>{d.title}</h2><p>{d.lead}</p></div>
       <a class="link" href={url('docs/#java-api', lang)}>{d.docs}<Icon name="arrow" /></a>
     </div>
     <div class="dev">
       <ul class="points">
-        {d.points.map((p) => <li><h3>{p.title}</h3><p>{p.body}</p></li>)}
+        {d.points.map((p, i) => <li data-reveal style={`--i:${i}`}><h3>{p.title}</h3><p>{p.body}</p></li>)}
       </ul>
-      <div class="code" data-code>
+      <div class="code notranslate" translate="no" data-code data-reveal style="--i:2">
         <div class="tabs" role="tablist" aria-label="Code samples">
           {samples.map((s, i) => (
             <button role="tab" type="button" aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-tab={s.id}>{s.label}</button>

@@ -1,46 +1,200 @@
 ---
-// The THEMIS wordmark in pixels, banded like the seal: burgundy at the top, parchment below.
+// THEMIS in pixel Roman capitals (15 rows, serifs, thick/thin strokes), gilded from parchment to burgundy,
+// with a 3-step pixel extrusion. Cells assemble on load; a light sweep crosses the letters.
 const glyphs: Record<string, string[]> = {
-  T: ['########', '########', '...##...', '...##...', '...##...', '...##...', '...##...', '...##...', '...##...'],
-  H: ['##....##', '##....##', '##....##', '########', '########', '##....##', '##....##', '##....##', '##....##'],
-  E: ['#######', '#######', '##.....', '##.....', '######.', '##.....', '##.....', '#######', '#######'],
-  M: ['###....###', '####..####', '##.####.##', '##..##..##', '##......##', '##......##', '##......##', '##......##', '##......##'],
-  I: ['####', '####', '.##.', '.##.', '.##.', '.##.', '.##.', '####', '####'],
-  S: ['.######.', '########', '##......', '###.....', '.######.', '.....###', '......##', '########', '.######.'],
+  T: [
+    '###############',
+    '###############',
+    '##....###....##',
+    '#.....###.....#',
+    '......###......',
+    '......###......',
+    '......###......',
+    '......###......',
+    '......###......',
+    '......###......',
+    '......###......',
+    '......###......',
+    '......###......',
+    '....#######....',
+    '....#######....',
+  ],
+  H: [
+    '#####.....#####',
+    '#####.....#####',
+    '.###.......###.',
+    '.###.......###.',
+    '.###.......###.',
+    '.###.......###.',
+    '.#############.',
+    '.#############.',
+    '.###.......###.',
+    '.###.......###.',
+    '.###.......###.',
+    '.###.......###.',
+    '.###.......###.',
+    '#####.....#####',
+    '#####.....#####',
+  ],
+  E: [
+    '#############',
+    '#############',
+    '.###.......##',
+    '.###........#',
+    '.###.........',
+    '.###.....#...',
+    '.#########...',
+    '.#########...',
+    '.###.....#...',
+    '.###.........',
+    '.###.........',
+    '.###........#',
+    '.###.......##',
+    '#############',
+    '#############',
+  ],
+  M: [
+    '#####.........#####',
+    '#####.........#####',
+    '.####.........####.',
+    '.#####.......#####.',
+    '.##.##.......##.##.',
+    '.##..##.....##..##.',
+    '.##..###...###..##.',
+    '.##...##...##...##.',
+    '.##....##.##....##.',
+    '.##....#####....##.',
+    '.##.....###.....##.',
+    '.##......#......##.',
+    '.##.............##.',
+    '####...........####',
+    '####...........####',
+  ],
+  I: [
+    '#######',
+    '#######',
+    '.#####.',
+    '..###..',
+    '..###..',
+    '..###..',
+    '..###..',
+    '..###..',
+    '..###..',
+    '..###..',
+    '..###..',
+    '..###..',
+    '.#####.',
+    '#######',
+    '#######',
+  ],
+  S: [
+    '....#######...',
+    '..##########.#',
+    '.####.....####',
+    '####.......###',
+    '####.........#',
+    '#####.........',
+    '.########.....',
+    '...#########..',
+    '.....########.',
+    '.........#####',
+    '#.........####',
+    '###.......####',
+    '####.....####.',
+    '#.##########..',
+    '...#######....',
+  ]
 };
 const word = 'THEMIS';
-const gap = 2;
-const band = (row: number) => (row < 2 ? 1 : row < 4 ? 2 : row < 5 ? 3 : row < 7 ? 4 : 5);
-const cells: { x: number; y: number; b: number }[] = [];
+const GAP = 3;
+const H = 15;
+// deterministic pseudo-random so the generated markup is stable between builds
+const rnd = (n: number) => { const x = Math.sin(n * 91.345) * 47453.5453; return x - Math.floor(x); };
+const cells: { x: number; y: number; dx: number; dy: number; d: number }[] = [];
 let x0 = 0;
 for (const ch of word) {
   const g = glyphs[ch];
-  g.forEach((line, y) => [...line].forEach((c, x) => { if (c === '#') cells.push({ x: x0 + x, y, b: band(y) }); }));
-  x0 += g[0].length + gap;
+  g.forEach((row, y) => [...row].forEach((c, x) => {
+    if (c !== '#') return;
+    const i = cells.length;
+    const ax = x0 + x;
+    cells.push({ x: ax, y, dx: Math.round((rnd(i) - 0.5) * 140), dy: Math.round((rnd(i + 7) - 0.65) * 70), d: Math.round(ax * 7 + rnd(i + 3) * 260) });
+  }));
+  x0 += g[0].length + GAP;
 }
-const width = x0 - gap;
-const height = 9;
+const W = x0 - GAP;
+const bands = 9;
+const stops = Array.from({ length: bands }, (_, b) => [b / bands, (b + 1) / bands, `var(--band-${b + 1})`] as const);
 ---
-<svg class="wordmark" viewBox={`-0.5 -0.5 ${width + 1.5} ${height + 1.5}`} role="img" aria-label="Themis" shape-rendering="crispEdges">
-  <g class="shadow">{cells.map((c) => <rect x={c.x + 0.35} y={c.y + 0.35} width="1" height="1" />)}</g>
-  {[1, 2, 3, 4, 5].map((b) => (
-    <g class={`band b${b}`} style={`--row:${b}`}>
-      {cells.filter((c) => c.b === b).map((c) => <rect x={c.x} y={c.y} width="1.02" height="1.02" />)}
+<div class="wm notranslate" translate="no">
+  <svg viewBox={`-1 -1 ${W + 3} ${H + 4}`} role="img" aria-label="Themis" shape-rendering="crispEdges">
+    <defs>
+      <linearGradient id="wm-gold" x1="0" y1="0" x2="0" y2={H} gradientUnits="userSpaceOnUse">
+        {stops.map(([a, b, c]) => <><stop offset={a} stop-color={c} /><stop offset={b} stop-color={c} /></>)}
+      </linearGradient>
+      <linearGradient id="wm-shine" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#fff" stop-opacity="0" />
+        <stop offset=".5" stop-color="#fff" stop-opacity=".8" />
+        <stop offset="1" stop-color="#fff" stop-opacity="0" />
+      </linearGradient>
+      <g id="wm-cells">{cells.map((c) => <rect x={c.x} y={c.y} width="1.02" height="1.02" />)}</g>
+      <clipPath id="wm-clip"><use href="#wm-cells" /></clipPath>
+    </defs>
+    <g class="depth">
+      <use href="#wm-cells" transform="translate(1 1.5)" />
+      <use href="#wm-cells" transform="translate(.66 1)" />
+      <use href="#wm-cells" transform="translate(.33 .5)" />
     </g>
-  ))}
-</svg>
+    <g class="face" fill="url(#wm-gold)">
+      {cells.map((c) => <rect class="c" x={c.x} y={c.y} width="1.02" height="1.02" style={`--dx:${c.dx}px;--dy:${c.dy}px;--d:${c.d}ms`} />)}
+    </g>
+    <g clip-path="url(#wm-clip)"><rect class="shine" x="-14" y="-3" width="9" height={H + 6} fill="url(#wm-shine)" /></g>
+  </svg>
+</div>
 
-<style>
-  .wordmark { width: min(100%, 860px); height: auto; margin-inline: auto; overflow: visible; }
-  .shadow rect { fill: color-mix(in srgb, var(--band-1) 35%, var(--bg)); }
-  .b1 rect { fill: var(--band-1); }
-  .b2 rect { fill: var(--band-2); }
-  .b3 rect { fill: var(--band-3); }
-  .b4 rect { fill: var(--band-4); }
-  .b5 rect { fill: var(--band-5); }
-  .band { animation: etch .7s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--row) * 90ms); }
-  @keyframes etch {
-    from { opacity: 0; transform: translateY(-1.2px); }
-    to { opacity: 1; transform: none; }
+<script>
+  // Once assembled, drop the per-cell animations so the letters render as one crisp shape.
+  document.querySelectorAll<HTMLElement>('.wm').forEach((wm) => {
+    const base = document.documentElement.classList.contains('intro-play') ? 1100 : 150;
+    setTimeout(() => wm.classList.add('settled'), base + 1900);
+  });
+</script>
+
+<style define:vars={{ travel: `${W + 30}px` }}>
+  .wm { width: min(100%, 980px); margin-inline: auto; position: relative; }
+  .wm::before {
+    content: ''; position: absolute; inset: -40% -12%; z-index: -1; pointer-events: none;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--glow) 34%, transparent), transparent 75%);
+    filter: blur(12px);
+  }
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .depth use { fill: var(--depth); }
+  .depth use:nth-child(2) { fill: color-mix(in srgb, var(--depth) 80%, var(--accent)); }
+  .depth use:nth-child(3) { fill: color-mix(in srgb, var(--depth) 55%, var(--accent)); }
+  .shine { opacity: 0; transform: skewX(-20deg); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .c {
+      transform-box: fill-box; transform-origin: center;
+      animation: assemble 1s var(--ease-out) both;
+      animation-delay: calc(var(--base) + var(--d));
+    }
+    :global(html.js) .depth { animation: rise .9s var(--ease-out) both; animation-delay: calc(var(--base) + 1100ms); }
+    :global(html.js) .shine { animation: sweep 1.6s ease-in-out both, sweep 1.8s ease-in-out infinite; animation-delay: calc(var(--base) + 1500ms), calc(var(--base) + 9s); }
+    .wm { --base: 150ms; }
+    .wm.settled .c { animation: none; }
+    :global(html.intro-play) .wm { --base: 1100ms; }
+  }
+  @keyframes assemble {
+    0% { transform: translate(var(--dx), var(--dy)) scale(.2) rotate(45deg); opacity: 0; }
+    55% { opacity: 1; }
+    100% { transform: none; opacity: 1; }
+  }
+  @keyframes rise { from { opacity: 0; transform: translate(-1px, -1.5px); } to { opacity: 1; transform: none; } }
+  @keyframes sweep {
+    0% { opacity: 0; transform: skewX(-20deg) translateX(0); }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { opacity: 0; transform: skewX(-20deg) translateX(var(--travel)); }
   }
 </style>

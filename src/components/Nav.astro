@@ -1,9 +1,10 @@
 ---
 import Icon from './Icon.astro';
+import LangPicker from './LangPicker.astro';
 import { t, url, asset, BUY_URL, GITHUB_URL } from '../i18n';
 import type { Lang } from '../i18n/types';
-interface Props { lang: Lang; altHref: string }
-const { lang, altHref } = Astro.props;
+interface Props { lang: Lang }
+const { lang } = Astro.props;
 const d = t(lang);
 const home = url('', lang);
 const links = [
@@ -24,8 +25,7 @@ const links = [
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </nav>
     <div class="tools">
-      <button class="icon-btn" type="button" data-theme-next title={d.nav.theme} aria-label={d.nav.theme}><Icon name="palette" /></button>
-      <a class="icon-btn" href={altHref} hreflang={lang === 'tr' ? 'en' : 'tr'} title={d.nav.language} aria-label={d.nav.language}><Icon name="globe" /></a>
+      <LangPicker lang={lang} />
       <a class="icon-btn" href={GITHUB_URL} title="GitHub" aria-label="GitHub"><Icon name="github" /></a>
       <a class="btn primary small buy" href={BUY_URL}>{d.nav.buy}</a>
       <details class="mobile">
@@ -48,7 +48,10 @@ const links = [
   .brand img { image-rendering: auto; border-radius: 50%; }
   .links { display: flex; gap: 22px; }
   .links a { text-decoration: none; color: var(--ink-2); font-size: 14px; }
+  .links a { position: relative; transition: color .2s; }
+  .links a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease-out); }
   .links a:hover { color: var(--ink); }
+  .links a:hover::after { transform: scaleX(1); }
   .tools { margin-left: auto; display: flex; align-items: center; gap: 6px; }
   .icon-btn {
     display: grid; place-items: center; width: 36px; height: 36px; color: var(--ink-2);

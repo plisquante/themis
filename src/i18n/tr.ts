@@ -9,7 +9,9 @@ export const tr: Dict = {
     title: 'Themis — Minecraft sunucuları için moderasyon',
     description: 'Ban, mute, uyarı, ceza merdivenleri, kaçak hesap tespiti, REST API ve imzalı webhook\'lar. Paper 1.21 – 26.x için moderasyon eklentisi.',
   },
-  nav: { features: 'Özellikler', demo: 'Demo', developers: 'Geliştiriciler', pricing: 'Fiyat', docs: 'Belgeler', buy: 'Satın al', theme: 'Temayı değiştir (T)', language: 'English', menu: 'Menü' },
+  nav: { features: 'Özellikler', demo: 'Demo', developers: 'Geliştiriciler', pricing: 'Fiyat', docs: 'Belgeler', buy: 'Satın al', language: 'Dil', menu: 'Menü' },
+  lang: { label: 'Dil seçin', translated: 'Google tarafından çevrildi', original: 'Orijinali göster' },
+  ticker: ['/ban', 'ceza merdivenleri', '/mute', 'REST API', '/warn', 'canlı akış', '/punish', 'Discord webhook', '/history', 'kaçak hesap tespiti', '/check', 'Redis senkron', '/case', 'PlaceholderAPI'],
   hero: {
     pill: 'Themis 1.0 çıktı — LiteBans ve AdvancedBan\'dan tek komutla geçiş',
     pillHref: 'docs/#migration',
@@ -118,10 +120,6 @@ export const tr: Dict = {
       { q: 'Mevcut banlarım ne olacak?', a: '/themis import ile vanilla, LiteBans ve AdvancedBan verileri sürelerini ve durumlarını koruyarak aktarılır.' },
       { q: 'Mesajları değiştirebilir miyim?', a: 'Her mesaj messages_tr.yml içinde MiniMessage biçiminde; renkler tek bir yerden değişir.' },
     ],
-  },
-  themes: {
-    title: 'Bu site de temalı',
-    lead: 'Themis\'in rengi logodaki bordo ve parşömenden geliyor. Klavyede T\'ye basarak ya da aşağıdan bir tema seçerek siteyi değiştirin.',
   },
   footer: {
     tagline: 'Sunucunda adalet, terazide.',

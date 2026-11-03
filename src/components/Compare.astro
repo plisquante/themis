@@ -6,8 +6,8 @@ const d = t(Astro.props.lang).compare;
 ---
 <section class="section alt" id="compare">
   <div class="wrap">
-    <div class="section-head"><div><h2>{d.title}</h2><p>{d.lead}</p></div></div>
-    <div class="scroll" tabindex="0" role="region" aria-label={d.title}>
+    <div class="section-head" data-reveal><div><h2>{d.title}</h2><p>{d.lead}</p></div></div>
+    <div class="scroll" data-reveal tabindex="0" role="region" aria-label={d.title}>
       <table>
         <thead><tr><th scope="col"><span class="visually-hidden">Feature</span></th><th scope="col" class="us">{d.themis}</th><th scope="col">{d.typical}</th></tr></thead>
         <tbody>
@@ -28,4 +28,6 @@ const d = t(Astro.props.lang).compare;
   tbody th { font-weight: 500; }
   td.us { color: var(--ink); background: color-mix(in srgb, var(--accent) 7%, transparent); font-weight: 600; }
   td.them { color: var(--ink-3); }
+  tbody tr { transition: background-color .2s; }
+  tbody tr:hover { background: var(--bg-2); }
 </style>

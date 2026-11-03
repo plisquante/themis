@@ -4,22 +4,23 @@ import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { t, asset, THEMES } from '../i18n';
+import { t, asset, LANGUAGES } from '../i18n';
 import type { Lang } from '../i18n/types';
 
-interface Props { lang: Lang; title?: string; description?: string; altHref: string; path: string }
-const { lang, title, description, altHref, path } = Astro.props;
+interface Props { lang: Lang; title?: string; description?: string; altHref: string; path: string; intro?: boolean }
+const { lang, title, description, altHref, path, intro = false } = Astro.props;
 const d = t(lang);
 const pageTitle = title ?? d.meta.title;
 const desc = description ?? d.meta.description;
 const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://themis.dev').toString();
-const themeIds = THEMES.map((x) => x.id);
 const trHref = lang === 'tr' ? Astro.url.pathname : altHref;
 const enHref = lang === 'en' ? Astro.url.pathname : altHref;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+const codes = LANGUAGES.map((l) => l.code);
 ---
 <!doctype html>
-<html lang={lang} data-theme="themis">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,9 +29,10 @@ const enHref = lang === 'en' ? Astro.url.pathname : altHref;
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="tr" href={`${site}${trHref}`} />
     <link rel="alternate" hreflang="en" href={`${site}${enHref}`} />
+    <link rel="alternate" hreflang="x-default" href={`${site}${enHref}`} />
     <link rel="icon" type="image/png" href={asset('favicon.png')} />
     <link rel="apple-touch-icon" href={asset('apple-touch-icon.png')} />
-    <meta name="theme-color" content="#1d1a1a" />
+    <meta name="theme-color" content="#171414" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={desc} />
@@ -42,64 +44,132 @@ const enHref = lang === 'en' ? Astro.url.pathname : altHref;
       applicationCategory: 'GameApplication', operatingSystem: 'Paper 1.21 – 26.x',
       offers: { '@type': 'Offer', price: '20', priceCurrency: 'USD' }, description: desc,
     })} />
-    <script is:inline define:vars={{ themeIds }}>
+    <script is:inline define:vars={{ lang, base, intro, codes }}>
       (function () {
-        var t = null;
-        try { t = localStorage.getItem('themis-theme'); } catch (e) {}
-        if (themeIds.indexOf(t) < 0) t = matchMedia('(prefers-color-scheme: light)').matches ? 'parchment' : 'themis';
-        document.documentElement.setAttribute('data-theme', t);
+        var root = document.documentElement;
+        root.classList.add('js');
+        var store = {
+          get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+          set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+        };
+        // Equivalent page in the other native language: /docs/ <-> /en/docs/
+        function otherPath(target) {
+          var rest = location.pathname.slice(base.length);
+          if (rest.indexOf('en/') === 0) rest = rest.slice(3);
+          else if (rest === 'en') rest = '';
+          return base + (target === 'en' ? 'en/' : '') + rest + location.hash;
+        }
+        function normalize(code) {
+          code = (code || '').toLowerCase();
+          if (code.indexOf('zh') === 0) return 'zh-CN';
+          var short = code.split('-')[0];
+          return codes.indexOf(short) >= 0 ? short : (short ? short : 'en');
+        }
+        var pref = store.get('themis-lang');
+        if (!pref) {
+          // First visit: follow the browser. Turkish gets the Turkish page; everyone else the English page,
+          // which Google Translate then renders in their language.
+          pref = normalize((navigator.languages && navigator.languages[0]) || navigator.language);
+          store.set('themis-lang', pref);
+          var want = pref === 'tr' ? 'tr' : 'en';
+          if (want !== lang) { location.replace(otherPath(want)); return; }
+        }
+        window.themisLang = { pref: pref, otherPath: otherPath, store: store };
+        var foreign = pref !== 'tr' && pref !== 'en';
+        var host = location.hostname;
+        function cookie(v) {
+          var exp = v ? '' : '; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+          document.cookie = 'googtrans=' + v + '; path=/' + exp;
+          if (host.indexOf('.') > 0) document.cookie = 'googtrans=' + v + '; path=/; domain=' + host + exp;
+        }
+        if (foreign) {
+          cookie('/' + lang + '/' + pref);
+          root.classList.add('gt-on');
+        } else if (document.cookie.indexOf('googtrans=') >= 0) {
+          cookie('');
+        }
+        try {
+          if (intro && !matchMedia('(prefers-reduced-motion: reduce)').matches && !sessionStorage.getItem('themis-intro')) {
+            root.classList.add('intro-play');
+            sessionStorage.setItem('themis-intro', '1');
+          }
+        } catch (e) {}
       })();
     </script>
   </head>
   <body data-path={path}>
     <a class="skip" href="#main">{lang === 'tr' ? 'İçeriğe geç' : 'Skip to content'}</a>
-    <Nav lang={lang} altHref={altHref} />
+    <slot name="intro" />
+    <Nav lang={lang} />
     <main id="main"><slot /></main>
     <Footer lang={lang} />
-    <div class="toast" role="status" aria-live="polite"></div>
-    <script is:inline define:vars={{ themeIds, names: THEMES.map((x) => x.name) }}>
+    <div class="gt-badge" hidden data-gt-badge>
+      <span>{d.lang.translated}</span>
+      <button type="button" data-lang-pick={lang}>{d.lang.original}</button>
+    </div>
+    <div id="gt-el" aria-hidden="true"></div>
+
+    <script is:inline define:vars={{ lang }}>
       (function () {
-        var root = document.documentElement;
-        var toast = document.querySelector('.toast');
-        var timer;
-        function set(id, announce) {
-          root.setAttribute('data-theme', id);
-          try { localStorage.setItem('themis-theme', id); } catch (e) {}
-          document.querySelectorAll('[data-theme-pick]').forEach(function (b) {
-            b.setAttribute('aria-pressed', String(b.getAttribute('data-theme-pick') === id));
-          });
-          if (announce && toast) {
-            toast.textContent = names[themeIds.indexOf(id)];
-            toast.classList.add('on');
-            clearTimeout(timer);
-            timer = setTimeout(function () { toast.classList.remove('on'); }, 1400);
-          }
-        }
-        function next() { set(themeIds[(themeIds.indexOf(root.getAttribute('data-theme')) + 1) % themeIds.length], true); }
-        window.themisTheme = { set: set, next: next };
+        var L = window.themisLang;
+        if (!L) return;
+        // Language picker
+        document.querySelectorAll('[data-lang-pick]').forEach(function (b) {
+          b.setAttribute('aria-checked', String(b.getAttribute('data-lang-pick') === L.pref));
+        });
+        var cur = document.querySelector('[data-lang-current]');
+        if (cur) cur.textContent = L.pref.toUpperCase().slice(0, 2);
         document.addEventListener('click', function (e) {
-          var n = e.target.closest('[data-theme-next]');
-          if (n) next();
-          var p = e.target.closest('[data-theme-pick]');
-          if (p) set(p.getAttribute('data-theme-pick'), true);
+          var b = e.target.closest('[data-lang-pick]');
+          if (!b) return;
+          var code = b.getAttribute('data-lang-pick');
+          L.store.set('themis-lang', code);
+          var page = code === 'tr' ? 'tr' : 'en';
+          if (page !== lang) location.href = L.otherPath(page);
+          else location.reload();
         });
-        document.addEventListener('keydown', function (e) {
-          if (e.key !== 't' && e.key !== 'T') return;
-          if (e.metaKey || e.ctrlKey || e.altKey) return;
-          var el = document.activeElement;
-          if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return;
-          next();
-        });
-        set(root.getAttribute('data-theme'), false);
+        // Google Translate for languages without a native page
+        if (L.pref === 'tr' || L.pref === 'en') return;
+        var badge = document.querySelector('[data-gt-badge]');
+        if (badge) badge.hidden = false;
+        window.themisGT = function () {
+          try {
+            new google.translate.TranslateElement({ pageLanguage: lang, autoDisplay: false }, 'gt-el');
+          } catch (e) {}
+        };
+        var s = document.createElement('script');
+        s.src = 'https://translate.google.com/translate_a/element.js?cb=themisGT';
+        s.async = true;
+        s.onerror = function () { if (badge) badge.hidden = true; };
+        document.head.appendChild(s);
       })();
     </script>
-    <style is:global>
-      .toast {
-        position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0;
-        background: var(--surface); color: var(--ink); border: 1px solid var(--line); box-shadow: 4px 4px 0 var(--line);
-        padding: 10px 16px; font-size: 13px; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 80;
+    <script>
+      // Scroll reveal for every [data-reveal] element, staggered by --i.
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        els.forEach((el) => el.classList.add('in'));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+          }
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        els.forEach((el) => io.observe(el));
       }
-      .toast.on { opacity: 1; transform: translate(-50%, 0); }
+    </script>
+    <style is:global>
+      /* Google Translate: keep its machinery invisible, keep our layout */
+      #gt-el, .skiptranslate > iframe, iframe.skiptranslate, .goog-te-banner-frame, #goog-gt-tt, .goog-te-balloon-frame,
+      .VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf, .VIpgJd-yAWNEb-L7lbkb { display: none !important; }
+      html.gt-on body { top: 0 !important; position: static !important; }
+      font[style] { background: none !important; box-shadow: none !important; }
+      .gt-badge {
+        position: fixed; left: 16px; bottom: 16px; z-index: 70; display: flex; align-items: center; gap: 12px;
+        background: var(--surface); border: 1px solid var(--line); box-shadow: 4px 4px 0 var(--line); padding: 8px 12px; font-size: 12px; color: var(--ink-2);
+      }
+      .gt-badge[hidden] { display: none; }
+      .gt-badge button { background: none; border: 0; color: var(--gold-2); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 0; }
     </style>
   </body>
 </html>

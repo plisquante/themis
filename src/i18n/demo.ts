@@ -44,7 +44,7 @@ export const demoStrings = {
     reset: 'Demo sıfırlandı.',
     welcome: 'Themis demo sunucusuna bağlandınız. Çevrimiçi: Steve, Alex, Notch, jeb_',
     you: 'Konsol',
-    by: 'Yetkili', reason: 'Sebep', length: 'Süre', revoked: 'kaldırıldı', active: 'aktif', expired: 'süresi doldu',
+    by: 'Yetkili', reason: 'Sebep', length: 'Süre', revokedWord: 'kaldırıldı', statusWords: { active: 'aktif', revoked: 'kaldırıldı', expired: 'süresi doldu' },
     defaultReasons: { ban: 'Sunucu kurallarını ihlal', mute: 'Uygunsuz sohbet', warn: 'Lütfen kurallara uyun', kick: 'Yetkili tarafından atıldı', note: '' },
   },
   en: {
@@ -91,7 +91,7 @@ export const demoStrings = {
     reset: 'Demo reset.',
     welcome: 'Connected to the Themis demo server. Online: Steve, Alex, Notch, jeb_',
     you: 'Console',
-    by: 'By', reason: 'Reason', length: 'Length', revoked: 'revoked', active: 'active', expired: 'expired',
+    by: 'By', reason: 'Reason', length: 'Length', revokedWord: 'revoked', statusWords: { active: 'active', revoked: 'revoked', expired: 'expired' },
     defaultReasons: { ban: 'Breaking the server rules', mute: 'Inappropriate chat', warn: 'Please follow the rules', kick: 'Kicked by staff', note: '' },
   },
 };

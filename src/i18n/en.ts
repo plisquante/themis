@@ -9,7 +9,9 @@ export const en: Dict = {
     title: 'Themis — moderation for Minecraft servers',
     description: 'Bans, mutes, warnings, escalation ladders, alt detection, a REST API and signed webhooks. The moderation plugin for Paper 1.21 – 26.x.',
   },
-  nav: { features: 'Features', demo: 'Demo', developers: 'Developers', pricing: 'Pricing', docs: 'Docs', buy: 'Buy', theme: 'Change theme (T)', language: 'Türkçe', menu: 'Menu' },
+  nav: { features: 'Features', demo: 'Demo', developers: 'Developers', pricing: 'Pricing', docs: 'Docs', buy: 'Buy', language: 'Language', menu: 'Menu' },
+  lang: { label: 'Choose language', translated: 'Translated by Google', original: 'Show original' },
+  ticker: ['/ban', 'escalation ladders', '/mute', 'REST API', '/warn', 'live stream', '/punish', 'Discord webhooks', '/history', 'alt detection', '/check', 'Redis sync', '/case', 'PlaceholderAPI'],
   hero: {
     pill: 'Themis 1.0 is out — move from LiteBans or AdvancedBan with one command',
     pillHref: 'docs/#migration',
@@ -118,10 +120,6 @@ export const en: Dict = {
       { q: 'What happens to my existing bans?', a: '/themis import brings over vanilla, LiteBans and AdvancedBan data with durations and states intact.' },
       { q: 'Can I change the messages?', a: 'Every message lives in messages_en.yml in MiniMessage format; colours change in one place.' },
     ],
-  },
-  themes: {
-    title: 'This site is themed too',
-    lead: 'Themis takes its colours from the burgundy and parchment of its seal. Press T on your keyboard or pick a theme below.',
   },
   footer: {
     tagline: 'Keep the scales level.',

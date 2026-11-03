@@ -7,10 +7,10 @@ const d = t(Astro.props.lang).features;
 ---
 <section id="features" class="section">
   <div class="wrap">
-    <div class="section-head"><div><h2>{d.title}</h2><p>{d.lead}</p></div></div>
+    <div class="section-head" data-reveal><div><h2>{d.title}</h2><p>{d.lead}</p></div></div>
     <ul class="grid">
-      {d.items.map((f) => (
-        <li>
+      {d.items.map((f, i) => (
+        <li data-reveal style={`--i:${i % 4}`}>
           <span class="ico"><Icon name={f.icon} /></span>
           <h3>{f.title}</h3>
           <p>{f.body}</p>
@@ -22,7 +22,11 @@ const d = t(Astro.props.lang).features;
 
 <style>
   .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px 32px; }
-  li { border-top: 1px solid var(--line); padding-top: 22px; }
+  li { border-top: 1px solid var(--line); padding-top: 22px; position: relative; }
+  li::before { content: ''; position: absolute; top: -1px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width .5s var(--ease-out); }
+  li:hover::before { width: 100%; }
+  .ico { transition: transform .35s var(--ease-spring); }
+  li:hover .ico { transform: translateY(-4px) rotate(-6deg); }
   .ico { display: inline-grid; place-items: center; width: 36px; height: 36px; background: var(--accent); color: var(--accent-ink); margin-bottom: 16px; }
   .ico :global(svg) { width: 20px; height: 20px; }
   li:nth-child(4n + 2) .ico, li:nth-child(4n + 4) .ico { background: var(--gold); color: var(--bg); }

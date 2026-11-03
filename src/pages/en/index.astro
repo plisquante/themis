@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Home from '../../components/Home.astro';
+import Intro from '../../components/Intro.astro';
 import { url } from '../../i18n';
 ---
-<Base lang="en" altHref={url('', 'tr')} path="/"><Home lang="en" /></Base>
+<Base lang="en" altHref={url('', 'tr')} path="/" intro><Intro slot="intro" /><Home lang="en" /></Base>
