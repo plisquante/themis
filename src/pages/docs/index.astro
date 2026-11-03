@@ -1,0 +1,6 @@
+---
+import Base from '../../layouts/Base.astro';
+import Docs from '../../components/Docs.astro';
+import { url, t } from '../../i18n';
+---
+<Base lang="tr" altHref={url('docs/', 'en')} path="/docs/" title={`${t('tr').docs.title} — Themis`}><Docs lang="tr" /></Base>

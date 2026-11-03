@@ -1,0 +1,105 @@
+---
+import '@fontsource-variable/geist';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { t, asset, THEMES } from '../i18n';
+import type { Lang } from '../i18n/types';
+
+interface Props { lang: Lang; title?: string; description?: string; altHref: string; path: string }
+const { lang, title, description, altHref, path } = Astro.props;
+const d = t(lang);
+const pageTitle = title ?? d.meta.title;
+const desc = description ?? d.meta.description;
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://themis.dev').toString();
+const themeIds = THEMES.map((x) => x.id);
+const trHref = lang === 'tr' ? Astro.url.pathname : altHref;
+const enHref = lang === 'en' ? Astro.url.pathname : altHref;
+---
+<!doctype html>
+<html lang={lang} data-theme="themis">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="tr" href={`${site}${trHref}`} />
+    <link rel="alternate" hreflang="en" href={`${site}${enHref}`} />
+    <link rel="icon" type="image/png" href={asset('favicon.png')} />
+    <link rel="apple-touch-icon" href={asset('apple-touch-icon.png')} />
+    <meta name="theme-color" content="#1d1a1a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:image" content={`${site}${asset('logo.png')}`} />
+    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_US'} />
+    <meta name="twitter:card" content="summary" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'Themis',
+      applicationCategory: 'GameApplication', operatingSystem: 'Paper 1.21 – 26.x',
+      offers: { '@type': 'Offer', price: '20', priceCurrency: 'USD' }, description: desc,
+    })} />
+    <script is:inline define:vars={{ themeIds }}>
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem('themis-theme'); } catch (e) {}
+        if (themeIds.indexOf(t) < 0) t = matchMedia('(prefers-color-scheme: light)').matches ? 'parchment' : 'themis';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+  </head>
+  <body data-path={path}>
+    <a class="skip" href="#main">{lang === 'tr' ? 'İçeriğe geç' : 'Skip to content'}</a>
+    <Nav lang={lang} altHref={altHref} />
+    <main id="main"><slot /></main>
+    <Footer lang={lang} />
+    <div class="toast" role="status" aria-live="polite"></div>
+    <script is:inline define:vars={{ themeIds, names: THEMES.map((x) => x.name) }}>
+      (function () {
+        var root = document.documentElement;
+        var toast = document.querySelector('.toast');
+        var timer;
+        function set(id, announce) {
+          root.setAttribute('data-theme', id);
+          try { localStorage.setItem('themis-theme', id); } catch (e) {}
+          document.querySelectorAll('[data-theme-pick]').forEach(function (b) {
+            b.setAttribute('aria-pressed', String(b.getAttribute('data-theme-pick') === id));
+          });
+          if (announce && toast) {
+            toast.textContent = names[themeIds.indexOf(id)];
+            toast.classList.add('on');
+            clearTimeout(timer);
+            timer = setTimeout(function () { toast.classList.remove('on'); }, 1400);
+          }
+        }
+        function next() { set(themeIds[(themeIds.indexOf(root.getAttribute('data-theme')) + 1) % themeIds.length], true); }
+        window.themisTheme = { set: set, next: next };
+        document.addEventListener('click', function (e) {
+          var n = e.target.closest('[data-theme-next]');
+          if (n) next();
+          var p = e.target.closest('[data-theme-pick]');
+          if (p) set(p.getAttribute('data-theme-pick'), true);
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 't' && e.key !== 'T') return;
+          if (e.metaKey || e.ctrlKey || e.altKey) return;
+          var el = document.activeElement;
+          if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return;
+          next();
+        });
+        set(root.getAttribute('data-theme'), false);
+      })();
+    </script>
+    <style is:global>
+      .toast {
+        position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0;
+        background: var(--surface); color: var(--ink); border: 1px solid var(--line); box-shadow: 4px 4px 0 var(--line);
+        padding: 10px 16px; font-size: 13px; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 80;
+      }
+      .toast.on { opacity: 1; transform: translate(-50%, 0); }
+    </style>
+  </body>
+</html>

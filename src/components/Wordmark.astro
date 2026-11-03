@@ -1,0 +1,46 @@
+---
+// The THEMIS wordmark in pixels, banded like the seal: burgundy at the top, parchment below.
+const glyphs: Record<string, string[]> = {
+  T: ['########', '########', '...##...', '...##...', '...##...', '...##...', '...##...', '...##...', '...##...'],
+  H: ['##....##', '##....##', '##....##', '########', '########', '##....##', '##....##', '##....##', '##....##'],
+  E: ['#######', '#######', '##.....', '##.....', '######.', '##.....', '##.....', '#######', '#######'],
+  M: ['###....###', '####..####', '##.####.##', '##..##..##', '##......##', '##......##', '##......##', '##......##', '##......##'],
+  I: ['####', '####', '.##.', '.##.', '.##.', '.##.', '.##.', '####', '####'],
+  S: ['.######.', '########', '##......', '###.....', '.######.', '.....###', '......##', '########', '.######.'],
+};
+const word = 'THEMIS';
+const gap = 2;
+const band = (row: number) => (row < 2 ? 1 : row < 4 ? 2 : row < 5 ? 3 : row < 7 ? 4 : 5);
+const cells: { x: number; y: number; b: number }[] = [];
+let x0 = 0;
+for (const ch of word) {
+  const g = glyphs[ch];
+  g.forEach((line, y) => [...line].forEach((c, x) => { if (c === '#') cells.push({ x: x0 + x, y, b: band(y) }); }));
+  x0 += g[0].length + gap;
+}
+const width = x0 - gap;
+const height = 9;
+---
+<svg class="wordmark" viewBox={`-0.5 -0.5 ${width + 1.5} ${height + 1.5}`} role="img" aria-label="Themis" shape-rendering="crispEdges">
+  <g class="shadow">{cells.map((c) => <rect x={c.x + 0.35} y={c.y + 0.35} width="1" height="1" />)}</g>
+  {[1, 2, 3, 4, 5].map((b) => (
+    <g class={`band b${b}`} style={`--row:${b}`}>
+      {cells.filter((c) => c.b === b).map((c) => <rect x={c.x} y={c.y} width="1.02" height="1.02" />)}
+    </g>
+  ))}
+</svg>
+
+<style>
+  .wordmark { width: min(100%, 860px); height: auto; margin-inline: auto; overflow: visible; }
+  .shadow rect { fill: color-mix(in srgb, var(--band-1) 35%, var(--bg)); }
+  .b1 rect { fill: var(--band-1); }
+  .b2 rect { fill: var(--band-2); }
+  .b3 rect { fill: var(--band-3); }
+  .b4 rect { fill: var(--band-4); }
+  .b5 rect { fill: var(--band-5); }
+  .band { animation: etch .7s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--row) * 90ms); }
+  @keyframes etch {
+    from { opacity: 0; transform: translateY(-1.2px); }
+    to { opacity: 1; transform: none; }
+  }
+</style>

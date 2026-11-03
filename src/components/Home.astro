@@ -1,0 +1,23 @@
+---
+import Hero from './Hero.astro';
+import Demo from './Demo.astro';
+import Features from './Features.astro';
+import Ladder from './Ladder.astro';
+import Developers from './Developers.astro';
+import Compare from './Compare.astro';
+import Install from './Install.astro';
+import Pricing from './Pricing.astro';
+import Themes from './Themes.astro';
+import type { Lang } from '../i18n/types';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<Hero lang={lang} />
+<Demo lang={lang} />
+<Features lang={lang} />
+<Ladder lang={lang} />
+<Developers lang={lang} />
+<Compare lang={lang} />
+<Install lang={lang} />
+<Pricing lang={lang} />
+<Themes lang={lang} />

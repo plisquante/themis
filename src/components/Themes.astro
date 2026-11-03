@@ -1,0 +1,38 @@
+---
+import { t, THEMES } from '../i18n';
+import type { Lang } from '../i18n/types';
+interface Props { lang: Lang }
+const d = t(Astro.props.lang).themes;
+---
+<section class="section" id="themes">
+  <div class="wrap">
+    <div class="section-head"><div><h2>{d.title}</h2><p>{d.lead} <kbd>T</kbd></p></div></div>
+    <ul class="themes">
+      {THEMES.map((th) => (
+        <li>
+          <button type="button" data-theme-pick={th.id} aria-pressed="false">
+            <span class="sw" data-theme={th.id} aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+            {th.name}
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .themes { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  button {
+    display: flex; align-items: center; gap: 12px; padding: 10px 14px 10px 10px; cursor: pointer;
+    background: var(--surface); color: var(--ink); border: 1px solid var(--line); font: inherit; font-size: 14px;
+  }
+  button:hover { border-color: var(--ink-3); }
+  button[aria-pressed='true'] { border-color: var(--gold); box-shadow: 3px 3px 0 var(--gold); }
+  .sw { display: flex; padding: 3px; background: var(--bg); border: 1px solid var(--line); }
+  .sw i { width: 10px; height: 18px; }
+  .sw i:nth-child(1) { background: var(--band-1); }
+  .sw i:nth-child(2) { background: var(--band-2); }
+  .sw i:nth-child(3) { background: var(--band-3); }
+  .sw i:nth-child(4) { background: var(--band-4); }
+  .sw i:nth-child(5) { background: var(--band-5); }
+</style>

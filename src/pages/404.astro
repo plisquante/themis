@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../i18n';
+---
+<Base lang="tr" altHref={url('', 'en')} path="/404/" title="404 — Themis">
+  <section class="nf wrap">
+    <p class="code">404</p>
+    <h1>Bu sayfa terazide yok.</h1>
+    <p class="muted">This page is not on the scales.</p>
+    <a class="btn primary" href={url('')}>Themis</a>
+  </section>
+</Base>
+<style>
+  .nf { padding: 120px 0; display: grid; justify-items: start; gap: 14px; }
+  .code { font: 700 5rem/1 'Geist Variable', sans-serif; color: var(--accent); letter-spacing: -.05em; }
+</style>

@@ -1,0 +1,76 @@
+---
+import Icon from './Icon.astro';
+import { t, url, asset, BUY_URL, GITHUB_URL } from '../i18n';
+import type { Lang } from '../i18n/types';
+interface Props { lang: Lang; altHref: string }
+const { lang, altHref } = Astro.props;
+const d = t(lang);
+const home = url('', lang);
+const links = [
+  { href: `${home}#features`, label: d.nav.features },
+  { href: `${home}#demo`, label: d.nav.demo },
+  { href: `${home}#developers`, label: d.nav.developers },
+  { href: `${home}#pricing`, label: d.nav.pricing },
+  { href: url('docs/', lang), label: d.nav.docs },
+];
+---
+<header class="nav">
+  <div class="wrap row">
+    <a class="brand" href={home} aria-label="Themis">
+      <img src={asset('favicon.png')} width="28" height="28" alt="" />
+      <span>Themis</span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" type="button" data-theme-next title={d.nav.theme} aria-label={d.nav.theme}><Icon name="palette" /></button>
+      <a class="icon-btn" href={altHref} hreflang={lang === 'tr' ? 'en' : 'tr'} title={d.nav.language} aria-label={d.nav.language}><Icon name="globe" /></a>
+      <a class="icon-btn" href={GITHUB_URL} title="GitHub" aria-label="GitHub"><Icon name="github" /></a>
+      <a class="btn primary small buy" href={BUY_URL}>{d.nav.buy}</a>
+      <details class="mobile">
+        <summary class="icon-btn" aria-label={d.nav.menu}><Icon name="menu" /></summary>
+        <div class="sheet">{links.map((l) => <a href={l.href}>{l.label}</a>)}</div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px) saturate(1.2);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  }
+  .row { display: flex; align-items: center; gap: 28px; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 600 16px 'Geist Variable', sans-serif; letter-spacing: -.01em; }
+  .brand img { image-rendering: auto; border-radius: 50%; }
+  .links { display: flex; gap: 22px; }
+  .links a { text-decoration: none; color: var(--ink-2); font-size: 14px; }
+  .links a:hover { color: var(--ink); }
+  .tools { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+  .icon-btn {
+    display: grid; place-items: center; width: 36px; height: 36px; color: var(--ink-2);
+    background: none; border: 0; cursor: pointer; list-style: none;
+  }
+  .icon-btn::-webkit-details-marker { display: none; }
+  .icon-btn:hover { color: var(--ink); }
+  .icon-btn :global(svg) { width: 18px; height: 18px; }
+  .buy { margin-left: 8px; }
+  .mobile { display: none; position: relative; }
+  .sheet {
+    position: absolute; right: 0; top: 44px; min-width: 200px; display: grid;
+    background: var(--surface); border: 1px solid var(--line); box-shadow: 4px 4px 0 var(--line);
+  }
+  .sheet a { padding: 12px 16px; text-decoration: none; border-bottom: 1px solid var(--line); }
+  .sheet a:last-child { border-bottom: 0; }
+  @media (max-width: 860px) {
+    .links { display: none; }
+    .mobile { display: block; }
+  }
+  @media (max-width: 420px) {
+    .buy { display: none; }
+    .row { gap: 12px; }
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+import { Code } from 'astro:components';
+import Icon from './Icon.astro';
+import { t, url } from '../i18n';
+import type { Lang } from '../i18n/types';
+import { javaSample, eventsSample, restSample, restResponse, webhookSample, streamSample } from '../i18n/code';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang).dev;
+const samples = [
+  { id: 'java', label: 'Java API', lang: 'java', code: javaSample },
+  { id: 'events', label: 'Events', lang: 'java', code: eventsSample },
+  { id: 'rest', label: 'REST', lang: 'bash', code: restSample + '\n\n' + restResponse },
+  { id: 'webhook', label: 'Webhook', lang: 'js', code: webhookSample },
+  { id: 'sse', label: 'Live stream', lang: 'js', code: streamSample },
+] as const;
+---
+<section id="developers" class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div><h2>{d.title}</h2><p>{d.lead}</p></div>
+      <a class="link" href={url('docs/#java-api', lang)}>{d.docs}<Icon name="arrow" /></a>
+    </div>
+    <div class="dev">
+      <ul class="points">
+        {d.points.map((p) => <li><h3>{p.title}</h3><p>{p.body}</p></li>)}
+      </ul>
+      <div class="code" data-code>
+        <div class="tabs" role="tablist" aria-label="Code samples">
+          {samples.map((s, i) => (
+            <button role="tab" type="button" aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-tab={s.id}>{s.label}</button>
+          ))}
+          <button type="button" class="copy" data-copy data-copied={d.copied}><Icon name="copy" /><span>{d.copy}</span></button>
+        </div>
+        {samples.map((s, i) => (
+          <div role="tabpanel" data-pane={s.id} hidden={i !== 0}><Code code={s.code} lang={s.lang} theme="css-variables" /></div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-code]').forEach((box) => {
+    const tabs = [...box.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const select = (tab: HTMLButtonElement) => {
+      tabs.forEach((t) => { const on = t === tab; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+      box.querySelectorAll<HTMLElement>('[data-pane]').forEach((p) => (p.hidden = p.dataset.pane !== tab.dataset.tab));
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        select(n); n.focus();
+      });
+    });
+    const copy = box.querySelector<HTMLButtonElement>('[data-copy]')!;
+    const label = copy.querySelector('span')!;
+    const original = label.textContent;
+    copy.addEventListener('click', async () => {
+      const pane = box.querySelector<HTMLElement>('[data-pane]:not([hidden]) pre');
+      try { await navigator.clipboard.writeText(pane?.innerText ?? ''); label.textContent = copy.dataset.copied ?? ''; } catch { /* clipboard blocked */ }
+      setTimeout(() => (label.textContent = original), 1400);
+    });
+  });
+</script>
+
+<style>
+  .dev { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 40px; align-items: start; }
+  .points { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; }
+  .points li { border-left: 2px solid var(--accent); padding-left: 16px; }
+  .points p { color: var(--ink-2); font-size: 14px; margin-top: 6px; }
+  .code { border: 1px solid var(--line); box-shadow: 6px 6px 0 var(--line); background: var(--term-bg); min-width: 0; }
+  .tabs { display: flex; align-items: stretch; border-bottom: 1px solid color-mix(in srgb, var(--term-ink) 14%, transparent); overflow-x: auto; }
+  .tabs button {
+    background: none; border: 0; color: color-mix(in srgb, var(--term-ink) 60%, transparent); font: inherit; font-size: 12.5px;
+    padding: 11px 14px; cursor: pointer; white-space: nowrap;
+  }
+  .tabs [aria-selected='true'] { color: var(--term-ink); box-shadow: inset 0 -2px 0 var(--gold); }
+  .copy { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+  .copy :global(svg) { width: 14px; height: 14px; }
+  [data-pane] :global(pre) { margin: 0; padding: 18px 20px; font-size: 12.5px; line-height: 1.65; overflow-x: auto; background: transparent !important; }
+  @media (max-width: 900px) { .dev { grid-template-columns: 1fr; } }
+</style>
