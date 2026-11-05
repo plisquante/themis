@@ -1,0 +1,12 @@
+GNU Unifont (https://unifoundry.com/unifont/)
+
+The compiled fonts are licensed under the SIL Open Font License, Version 1.1
+(https://openfontlicense.org) and under the GNU General Public License version 2 or later
+with the GNU font embedding exception:
+
+  As a special exception, if you create a document which uses this font, and embed this font
+  or unaltered portions of this font into the document, this font does not by itself cause the
+  resulting document to be covered by the GNU General Public License.
+
+unifont.woff2 in this folder is a subset (Latin, Turkish and box-drawing characters) of
+unifont-16.0.04.otf.
