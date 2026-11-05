@@ -1,25 +1,128 @@
-# themis — website agent guide
+# CLAUDE.md — Themis sitesi
 
-Marketing + documentation site for the Themis moderation plugin (code lives in `ThemisCode`).
-Built with Astro as a fully static site.
+```
+  ╔╦╗╦ ╦╔═╗╔╦╗╦╔═╗
+   ║ ╠═╣║╣ ║║║║╚═╗   moderasyonun tanrıçası
+   ╩ ╩ ╩╚═╝╩ ╩╩╚═╝   — cemo
+```
 
-## Commands
-- `npm install` then `npm run dev` (local), `npm run build` (outputs `dist/`), `npm run preview`.
-- `npm test` — browser smoke test of `dist/` (45 checks: pages, demo, intro, languages). Needs Playwright.
-- `npm run verify` — type check + build + smoke test. The plugin repo's `scripts/verify-all.sh` runs both repos.
+Themis moderasyon eklentisinin (kod: `plisquante/ThemisCode`) tanıtım sitesi. Tasarım ve altyapı
+**cemo**'nun (Cem Ali) konseptidir ve birebir korunur. Metinler eklentinin gerçek özelliklerini anlatır.
 
-## Design system
-- Pixel-art identity taken from the Themis logo: burgundy, parchment and laurel gold.
-- One theme. Every color is a token in `src/styles/tokens.css`; never hard-code colors in components.
-- Motion: opening sequence (`Intro.astro`, first visit per session), wordmark assembly, scroll reveals
-  (`data-reveal`, stagger with `--i`). All of it is skipped under `prefers-reduced-motion`.
-- Translation: tr and en are native pages; other browser languages get the English page rendered by
-  Google Translate (`googtrans` cookie, see `layouts/Base.astro`). Mark code and commands `translate="no"`.
-- Fonts: Geist (headings/UI) and JetBrains Mono (body/code), self-hosted via @fontsource.
-- Respect `prefers-reduced-motion`; keep the layout working at 360px width.
-- Copy lives in `src/i18n/` (tr + en). Never hard-code UI strings in components.
+## Kurallar
 
-## Skills & tools
-Project skills are vendored in `.claude/skills/` (see `THIRD_PARTY.md`). For UI work use
-`frontend-design`, `frontend-design-direction`, `design-system`, `frontend-a11y`, `seo`, then
-verify with `webapp-testing` (Playwright screenshots). MCP: `context7`, `serena` in `.mcp.json`.
+- **Tema ve altyapı değişmez.** Renkler, fontlar, logo animasyonu, arka plandaki 0/1'ler ve düzen zip'teki gibi kalır.
+  1440px ve üstünde görünüm orijinalle birebir aynıdır; `css/style.css` sonundaki medya sorguları yalnızca dar ekranlar içindir.
+- cemo'nun sorduğu dört değişiklik (fil dişi zemin, para gibi düşen logo, obfuscate kod arka planı, köşeli font)
+  sorulduğunda kullanıcı **hiçbirini istemedi**. Kullanıcı açıkça istemeden uygulama.
+- Sitedeki her iddia eklentide gerçekten var olmalı. Rakamlar (20 komut, 17 REST uç noktası, 5 veritabanı, 20$)
+  eklentiden sayılmıştır; eklenti değişirse burayı da güncelle. Uydurma istatistik yazma.
+- Kullanıcı Türkçe konuşur. Site Türkçedir.
+
+## Dosya yapısı
+
+```
+index.html          sayfa iskeleti ve metinler
+css/style.css       tüm stiller, renk değişkenleri, @font-face ve dar ekran kuralları
+js/main.js          arka plan canvas'ı, kartlar (CARDS), terminal (TERM), tüm animasyonlar
+assets/logo.png     logo (900×900, yuvarlak, şeffaf); logo-128.png menü, favicon ve footer için
+fonts/              TeX Gyre Pagella, Inter ve Unifont'un Latin + Türkçe alt kümeleri (woff2) ve lisansları
+tests/smoke.cjs     tarayıcı testi: `node tests/smoke.cjs` (Playwright gerekir)
+```
+
+Build adımı yok. `index.html` herhangi bir statik sunucuyla yayınlanır (ör. `python3 -m http.server`).
+GitHub Pages yayını `.github/workflows/deploy.yml` ile `main` dalına her push'ta yapılır.
+
+## Sayfa yapısı
+
+1. **Nav**: sabit üst bar. Logo, "THEMIS", menü (bölümlere ve dokümantasyona bağlantı) ve "Sunucuna Ekle". Kaydırınca arka planı belirginleşir; okunan bölüm menüde vurgulanır.
+2. **Hero** (`#hero`): logo (dönen kesikli halka ve nabız gibi atan glow), `THEMIS`, ayraç, "MODERASYONUN TANRIÇASI" ve iki buton.
+3. **Özellikler** (`#features`): "Hiçbir suç terazide hafif gelmez." ve 3×2 kart. Kartlar `main.js` içindeki `CARDS` dizisinden üretilir; ikonlar `ICONS` içindeki 11×11 piksel desenlerinden çizilir.
+4. **İstatistik şeridi** (`#stats`): sayılar görününce sıfırdan sayar (`data-to`).
+5. **Nasıl çalışır** (`#how`): logodaki üç sembol, bir cezanın üç adımı (Göz Bağı: kayıt, Terazi: sicilin tartılması, Kılıç: yaptırım). Sağdaki terminal `TERM` dizisinden yazılır.
+6. **SSS** (`#faq`): aynı adım kutularıyla altı soru.
+7. **Footer**: "Adalet kodda yazılıdır.", butonlar ve alt satır.
+
+Arka plan: tam ekran `<canvas id="bits">`. `drawBits(t, scrollY)` −28° açılı ızgarada 0/1 çizer; bitler kümeler halinde değişir, yeni değişen bit kısa bir an parlar.
+
+## Animasyon mimarisi
+
+- Tüm animasyon `main.js` içindeki **`render(t)`** fonksiyonunda, geçen süreye (`t`, saniye) bağlıdır. Bir `requestAnimationFrame` döngüsü her karede bu fonksiyonu çağırır.
+- Kaydırmayla açılan öğeler `.reveal` sınıfını taşır; görünürlükleri her karede `getBoundingClientRect` ile hesaplanır.
+- Kart hover efekti `mousemove` ile `window.__hover`'a yazılıp `render` içinde uygulanır.
+- Yeni animasyonları da `render(t)` içine `t`'ye bağlı yaz; hepsi tek yerden yönetilsin.
+
+## Renkler ve fontlar
+
+`css/style.css` → `:root`:
+
+```css
+--bg:#13110e; --cream:#efe3bd; --gold:#d9c58f; --gold-d:#a88d55;
+--muted:#a59d88; --dim:#6f6858; --card:rgba(26,23,18,.82); --line:rgba(217,197,143,.16);
+```
+
+- Başlıklar: TeX Gyre Pagella (Palatino benzeri klasik serif)
+- Gövde metni: Inter
+- Etiketler, butonlar, terminal: Unifont
+
+Fontlar `fonts/` klasöründen yüklenir, böylece site her bilgisayarda aynı görünür. Yeni bir karakter
+(ör. başka bir dil) gerekirse alt kümeleri `pyftsubset` ile yeniden üret.
+
+Tarz: **neoklasik konulu, sınırlı paletli pixel art madalyon** (logo), **Dark Academia ile hacker/terminal estetiğinin karışımı** (site).
+
+---
+
+## İleride istenirse: cemo'nun dört seçeneğinin uygulama notları
+
+### 1. Fil dişi arka plan
+
+- `--bg` için `#f6f1e3` veya `#fffff0` dene. Tüm palet ters dönmeli:
+  metinler koyu (`#1a1712`), altın tonu kontrast için koyulaşmalı (ör. `#8a6d32`),
+  kartlar `rgba(255,252,243,.85)` ve ince koyu kenarlık.
+- `.hero::before`, `.vignette` ve `footer::before` gradyanları koyu renk üzerine kurulu. Açık renge çevir.
+- `drawBits` içindeki `rgba(217,197,143,…)` / `rgba(239,227,189,…)` renkleri koyu kahve/siyah
+  ve düşük opaklık olmalı. Rakamlar logoyu ve yazıyı bastırmamalı.
+- Logonun dış halkası siyah, açık zeminde iyi durur. `drop-shadow`'u yumuşat.
+
+### 2. Logo para gibi dönüp düşsün
+
+- Açılışta (yaklaşık 0–2.2 sn) `#logo` için `perspective` ile `rotateX` kullan. Logo yukarıdan
+  birkaç tur dönerek inmeli, yere değince 2–3 kez giderek azalan sekmeler ve sallanma (wobble) yapıp
+  düz durmalı.
+- Altına "masa" hissi için elips bir gölge ekle. Logo yükseldikçe gölge küçülüp soluklaşsın,
+  indikçe büyüyüp koyulaşsın.
+- `logo.png` tek yüzlü. Arka yüz için aynı görseli `backface-visibility` ile çift katman yap ya da
+  kenar kalınlığı hissi için birkaç katmanı üst üste koy. Arka yüzde farklı bir tasarım isteyip
+  istemediğini kullanıcıya sorabilirsin.
+- Şu an `render` içinde logoya uygulanan basit fade/scale girişini bununla değiştir.
+- Kullanıcı "x ekseni" dedi. CSS'te `rotateX` paranın takla atması (yazı-tura) anlamına gelir.
+  Kendi ekseni etrafında fırıldak gibi dönmesini istiyorsa o `rotateY` olur. Emin değilsen sor.
+
+### 3. 0/1 yerine obfuscate edilmiş kod
+
+- `drawBits` fonksiyonunu değiştir. Izgara mantığı aynı kalabilir. Tek karakter yerine satır satır
+  obfuscate edilmiş kod parçaları çizilebilir (hex dizileri, `_0x3fa2[...]` tarzı JS obfuscation,
+  x86 asm benzeri satırlar vb.).
+- Karakterler zamanla "karışıp çözülme" efektiyle değişebilir. Mevcut parlama efektini koru.
+- Kodun kaynağını kullanıcıya sor: kendi kodunun obfuscate edilmiş hali mi, yoksa temsili/sahte kod mu?
+- Okunabilirlik: hero ve kartların arkasındaki karartma maskeleri ön plandaki yazıyı korumaya devam etmeli.
+
+### 4. Daha köşeli font
+
+- İki yön var, hangisini istediğini sor:
+  - **Pixel font** (logoyla birebir uyumlu): Press Start 2P, Silkscreen, Pixelify Sans, VT323
+  - **Köşeli tekno font**: Chakra Petch, Orbitron, Rajdhani, Oxanium
+- Klasik havayı korumak isterse başlıkta Cinzel kalıp etiketler ve butonlar pixel font olabilir.
+- Türkçe karakterleri (İ, ı, ğ, ş, ç, ö, ü) desteklediğini mutlaka kontrol et.
+
+---
+
+## Bağlantılar
+
+- Satın alma bağlantısı şimdilik `https://builtbybit.com/` (yer tutucu). Mağaza sayfası açılınca `index.html` içindeki üç `builtbybit` bağlantısını güncelle.
+- Dokümantasyon: `https://github.com/plisquante/ThemisCode#readme`.
+- Değişikliklerden sonra `node tests/smoke.cjs` çalıştır ve sayfayı tarayıcıda 390px ve 1440px genişlikte kontrol et.
+
+## Skill'ler ve araçlar
+
+Proje skill'leri `.claude/skills/` altında (kaynaklar `THIRD_PARTY.md`'de). MCP: `context7`, `serena` (`.mcp.json`).

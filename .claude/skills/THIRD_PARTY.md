@@ -13,6 +13,7 @@ open-source repositories. Each keeps the license of its upstream project.
 | repomix-explorer | https://github.com/yamadashy/repomix | MIT |
 | codebase-index | https://github.com/denfry/codebase-index | MIT |
 | prd | https://github.com/snarktank/ralph | MIT |
+| design-taste-frontend (tasteskill v2) | https://github.com/leonxlnx/taste-skill | MIT (LICENSE in folder) |
 | ci-cd-pipelines | https://github.com/rohitg00/awesome-claude-code-toolkit | Apache-2.0 |
 
 Only the skills relevant to this repository were vendored. Tool-style projects from the
