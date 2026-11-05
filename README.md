@@ -2,7 +2,7 @@
 
 # themis — site
 
-Themis moderasyon eklentisinin tanıtım sitesi (eklenti kodu: [`plisquante/ThemisCode`](https://github.com/plisquante/ThemisCode)).
+Themis moderasyon eklentisinin tanıtım sitesi ve wikisi.
 Tasarım ve altyapı: **cemo**.
 
 Build adımı yok: düz HTML, CSS ve JavaScript.
@@ -15,8 +15,11 @@ node tests/smoke.cjs            # tarayıcı testi (Playwright + Chromium gereki
 | Dosya | İçerik |
 | --- | --- |
 | `index.html` | sayfa ve metinler |
+| `wiki/` | wiki sayfaları (kurulum, proxy, komutlar, yetkiler, ayarlar, API…) |
+| `404.html` | hata sayfası |
 | `css/style.css` | stiller, renkler, fontlar, dar ekran kuralları |
 | `js/main.js` | arka plan, kartlar, terminal, animasyonlar |
+| `css/wiki.css`, `js/wiki.js` | wiki düzeni, menü, arka plan |
 | `assets/` | logo |
 | `fonts/` | TeX Gyre Pagella, Inter, Unifont (Latin + Türkçe alt kümeleri) ve lisansları |
 

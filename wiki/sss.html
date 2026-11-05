@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../assets/logo-128.png">
+<title>Sık sorulanlar · Themis Wiki</title>
+<meta name="description" content="Themis hakkında sık sorulan sorular: proxy kurulumu, Velocity ve imzalı sohbet, geçiş, API, sürümler.">
+<meta name="theme-color" content="#13110e">
+<link rel="preload" href="../fonts/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/unifont.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/wiki.css">
+</head>
+<body class="wiki-page" data-page="sss">
+<canvas id="bits" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+
+<nav>
+  <div class="bgfill"></div>
+  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
+  <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
+</nav>
+
+<div class="wiki">
+<aside id="side" aria-label="Wiki sayfaları"></aside>
+<main class="doc" id="content">
+<div class="kicker">// BAŞLANGIÇ</div>
+<h1>Sık <em>sorulanlar</em></h1>
+<p class="lead">En çok sorulanlar. Aradığınızı bulamazsanız soldaki sayfalara bakın.</p>
+<h3>Velocity ya da BungeeCord gerekir mi?</h3>
+<p>Hayır. Tek bir Paper sunucusunda ya da ortak veritabanına bağlı birkaç Paper sunucusunda çalışır. Proxy kullanıyorsanız Themis'i yalnızca proxy'ye de kurabilirsiniz; aynı jar Velocity ve BungeeCord'un <code>plugins</code> klasöründe çalışır ve backend sunuculara bir şey kurmanız gerekmez. Bkz. <a href="proxy.html">Velocity ve BungeeCord</a>.</p>
+<h3>Proxy'ye kurunca backend'e de kurmam gerekir mi?</h3>
+<p>Gerekmez. BungeeCord'da her şey proxy'de çalışır. Velocity'de de çalışır; tek fark, susturulmuş bir oyuncunun imzalı sohbet mesajını Velocity'nin iptal edememesidir. Bu durumda Themis oyuncunun bağlantısını susturma ekranıyla keser. Bunu istemiyorsanız jar'ı backend'lere <code>mode: BRIDGE</code> ile koyun.</p>
+<h3>Velocity'de susturulmuş oyuncu neden atılıyor?</h3>
+<p>1.19.1'den beri sohbet mesajları istemci tarafından imzalanır ve Velocity, bir eklentinin imzalı mesajı iptal etmesine izin vermez. Themis mesajın sunucuya ulaşmasına izin vermek yerine bağlantıyı keser. Köprü kurarak mesajı sessizce engelleyebilir ya da <code>proxy.velocity-signed-chat: ALLOW</code> ile geçirip yetkilileri uyarabilirsiniz.</p>
+<h3>LiteBans banlarıma ne olur?</h3>
+<p>Konsoldan <code>themis import litebans &lt;jdbc-url&gt; &lt;kullanıcı&gt; &lt;şifre&gt;</code> çalıştırın. Her ban, mute, uyarı ve kick tarihleriyle, kimin verdiğiyle ve kaldırılıp kaldırılmadığıyla gelir. AdvancedBan ve vanilla ban listeleri de aktarılır. Bkz. <a href="aktarma.html">geçiş</a>.</p>
+<h3>Kendi eklentim ceza verebilir mi?</h3>
+<p>Evet. <a href="java-api.html">Java API</a> MIT lisanslıdır ve sunucu yazılımına bağlı değildir. Eklentiniz ceza verebilir, kaldırabilir, arayabilir; her cezayı kaydedilmeden önce engelleyebilir ya da değiştirebilir.</p>
+<h3>Bir site ya da Discord botu bağlanabilir mi?</h3>
+<p><a href="rest-api.html">REST API</a>'yi açın ve yalnızca ihtiyaç duyduğu kapsamlara sahip bir anahtar oluşturun. 17 uç nokta, canlı olay akışı, anahtar başına hız sınırı ve HMAC imzalı <a href="webhooklar.html">webhook'lar</a> hazır.</p>
+<h3>Hangi sürümlerde çalışır?</h3>
+<p>Paper 1.21 ile 26.x arası ve Purpur gibi Paper çatalları, Velocity 3.4 ve üstü, güncel BungeeCord; Java 21 ve üstü. Folia henüz desteklenmiyor.</p>
+<h3>Veritabanına ulaşılamazsa ne olur?</h3>
+<p>Varsayılan olarak oyuncular girebilir ve hata konsola yazılır. <code>punishments.fail-closed: true</code> yaparsanız veritabanına ulaşılamadığı sürece giriş reddedilir.</p>
+<h3>Yetkilinin verebileceği cezayı sınırlayabilir miyim?</h3>
+<p>Evet. config.yml'deki <code>limits</code> ile grup başına en uzun süreyi belirleyin ve yetkiliye <code>themis.limit.&lt;grup&gt;</code> verin. Süresiz ceza için ayrıca <code>themis.ban.permanent</code> ya da <code>themis.mute.permanent</code> gerekir. Bkz. <a href="yetkiler.html#sinirlar">rütbe sınırları</a>.</p>
+<h3>Bir yetkili kendini ya da yöneticiyi cezalandırabilir mi?</h3>
+<p><code>prevent-self-punish: true</code> (varsayılan) kendini cezalandırmayı engeller. Yöneticilere <code>themis.exempt.ban</code>, <code>themis.exempt.mute</code> gibi muafiyetler verirseniz çevrimiçiyken o türde ceza alamazlar.</p>
+<h3>Mesajları değiştirebilir miyim?</h3>
+<p>Her satır <code>messages_tr.yml</code> ya da <code>messages_en.yml</code> içinde, hover ve tıklama destekli MiniMessage biçimindedir. Renkler dosyanın başında tek yerden ayarlanır. Bkz. <a href="mesajlar.html">Mesajlar ve diller</a>.</p>
+<h3>Komutlar başka bir eklentiyle çakışırsa?</h3>
+<p>Paper'da <code>/themis:ban</code> gibi ön ekli adlar her zaman Themis'e gider. Proxy'de Themis'in komutları backend komutlarından önce çalışır. Başka bir moderasyon eklentisinden geçiyorsanız aktarmadan sonra onu kaldırın.</p>
+<div class="pager" id="pager"></div>
+</main>
+</div>
+
+<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<script src="../js/wiki.js"></script>
+</body>
+</html>

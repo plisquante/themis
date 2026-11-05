@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../assets/logo-128.png">
+<title>Webhook'lar · Themis Wiki</title>
+<meta name="description" content="Themis webhook&#x27;ları: Discord embed&#x27;leri ve HMAC-SHA256 imzalı JSON, alanlar, olaylar, yeniden deneme ve imza doğrulama.">
+<meta name="theme-color" content="#13110e">
+<link rel="preload" href="../fonts/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/unifont.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/wiki.css">
+</head>
+<body class="wiki-page" data-page="webhooklar">
+<canvas id="bits" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+
+<nav>
+  <div class="bgfill"></div>
+  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
+  <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
+</nav>
+
+<div class="wiki">
+<aside id="side" aria-label="Wiki sayfaları"></aside>
+<main class="doc" id="content">
+<div class="kicker">// GELİŞTİRİCİ</div>
+<h1>Webhook'lar</h1>
+<p class="lead">Themis her ceza olayını Discord'a ya da kendi sunucunuza gönderebilir. İki biçim vardır: <code>DISCORD</code> zengin bir embed atar, <code>THEMIS</code> imzalı JSON gönderir.</p>
+
+<h2>Tanım</h2>
+<pre><code>webhooks:
+  - name: discord-log
+    enabled: true
+    url: "https://discord.com/api/webhooks/..."
+    format: DISCORD
+    events: ["punishment.issued", "punishment.revoked"]
+    types: []                 # boş = hepsi; ya da ban, mute, warn, kick, note
+    include-silent: false
+  - name: my-backend
+    enabled: true
+    url: "https://example.com/themis-webhook"
+    format: THEMIS
+    secret: "uzun-rastgele-bir-değer"
+    events: ["*"]
+    types: []
+    include-silent: true
+    expose-ips: false</code></pre>
+<div class="table"><table>
+<tr><th>ALAN</th><th>AÇIKLAMA</th></tr>
+<tr><td><code>events</code></td><td><code>punishment.issued</code>, <code>punishment.revoked</code>, <code>punishment.edited</code>, <code>punishment.expired</code> ya da <code>*</code>.</td></tr>
+<tr><td><code>types</code></td><td>Yalnızca bu ceza türleri; boşsa hepsi.</td></tr>
+<tr><td><code>include-silent</code></td><td>Sessiz cezalar da gönderilsin mi.</td></tr>
+<tr><td><code>secret</code></td><td><code>THEMIS</code> biçiminde imza anahtarı.</td></tr>
+<tr><td><code>expose-ips</code></td><td>Yükte tam IP'ler; kapalıyken maskelidir.</td></tr>
+</table></div>
+<p>Deneme: <code>/themis webhook test</code> açık webhook'lara örnek bir ban olayı gönderir.</p>
+
+<h2>THEMIS yükü</h2>
+<pre><code>{
+  "id": "evt_3f0c…",
+  "type": "punishment.issued",
+  "created_at": "2026-11-05T19:00:00Z",
+  "server": "survival",
+  "api_version": 1,
+  "data": { "punishment": { "id": 42, "code": "7KQ2MX", "type": "ban", … } }
+}</code></pre>
+<p>Başlıklar: <code>X-Themis-Event</code>, <code>X-Themis-Delivery</code> (teslimat kimliği), <code>X-Themis-Signature</code>.</p>
+
+<h2>İmzayı doğrulama</h2>
+<p><code>X-Themis-Signature: t=&lt;unix&gt;,v1=&lt;hex&gt;</code>, burada <code>v1 = HMAC_SHA256(secret, t + "." + ham_gövde)</code>. Beş dakikadan eski teslimatları reddedin.</p>
+<pre><code>// Node.js
+const crypto = require('node:crypto');
+function verify(rawBody, header, secret) {
+  const { t, v1 } = Object.fromEntries(header.split(',').map(p =&gt; p.split('=')));
+  if (Math.abs(Date.now() / 1000 - Number(t)) &gt; 300) return false;
+  const want = crypto.createHmac('sha256', secret).update(t + '.' + rawBody).digest('hex');
+  return want.length === v1.length &amp;&amp; crypto.timingSafeEqual(Buffer.from(want), Buffer.from(v1));
+}</code></pre>
+
+<h2>Yeniden deneme</h2>
+<p>Ağ hatası, 429 ya da 5xx yanıtında teslimat 2, 4, 8 ve 16 saniye arayla toplam beş kez denenir. Diğer yanıtlar tekrar denenmez; sonuç konsola yazılır.</p>
+<div class="pager" id="pager"></div>
+</main>
+</div>
+
+<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<script src="../js/wiki.js"></script>
+</body>
+</html>
