@@ -54,7 +54,7 @@
 <li><strong>Kapsamsız ceza</strong> (ya da <code>-scope=*</code>) bütün ağda geçerlidir.</li>
 </ul>
 <p>Oyuncunun taşınacağı sunucuyu <code>proxy.fallback-server</code> belirler. Boşsa proxy'nin deneme sırası (Velocity <code>try</code>, BungeeCord <code>priorities</code>) kullanılır.</p>
-<div class="note"><b>DİKKAT</b><code>server-name</code> değerini bir backend sunucusuyla aynı yapmayın. Proxy'nin kendi adıyla verilen kapsam bütün ağı kapsar.</div>
+<div class="note"><b>DİKKAT</b>Proxy'de yeni oluşan config.yml <code>server-name: "network"</code> ile başlar. Bu adı bir backend sunucusuyla aynı yapmayın: proxy'nin kendi adıyla verilen kapsam bütün ağı kapsar. Çakışma olursa Themis açılışta uyarır.</div>
 
 <h2>Velocity ve imzalı sohbet</h2>
 <p>Minecraft 1.19.1'den beri istemciler sohbet mesajlarını ve <code>/msg</code>, <code>/me</code> gibi bazı vanilla komutlarını imzalar. Velocity, bir eklentinin imzalı mesajı iptal etmesine izin vermez; iptal edilen her imzalı mesajda oyuncunun bağlantısını keser. Themis bu yüzden susturulmuş oyuncunun imzalı mesajında şöyle davranır:</p>

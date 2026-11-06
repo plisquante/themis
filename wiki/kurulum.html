@@ -66,7 +66,7 @@ sync:
 <ol>
 <li>Jar'ı proxy'nin <code>plugins/</code> klasörüne koyun ve proxy'yi başlatın.</li>
 <li>Velocity'de Themis ihtiyaç duyduğu kütüphaneleri ilk açılışta Maven Central'dan indirir ve <code>plugins/themis/libraries/</code> içine koyar. Her dosyanın SHA-256 özeti jar'ın içinde sabittir; tutmayan bir dosya asla yüklenmez. BungeeCord bu kütüphaneleri kendisi indirir.</li>
-<li>Ayar dosyası Velocity'de <code>plugins/themis/config.yml</code>, BungeeCord'da <code>plugins/Themis/config.yml</code> olur. <code>server-name</code> değerini proxy'nin adı yapın (ör. <code>network</code>).</li>
+<li>Ayar dosyası Velocity'de <code>plugins/themis/config.yml</code>, BungeeCord'da <code>plugins/Themis/config.yml</code> olur. <code>server-name</code> proxy'de <code>network</code> olarak gelir; bir backend sunucusunun adıyla aynı olmasın.</li>
 </ol>
 <p>Proxy'de komutlar, giriş kontrolü, sohbet ve komut susturması, sunucuya özel banlar ve duyurular çalışır. Nasıl çalıştığı ve sınırları: <a href="proxy.html">Velocity ve BungeeCord</a>.</p>
 
