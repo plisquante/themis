@@ -10,7 +10,7 @@ body.wiki-page{min-height:100vh}
 .wiki aside h5:first-child{margin-top:0}
 .wiki aside ul{list-style:none}
 .wiki aside li a{display:block;padding:7px 0 7px 16px;border-left:1px solid var(--line);color:var(--muted);
-  font-size:15px;transition:color .6s ease,border-color .6s ease}
+  font-size:15px;transition:color .35s ease,border-color .35s ease}
 .wiki aside li a:hover{color:var(--cream)}
 .wiki aside li a[aria-current=page]{color:var(--cream);border-left:2px solid var(--gold);padding-left:15px}
 .wiki .toggle{display:none}
@@ -37,7 +37,7 @@ body.wiki-page{min-height:100vh}
 .doc pre code{background:none;border:0;padding:0;color:inherit;font-size:inherit}
 .doc pre .d{color:var(--dim)}.doc pre .g{color:var(--gold)}.doc pre .c{color:var(--cream)}.doc pre .r{color:#d98f7a}
 .doc pre button{position:absolute;top:8px;right:8px;font-family:var(--pix);font-size:13px;color:var(--muted);
-  background:rgba(26,23,18,.9);border:1px solid var(--line);padding:3px 9px;cursor:pointer;opacity:0;transition:opacity .5s ease,color .5s ease}
+  background:rgba(26,23,18,.9);border:1px solid var(--line);padding:3px 9px;cursor:pointer;opacity:0;transition:opacity .3s ease,color .3s ease}
 .doc pre:hover button,.doc pre button:focus-visible{opacity:1}
 .doc pre button:hover{color:var(--cream)}
 .doc table{width:100%;border-collapse:collapse;margin:16px 0 28px;font-size:15px}
@@ -52,13 +52,13 @@ body.wiki-page{min-height:100vh}
 .doc .note.warn b{color:#d98f7a}
 .doc .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:24px 0 8px}
 .doc .cards a{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);padding:20px 22px;
-  transition:border-color .6s ease,background-color .6s ease}
+  transition:border-color .35s ease,background-color .35s ease}
 .doc .cards a:hover{border-color:rgba(217,197,143,.5);background:rgba(36,31,23,.9)}
 .doc .cards a span{display:block;font-family:var(--pix);font-size:13px;letter-spacing:.1em;color:var(--gold-d)}
 .doc .cards a strong{display:block;font-family:var(--serif);font-size:21px;margin:6px 0 4px}
 .doc .cards a em{font-style:normal;color:var(--muted);font-size:15px}
 .doc .pager{display:flex;justify-content:space-between;gap:16px;margin-top:72px;padding-top:28px;border-top:1px solid var(--line)}
-.doc .pager a{text-decoration:none;font-family:var(--pix);font-size:16px;color:var(--muted);transition:color .6s ease}
+.doc .pager a{text-decoration:none;font-family:var(--pix);font-size:16px;color:var(--muted);transition:color .35s ease}
 .doc .pager a:hover{color:var(--cream)}
 .doc .pager a.next{margin-left:auto;text-align:right}
 .wiki-foot{position:relative;z-index:1;border-top:1px solid var(--line);padding:28px 56px;display:flex;justify-content:space-between;

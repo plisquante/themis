@@ -16,8 +16,9 @@ kullanıcı dokümantasyonu yalnızca burada, `wiki/` altında tutulur. Siteden 
   1440px ve üstünde görünüm orijinalle birebir aynıdır; `css/style.css` sonundaki medya sorguları yalnızca dar ekranlar içindir.
 - cemo'nun sorduğu dört değişiklik (fil dişi zemin, para gibi düşen logo, obfuscate kod arka planı, köşeli font)
   sorulduğunda kullanıcı **hiçbirini istemedi**. Kullanıcı açıkça istemeden uygulama.
-- Animasyonlar yavaş ve yumuşaktır (kullanıcı isteği): zamana bağlı, in-out eğriler, açılış ~3.6 sn, bölümler görününce
-  bir kez 1.4 sn'de belirir, hover yumuşak geçer, sayaç 2.6 sn. Hızlandırma ya da kaydırmaya bağlı ani geçiş ekleme.
+- Animasyonlar yumuşak ama ağır değil (kullanıcı önce "çok hızlı ve keskin", sonra "fazla yavaş" dedi): zamana bağlı
+  in-out eğriler, açılış ~2.2 sn, bölümler görününce bir kez 0.8 sn'de belirir, hover yumuşak geçer (~0.3 sn),
+  sayaç 1.6 sn, CSS geçişleri .3–.35 sn. Kaydırmaya bağlı ani geçiş ekleme; süreleri bu aralıkta tut.
 - Sitedeki her iddia eklentide gerçekten var olmalı. Rakamlar (20 komut, 17 REST uç noktası, 5 veritabanı, 20$)
   eklentiden sayılmıştır; eklenti değişirse burayı da güncelle. Uydurma istatistik yazma.
 - Kullanıcı Türkçe konuşur. Site Türkçedir.
