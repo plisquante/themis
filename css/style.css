@@ -32,7 +32,7 @@ nav .brand{position:relative;display:flex;align-items:center;gap:14px;font-famil
 nav .brand img{width:38px;height:38px}
 nav ul{position:relative;display:flex;gap:40px;list-style:none;font-size:14px;color:var(--muted);
   letter-spacing:.08em}
-nav ul li{transition:color .6s ease}
+nav ul li{transition:color .35s ease}
 nav ul li.on{color:var(--cream)}
 nav .cta{position:relative;font-family:var(--pix);font-size:16px;color:var(--bg);background:var(--gold);
   padding:10px 20px;letter-spacing:.06em}
@@ -133,9 +133,9 @@ footer .bottom .sig{color:var(--gold)}
 /* links keep the look of the original blocks */
 a{color:inherit;text-decoration:none}
 nav .brand,nav ul a,.btn,nav .cta{cursor:pointer}
-nav ul a{transition:color .6s ease}
+nav ul a{transition:color .35s ease}
 nav ul a:hover{color:var(--cream)}
-nav .cta,.btn{display:inline-block;transition:filter .45s ease,background-color .45s ease,color .45s ease}
+nav .cta,.btn{display:inline-block;transition:filter .3s ease,background-color .3s ease,color .3s ease}
 nav .cta:hover,.btn.p:hover{filter:brightness(1.08)}
 .btn.s:hover{background:rgba(217,197,143,.12)}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px}

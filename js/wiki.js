@@ -44,14 +44,14 @@ function drawBits(t,scrollY){
   if(cv.width!==W*dpr||cv.height!==H*dpr){cv.width=W*dpr;cv.height=H*dpr}
   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
   ctx.save();ctx.translate(W/2,H/2);ctx.rotate(-28*Math.PI/180);
-  const cw=24,ch=32,R=Math.hypot(W,H)/2+60,flow=(REDUCED?0:t*7)+scrollY*0.15,drift=flow%ch,rowOff=Math.floor(flow/ch);
+  const cw=24,ch=32,R=Math.hypot(W,H)/2+60,flow=(REDUCED?0:t*10)+scrollY*0.15,drift=flow%ch,rowOff=Math.floor(flow/ch);
   ctx.font="20px Unifont, 'DejaVu Sans Mono', monospace";ctx.textAlign="center";ctx.textBaseline="middle";
   for(let y=-R;y<R;y+=ch){
     const j=Math.round((y+R)/ch)-rowOff;
     for(let x=-R;x<R;x+=cw){
-      const i=Math.round((x+R)/cw),blk=hash(Math.floor(i/5),Math.floor(j/3)),sp=0.06+blk*0.32,ph=hash(i,j)*10;
+      const i=Math.round((x+R)/cw),blk=hash(Math.floor(i/5),Math.floor(j/3)),sp=0.1+blk*0.55,ph=hash(i,j)*10;
       const c=t*sp+ph+blk*3,k=Math.floor(c),bit=(k+Math.floor(hash(i,k)*2))&1,prev=(k-1+Math.floor(hash(i,k-1)*2))&1;
-      const since=(c-k)/sp,base=0.03+hash(j,i)*0.08,glow=since<1.6?Math.pow(1-since/1.6,2)*0.14:0,mix=REDUCED?1:smooth(since/0.9);
+      const since=(c-k)/sp,base=0.03+hash(j,i)*0.08,glow=since<1.0?Math.pow(1-since/1.0,2)*0.14:0,mix=REDUCED?1:smooth(since/0.5);
       if(mix<1&&prev!==bit){ctx.fillStyle=`rgba(217,197,143,${base*(1-mix)})`;ctx.fillText(prev,x,y+drift)}
       ctx.fillStyle=`rgba(${bit?"217,197,143":"239,227,189"},${(base+glow)*(prev!==bit?mix:1)})`;ctx.fillText(bit,x,y+drift);
     }
