@@ -1,0 +1,83 @@
+/* Wiki pages: same palette, fonts and grain as the landing page (css/style.css is loaded first). */
+body.wiki-page{min-height:100vh}
+.wiki-page nav .bgfill{opacity:1}
+.wiki-page .vignette{opacity:.85}
+.wiki{position:relative;z-index:1;display:grid;grid-template-columns:260px minmax(0,1fr);gap:72px;
+  width:min(1240px,calc(100% - 112px));margin:0 auto;padding:140px 0 120px}
+.wiki aside{position:sticky;top:108px;align-self:start;max-height:calc(100vh - 140px);overflow:auto;padding-right:8px}
+.wiki aside h5{font-family:var(--pix);font-weight:400;font-size:14px;letter-spacing:.12em;color:var(--gold-d);
+  margin:28px 0 10px}
+.wiki aside h5:first-child{margin-top:0}
+.wiki aside ul{list-style:none}
+.wiki aside li a{display:block;padding:7px 0 7px 16px;border-left:1px solid var(--line);color:var(--muted);
+  font-size:15px;transition:color .6s ease,border-color .6s ease}
+.wiki aside li a:hover{color:var(--cream)}
+.wiki aside li a[aria-current=page]{color:var(--cream);border-left:2px solid var(--gold);padding-left:15px}
+.wiki .toggle{display:none}
+.doc{max-width:780px;color:var(--muted);font-size:16.5px;line-height:1.75}
+.doc .kicker{margin-bottom:18px}
+.doc h1{font-family:var(--serif);font-weight:700;color:var(--cream);font-size:58px;line-height:1.05;letter-spacing:.01em;margin:0 0 22px;text-shadow:none;text-align:left}
+.doc h1 em{font-weight:400}
+.doc h1 em,.doc h2 em{font-style:italic;color:var(--gold)}
+.doc .lead{font-size:19px;color:var(--cream);opacity:.86;margin-bottom:40px}
+.doc h2{font-family:var(--serif);font-weight:700;color:var(--cream);font-size:32px;line-height:1.2;margin:64px 0 18px;
+  padding-top:28px;border-top:1px solid var(--line);scroll-margin-top:110px}
+.doc h3{font-family:var(--serif);font-weight:700;color:var(--cream);font-size:22px;margin:38px 0 12px;scroll-margin-top:110px}
+.doc p{margin:0 0 16px}
+.doc a{color:var(--gold);text-decoration:underline;text-decoration-color:rgba(217,197,143,.35);text-underline-offset:3px}
+.doc a:hover{text-decoration-color:var(--gold)}
+.doc strong{color:var(--cream);font-weight:600}
+.doc ul,.doc ol{margin:0 0 18px 22px}
+.doc li{margin:6px 0}
+.doc li::marker{color:var(--gold-d)}
+.doc code{font-family:var(--pix);font-size:15px;color:var(--gold);background:rgba(217,197,143,.07);padding:1px 6px;
+  border:1px solid rgba(217,197,143,.12)}
+.doc pre{position:relative;margin:18px 0 26px;background:rgba(15,13,10,.92);border:1px solid var(--line);
+  padding:20px 22px;overflow:auto;font-family:var(--pix);font-size:15px;line-height:1.6;color:var(--cream)}
+.doc pre code{background:none;border:0;padding:0;color:inherit;font-size:inherit}
+.doc pre .d{color:var(--dim)}.doc pre .g{color:var(--gold)}.doc pre .c{color:var(--cream)}.doc pre .r{color:#d98f7a}
+.doc pre button{position:absolute;top:8px;right:8px;font-family:var(--pix);font-size:13px;color:var(--muted);
+  background:rgba(26,23,18,.9);border:1px solid var(--line);padding:3px 9px;cursor:pointer;opacity:0;transition:opacity .5s ease,color .5s ease}
+.doc pre:hover button,.doc pre button:focus-visible{opacity:1}
+.doc pre button:hover{color:var(--cream)}
+.doc table{width:100%;border-collapse:collapse;margin:16px 0 28px;font-size:15px}
+.doc th{font-family:var(--pix);font-weight:400;font-size:14px;letter-spacing:.06em;color:var(--gold-d);text-align:left;
+  padding:10px 14px 10px 0;border-bottom:1px solid var(--line)}
+.doc td{padding:11px 14px 11px 0;border-bottom:1px solid rgba(217,197,143,.08);vertical-align:top}
+.doc td:first-child{white-space:nowrap}
+.doc .table{overflow-x:auto}
+.doc .note{border-left:2px solid var(--gold);background:var(--card);padding:16px 20px;margin:20px 0 26px;color:var(--cream)}
+.doc .note.warn{border-left-color:#d98f7a}
+.doc .note b{font-family:var(--pix);font-weight:400;color:var(--gold);letter-spacing:.06em;display:block;margin-bottom:4px}
+.doc .note.warn b{color:#d98f7a}
+.doc .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:24px 0 8px}
+.doc .cards a{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);padding:20px 22px;
+  transition:border-color .6s ease,background-color .6s ease}
+.doc .cards a:hover{border-color:rgba(217,197,143,.5);background:rgba(36,31,23,.9)}
+.doc .cards a span{display:block;font-family:var(--pix);font-size:13px;letter-spacing:.1em;color:var(--gold-d)}
+.doc .cards a strong{display:block;font-family:var(--serif);font-size:21px;margin:6px 0 4px}
+.doc .cards a em{font-style:normal;color:var(--muted);font-size:15px}
+.doc .pager{display:flex;justify-content:space-between;gap:16px;margin-top:72px;padding-top:28px;border-top:1px solid var(--line)}
+.doc .pager a{text-decoration:none;font-family:var(--pix);font-size:16px;color:var(--muted);transition:color .6s ease}
+.doc .pager a:hover{color:var(--cream)}
+.doc .pager a.next{margin-left:auto;text-align:right}
+.wiki-foot{position:relative;z-index:1;border-top:1px solid var(--line);padding:28px 56px;display:flex;justify-content:space-between;
+  font-family:var(--pix);font-size:14px;color:var(--dim)}
+.wiki-foot a{color:var(--muted)}
+
+@media (max-width:1100px){
+  .wiki{grid-template-columns:220px minmax(0,1fr);gap:44px;width:calc(100% - 64px)}
+}
+@media (max-width:900px){
+  .wiki{display:block;width:calc(100% - 32px);padding-top:104px}
+  .wiki aside{position:static;max-height:none;margin-bottom:36px;border:1px solid var(--line);background:var(--card);padding:0}
+  .wiki .toggle{display:flex;width:100%;justify-content:space-between;align-items:center;font-family:var(--pix);font-size:15px;
+    color:var(--cream);background:none;border:0;padding:14px 16px;cursor:pointer}
+  .wiki aside .menu{display:none;padding:0 16px 16px}
+  .wiki aside.open .menu{display:block}
+  .doc h1{font-size:40px;letter-spacing:.01em;margin:0 0 18px}
+  .doc h2{font-size:26px}
+  .doc .cards{grid-template-columns:1fr}
+  .doc td:first-child{white-space:normal}
+  .wiki-foot{flex-direction:column;gap:8px;padding:24px 16px;text-align:center}
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../assets/logo-128.png">
+<title>Yetkiler · Themis Wiki</title>
+<meta name="description" content="Themis yetki düğümleri: komut yetkileri, kalıcı ceza, rütbe sınırları, muafiyetler, bildirimler ve üst yetkiler.">
+<meta name="theme-color" content="#13110e">
+<link rel="preload" href="../fonts/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/unifont.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/wiki.css">
+</head>
+<body class="wiki-page" data-page="yetkiler">
+<canvas id="bits" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+
+<nav>
+  <div class="bgfill"></div>
+  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
+  <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
+</nav>
+
+<div class="wiki">
+<aside id="side" aria-label="Wiki sayfaları"></aside>
+<main class="doc" id="content">
+<div class="kicker">// KULLANIM</div>
+<h1>Yetkiler</h1>
+<p class="lead">Yetkili ekibine <code>themis.staff</code>, yöneticilere <code>themis.*</code> vermek çoğu sunucu için yeterlidir.</p>
+
+<h2>Üst yetkiler</h2>
+<div class="table"><table>
+<tr><th>YETKİ</th><th>VERDİKLERİ</th></tr>
+<tr><td><code>themis.staff</code></td><td>Yönetim dışındaki bütün komutlar, <code>themis.notify.silent</code>, <code>themis.notify.alts</code>, <code>themis.template.*</code>.</td></tr>
+<tr><td><code>themis.*</code></td><td><code>themis.staff</code> + <code>themis.command.admin</code>, kalıcı ceza yetkileri ve <code>themis.check.ip</code>.</td></tr>
+</table></div>
+<p>Muafiyetler (<code>themis.exempt.*</code>) hiçbir üst yetkiden ve joker karakterden gelmez; tek tek verilmelidir.</p>
+
+<h2>Komut yetkileri</h2>
+<p>Her komutun yetkisi <a href="komutlar.html">Komutlar</a> tablosunda. <code>/tempban</code> ve <code>/ban</code> aynı yetkiyi (<code>themis.command.ban</code>), <code>/tempmute</code> ve <code>/mute</code> aynı yetkiyi kullanır.</p>
+
+<h2>Diğer yetkiler</h2>
+<div class="table"><table>
+<tr><th>YETKİ</th><th>VARSAYILAN</th><th>NE İŞE YARAR</th></tr>
+<tr><td><code>themis.notify</code></td><td>herkes</td><td>Herkese açık ceza duyurularını görür.</td></tr>
+<tr><td><code>themis.notify.silent</code></td><td>op</td><td>Sessiz cezaları, notları ve yetkili bildirimlerini görür.</td></tr>
+<tr><td><code>themis.notify.alts</code></td><td>op</td><td>Yasaklı ya da susturulmuş bir oyuncunun alt hesabı girince uyarı alır.</td></tr>
+<tr><td><code>themis.ban.permanent</code></td><td>op</td><td>Süresiz ban verebilir.</td></tr>
+<tr><td><code>themis.mute.permanent</code></td><td>op</td><td>Süresiz susturma verebilir.</td></tr>
+<tr><td><code>themis.warn.permanent</code></td><td>op</td><td><code>/editcase</code> ile bir uyarıyı kalıcı yapabilir.</td></tr>
+<tr><td><code>themis.check.ip</code></td><td>op</td><td><code>/check</code> içinde IP'yi tam görür (yoksa <code>1.2.x.x</code> gibi maskelenir).</td></tr>
+<tr><td><code>themis.limit.&lt;grup&gt;</code></td><td>—</td><td>Oyuncuyu config.yml'deki o grubun süre sınırlarına bağlar.</td></tr>
+<tr><td><code>themis.limit.bypass</code></td><td>op</td><td>Süre sınırlarını yok sayar.</td></tr>
+<tr><td><code>themis.template.&lt;anahtar&gt;</code></td><td>—</td><td>O ceza şablonunu kullanabilir (şablonda başka bir yetki tanımlanabilir).</td></tr>
+<tr><td><code>themis.template.*</code></td><td>op</td><td>Bütün şablonları kullanabilir.</td></tr>
+<tr><td><code>themis.exempt.ban</code>, <code>.mute</code>, <code>.warn</code>, <code>.kick</code>, <code>.note</code></td><td>kimse</td><td>Çevrimiçiyken o türde ceza alamaz.</td></tr>
+</table></div>
+<p>Varsayılanlar Paper içindir. Proxy'lerde op kavramı yoktur; yetkileri proxy'deki yetki eklentinizle verin. Bkz. <a href="proxy.html#yetkiler">Velocity ve BungeeCord</a>.</p>
+
+<h2 id="sinirlar">Rütbe sınırları</h2>
+<p>Bir yetkilinin verebileceği en uzun süreyi grup başına sınırlayın:</p>
+<pre><code>limits:
+  helper:
+    mute: 2h
+    ban: 1d
+    warn: 30d
+  moderator:
+    mute: 7d
+    ban: 30d</code></pre>
+<ul>
+<li><code>themis.limit.helper</code> yetkisi olan biri en fazla 2 saat susturabilir; süresiz ceza da sınırı aşmış sayılır.</li>
+<li>Birden çok gruba üye olan için en cömert sınır geçerlidir. Grupta tanımlanmamış bir tür o grup için sınırsızdır.</li>
+<li>Konsol, API ve <code>themis.limit.bypass</code> sahipleri sınırsızdır.</li>
+</ul>
+<div class="pager" id="pager"></div>
+</main>
+</div>
+
+<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<script src="../js/wiki.js"></script>
+</body>
+</html>

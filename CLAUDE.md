@@ -6,7 +6,8 @@
    ╩ ╩ ╩╚═╝╩ ╩╩╚═╝   — cemo
 ```
 
-Themis moderasyon eklentisinin (kod: `plisquante/ThemisCode`) tanıtım sitesi. Tasarım ve altyapı
+Themis moderasyon eklentisinin (kod: `plisquante/ThemisCode`, özel repo) tanıtım sitesi ve wikisi. Eklenti ücretlidir;
+kullanıcı dokümantasyonu yalnızca burada, `wiki/` altında tutulur. Siteden kod reposuna bağlantı verilmez. Tasarım ve altyapı
 **cemo**'nun (Cem Ali) konseptidir ve birebir korunur. Metinler eklentinin gerçek özelliklerini anlatır.
 
 ## Kurallar
@@ -15,6 +16,8 @@ Themis moderasyon eklentisinin (kod: `plisquante/ThemisCode`) tanıtım sitesi. 
   1440px ve üstünde görünüm orijinalle birebir aynıdır; `css/style.css` sonundaki medya sorguları yalnızca dar ekranlar içindir.
 - cemo'nun sorduğu dört değişiklik (fil dişi zemin, para gibi düşen logo, obfuscate kod arka planı, köşeli font)
   sorulduğunda kullanıcı **hiçbirini istemedi**. Kullanıcı açıkça istemeden uygulama.
+- Animasyonlar yavaş ve yumuşaktır (kullanıcı isteği): zamana bağlı, in-out eğriler, açılış ~3.6 sn, bölümler görününce
+  bir kez 1.4 sn'de belirir, hover yumuşak geçer, sayaç 2.6 sn. Hızlandırma ya da kaydırmaya bağlı ani geçiş ekleme.
 - Sitedeki her iddia eklentide gerçekten var olmalı. Rakamlar (20 komut, 17 REST uç noktası, 5 veritabanı, 20$)
   eklentiden sayılmıştır; eklenti değişirse burayı da güncelle. Uydurma istatistik yazma.
 - Kullanıcı Türkçe konuşur. Site Türkçedir.
@@ -23,6 +26,10 @@ Themis moderasyon eklentisinin (kod: `plisquante/ThemisCode`) tanıtım sitesi. 
 
 ```
 index.html          sayfa iskeleti ve metinler
+404.html            GitHub Pages hata sayfası (yollar /themis/ ile başlar; özel alan adına geçilirse güncelle)
+wiki/*.html         wiki sayfaları (Türkçe); kenar menüsü ve önceki/sonraki bağlantıları js/wiki.js PAGES listesinden
+css/wiki.css        wiki düzeni (renkler ve fontlar style.css'ten)
+js/wiki.js          wiki menüsü, kopyala düğmeleri, sakin 0/1 arka planı
 css/style.css       tüm stiller, renk değişkenleri, @font-face ve dar ekran kuralları
 js/main.js          arka plan canvas'ı, kartlar (CARDS), terminal (TERM), tüm animasyonlar
 assets/logo.png     logo (900×900, yuvarlak, şeffaf); logo-128.png menü, favicon ve footer için
@@ -42,6 +49,13 @@ GitHub Pages yayını `.github/workflows/deploy.yml` ile `main` dalına her push
 5. **Nasıl çalışır** (`#how`): logodaki üç sembol, bir cezanın üç adımı (Göz Bağı: kayıt, Terazi: sicilin tartılması, Kılıç: yaptırım). Sağdaki terminal `TERM` dizisinden yazılır.
 6. **SSS** (`#faq`): aynı adım kutularıyla altı soru.
 7. **Footer**: "Adalet kodda yazılıdır.", butonlar ve alt satır.
+
+## Wiki
+
+17 sayfa: index, kurulum, proxy, sss, komutlar, yetkiler, sablonlar, aktarma, yapilandirma, depolama, mesajlar,
+rest-api, webhooklar, java-api, placeholderapi, surumler, lisans. Yeni sayfa: `wiki/<anahtar>.html` oluştur (mevcut
+bir sayfayı kopyala, `data-page` değerini değiştir) ve `js/wiki.js` içindeki `PAGES` listesine ekle; smoke test ikisinin
+eşleştiğini kontrol eder. Eklentide komut, ayar, yetki, mesaj ya da REST değişirse ilgili wiki sayfasını da güncelle.
 
 Arka plan: tam ekran `<canvas id="bits">`. `drawBits(t, scrollY)` −28° açılı ızgarada 0/1 çizer; bitler kümeler halinde değişir, yeni değişen bit kısa bir an parlar.
 
@@ -119,8 +133,8 @@ Tarz: **neoklasik konulu, sınırlı paletli pixel art madalyon** (logo), **Dark
 
 ## Bağlantılar
 
-- Satın alma bağlantısı şimdilik `https://builtbybit.com/` (yer tutucu). Mağaza sayfası açılınca `index.html` içindeki üç `builtbybit` bağlantısını güncelle.
-- Dokümantasyon: `https://github.com/plisquante/ThemisCode#readme`.
+- Satın alma bağlantısı şimdilik `https://builtbybit.com/` (yer tutucu). Mağaza sayfası açılınca `index.html` ve `wiki/*.html` içindeki bütün `builtbybit` bağlantılarını güncelle.
+- Dokümantasyon: `wiki/` (yayında `https://plisquante.github.io/themis/wiki/`). Eklentinin config.yml ve mesajları bu adrese bağlanır.
 - Değişikliklerden sonra `node tests/smoke.cjs` çalıştır ve sayfayı tarayıcıda 390px ve 1440px genişlikte kontrol et.
 
 ## Skill'ler ve araçlar

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../assets/logo-128.png">
+<title>Mesajlar ve diller · Themis Wiki</title>
+<meta name="description" content="Themis mesaj dosyaları: diller, MiniMessage biçimi, renk etiketleri ve ceza yer tutucuları.">
+<meta name="theme-color" content="#13110e">
+<link rel="preload" href="../fonts/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/unifont.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/wiki.css">
+</head>
+<body class="wiki-page" data-page="mesajlar">
+<canvas id="bits" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+
+<nav>
+  <div class="bgfill"></div>
+  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
+  <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
+</nav>
+
+<div class="wiki">
+<aside id="side" aria-label="Wiki sayfaları"></aside>
+<main class="doc" id="content">
+<div class="kicker">// AYARLAR</div>
+<h1>Mesajlar ve <em>diller</em></h1>
+<p class="lead">Oyuncunun ve yetkilinin gördüğü her satır <code>messages_tr.yml</code> ya da <code>messages_en.yml</code> içindedir. Dil config.yml'deki <code>language</code> ile seçilir.</p>
+
+<h2>Biçim</h2>
+<p>Mesajlar <a href="https://docs.advntr.dev/minimessage/format.html">MiniMessage</a> biçimindedir: renk, kalın yazı, üzerine gelince açılan bilgi ve tıklama desteklenir.</p>
+<pre><code>prefix: "&lt;accent&gt;&lt;bold&gt;⚖&lt;/bold&gt;&lt;/accent&gt; &lt;muted&gt;»&lt;/muted&gt; "
+player:
+  muted: "&lt;prefix&gt;&lt;bad&gt;Susturuldun&lt;/bad&gt; &lt;muted&gt;(&lt;remaining&gt; kaldı)&lt;/muted&gt; &lt;text&gt;&lt;reason&gt;"</code></pre>
+<p>Dosyanın başındaki <code>colors</code> bölümü altı renk etiketini tanımlar: <code>&lt;accent&gt;</code>, <code>&lt;text&gt;</code>, <code>&lt;muted&gt;</code>, <code>&lt;gold&gt;</code>, <code>&lt;good&gt;</code>, <code>&lt;bad&gt;</code>. Rengi bir kez burada değiştirmek bütün mesajları değiştirir. <code>&lt;prefix&gt;</code> ve <code>&lt;appeal_url&gt;</code> her mesajda kullanılabilir.</p>
+
+<h2>Ceza yer tutucuları</h2>
+<p>Bir cezayı anlatan her mesajda (ban ekranı, duyurular, sicil satırları, /case) şunlar kullanılabilir:</p>
+<div class="table"><table>
+<tr><th>YER TUTUCU</th><th>DEĞER</th></tr>
+<tr><td><code>&lt;code&gt;</code></td><td>Dosya kodu, ör. 7KQ2MX</td></tr>
+<tr><td><code>&lt;target&gt;</code> · <code>&lt;issuer&gt;</code></td><td>Cezalı ve cezayı veren</td></tr>
+<tr><td><code>&lt;reason&gt;</code> · <code>&lt;reason_short&gt;</code></td><td>Sebep; kısa hali 32 karakter</td></tr>
+<tr><td><code>&lt;type&gt;</code></td><td>Tür adı (mesaj dosyasındaki <code>types</code>)</td></tr>
+<tr><td><code>&lt;duration&gt;</code> · <code>&lt;remaining&gt;</code></td><td>Toplam süre ve kalan süre</td></tr>
+<tr><td><code>&lt;expires&gt;</code> · <code>&lt;created&gt;</code> · <code>&lt;created_short&gt;</code></td><td>Bitiş ve veriliş tarihleri</td></tr>
+<tr><td><code>&lt;server&gt;</code></td><td>Cezanın verildiği sunucu</td></tr>
+<tr><td><code>&lt;status&gt;</code> · <code>&lt;status_icon&gt;</code></td><td>Etkin, süresi doldu ya da kaldırıldı</td></tr>
+<tr><td><code>&lt;revoker&gt;</code> · <code>&lt;revoke_reason&gt;</code></td><td>Kaldıran ve kaldırma sebebi</td></tr>
+</table></div>
+
+<h2>Yeni bir dil</h2>
+<ol>
+<li><code>messages_en.yml</code> dosyasını <code>messages_de.yml</code> gibi bir adla kopyalayın.</li>
+<li>Satırları çevirin; anahtarları ve yer tutucuları değiştirmeyin.</li>
+<li>config.yml'de <code>language: de</code> yazıp <code>/themis reload</code> çalıştırın.</li>
+</ol>
+<p>Dosyada eksik kalan bir anahtar İngilizce metinle gösterilir; güncellemelerde gelen yeni satırlar böylece boş kalmaz.</p>
+<div class="pager" id="pager"></div>
+</main>
+</div>
+
+<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<script src="../js/wiki.js"></script>
+</body>
+</html>

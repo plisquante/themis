@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../assets/logo-128.png">
+<title>Veritabanı ve ağ senkronu · Themis Wiki</title>
+<meta name="description" content="Themis veritabanı seçenekleri (H2, SQLite, MySQL, MariaDB, PostgreSQL) ve sunucular arası SQL/Redis senkronu.">
+<meta name="theme-color" content="#13110e">
+<link rel="preload" href="../fonts/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/unifont.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/wiki.css">
+</head>
+<body class="wiki-page" data-page="depolama">
+<canvas id="bits" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+
+<nav>
+  <div class="bgfill"></div>
+  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
+  <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
+</nav>
+
+<div class="wiki">
+<aside id="side" aria-label="Wiki sayfaları"></aside>
+<main class="doc" id="content">
+<div class="kicker">// AYARLAR</div>
+<h1>Veritabanı ve <em>ağ senkronu</em></h1>
+<p class="lead">Themis beş veritabanıyla çalışır. Tek sunucu için kurulum gerekmez; bir ağda bütün sunucular tek sicili paylaşır.</p>
+
+<h2>Hangi veritabanı</h2>
+<div class="table"><table>
+<tr><th>TÜR</th><th>NE ZAMAN</th><th>DOSYA / SUNUCU</th></tr>
+<tr><td><code>H2</code></td><td>Tek sunucu ya da tek proxy. Varsayılan.</td><td><code>plugins/Themis/themis.mv.db</code></td></tr>
+<tr><td><code>SQLITE</code></td><td>Tek sunucu, tek dosya isteyenler.</td><td><code>plugins/Themis/themis.db</code></td></tr>
+<tr><td><code>MYSQL</code> / <code>MARIADB</code></td><td>Birden çok sunucu ya da proxy.</td><td>Harici sunucu</td></tr>
+<tr><td><code>POSTGRESQL</code></td><td>Birden çok sunucu ya da proxy.</td><td>Harici sunucu</td></tr>
+</table></div>
+<p>Tablolar ilk açılışta oluşur ve sürüm güncellemelerinde kendiliğinden güncellenir. Veritabanı kullanıcısının tablo oluşturma yetkisi olmalıdır.</p>
+
+<h2>Ağ senkronu</h2>
+<p>Ortak veritabanı sicili paylaştırır; senkron ise bir sunucuda olan şeyin diğerlerinde anında etki etmesini sağlar: başka sunucudaki oyuncunun atılması, susturmanın her yerde başlaması, duyurular ve API olayları.</p>
+<div class="table"><table>
+<tr><th>MOD</th><th>GECİKME</th><th>GEREKEN</th></tr>
+<tr><td><code>NONE</code></td><td>—</td><td>Tek sunucu.</td></tr>
+<tr><td><code>SQL</code></td><td><code>poll-interval</code> kadar (varsayılan 2 sn)</td><td>Yalnızca ortak veritabanı.</td></tr>
+<tr><td><code>REDIS</code></td><td>Anında</td><td>Ortak veritabanı + Redis.</td></tr>
+</table></div>
+<div class="note"><b>NOT</b>H2 ve SQLite dosya tabanlıdır, sunucular arasında paylaşılamaz. Bu türlerle <code>sync.mode</code> açılırsa Themis uyarı verir ve senkronu kapatır.</div>
+
+<h2>Örnek: üç sunuculu ağ</h2>
+<pre><code><span class="d"># her sunucuda aynı, yalnızca server-name farklı</span>
+server-name: "skyblock"
+storage:
+  type: MARIADB
+  host: 10.0.0.5
+  port: 3306
+  database: themis
+  username: themis
+  password: "..."
+  pool-size: 8
+sync:
+  mode: REDIS
+  redis-uri: "redis://10.0.0.5:6379"</code></pre>
+<p>Proxy kullanıyorsanız Themis'i yalnızca proxy'ye kurmak çoğu zaman daha basittir; bkz. <a href="proxy.html">Velocity ve BungeeCord</a>.</p>
+<div class="pager" id="pager"></div>
+</main>
+</div>
+
+<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<script src="../js/wiki.js"></script>
+</body>
+</html>
