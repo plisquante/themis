@@ -72,8 +72,12 @@ const check = (name, ok, detail = '') => { results.push(ok); console.log(`${ok ?
     await p.waitForTimeout(5000);
     const stats = await p.evaluate(() => [...document.querySelectorAll('.stat b')].map((b) => [b.dataset.to, b.firstChild.textContent]));
     check('stats count up to their targets', stats.every(([to, v]) => Number(v) === Number(to)), JSON.stringify(stats));
-    const numberFonts = await p.evaluate(() => [...document.querySelectorAll('.stat b .n')].map((n) => [getComputedStyle(n).fontSize, getComputedStyle(n).fontFamily]));
-    check('stat numbers use the large serif, not the label font', numberFonts.length === 3 && numberFonts.every(([size, fam]) => parseFloat(size) >= 40 && /Pagella/.test(fam)), JSON.stringify(numberFonts));
+    const numberFonts = await p.evaluate(() => [...document.querySelectorAll('.stat b .n')].map((n) => {
+      const s = getComputedStyle(n);
+      return [s.fontSize, s.fontFamily, s.fontStyle, document.fonts.check(`italic 400 ${s.fontSize} "TeX Gyre Pagella"`)];
+    }));
+    check('stat numbers use the large italic serif, not the label font', numberFonts.length === 3
+      && numberFonts.every(([size, fam, style, loaded]) => parseFloat(size) >= 40 && /Pagella/.test(fam) && style === 'italic' && loaded), JSON.stringify(numberFonts));
     check('no price on the page', !/\d\s*\$|\$\s*\d|TEK SEFERLİK/.test(await p.evaluate(() => document.body.innerText)));
     await p.locator('.term').scrollIntoViewIfNeeded();
     await p.waitForTimeout(11000);
@@ -92,6 +96,19 @@ const check = (name, ok, detail = '') => { results.push(ok); console.log(`${ok ?
     await p.waitForTimeout(300);
     check('nav marks SSS while reading the FAQ', await p.evaluate(() => document.querySelectorAll('#navlinks li')[4].classList.contains('on')));
     await p.close();
+
+    console.log('Cache');
+    // Pages ask for css/js with ?v=N so browsers fetch new styles at once instead of mixing
+    // a new page with a stylesheet cached for ten minutes. Every page must ask for the same N.
+    const pages = ['index.html', '404.html', ...fs.readdirSync(path.join(ROOT, 'wiki')).filter((f) => f.endsWith('.html')).map((f) => 'wiki/' + f)];
+    const versions = new Set(), unversioned = [];
+    for (const f of pages) {
+      const html = fs.readFileSync(path.join(ROOT, f), 'utf8');
+      for (const m of html.matchAll(/(?:href|src)="([^"]*\/(?:css|js)\/[^"]+\.(?:css|js)|(?:css|js)\/[^"]+\.(?:css|js))(\?v=[^"]*)?"/g)) {
+        if (!m[2]) unversioned.push(`${f}: ${m[1]}`); else versions.add(m[2]);
+      }
+    }
+    check('every stylesheet and script link carries the same ?v= version', unversioned.length === 0 && versions.size === 1, [...unversioned, ...versions].join(', '));
 
     console.log('Wiki');
     const index = fs.readFileSync(path.join(ROOT, 'js/wiki.js'), 'utf8');

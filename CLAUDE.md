@@ -39,6 +39,9 @@ tests/smoke.cjs     tarayıcı testi: `node tests/smoke.cjs` (Playwright gerekir
 ```
 
 Build adımı yok. `index.html` herhangi bir statik sunucuyla yayınlanır (ör. `python3 -m http.server`).
+**Önbellek:** GitHub Pages CSS/JS'yi 10 dakika önbellekte tutar; yeni sayfa eski stil dosyasıyla açılıp bozuk görünebilir.
+Bu yüzden her sayfa `css/*.css?v=N` ve `js/*.js?v=N` ister. CSS ya da JS değişince `index.html`, `404.html` ve
+`wiki/*.html` içindeki `?v=` değerini birlikte artır; smoke test hepsinin aynı olduğunu kontrol eder.
 GitHub Pages yayını `.github/workflows/deploy.yml` ile `main` dalına her push'ta yapılır.
 
 ## Sayfa yapısı
@@ -47,8 +50,8 @@ GitHub Pages yayını `.github/workflows/deploy.yml` ile `main` dalına her push
 2. **Hero** (`#hero`): logo (dönen kesikli halka ve nabız gibi atan glow), `THEMIS`, ayraç, "MODERASYONUN TANRIÇASI" ve iki buton.
 3. **Özellikler** (`#features`): "Hiçbir suç terazide hafif gelmez." ve 3×2 kart. Kartlar `main.js` içindeki `CARDS` dizisinden üretilir; ikonlar `ICONS` içindeki 11×11 piksel desenlerinden çizilir.
 4. **İstatistik şeridi** (`#stats`): üç kutu (komut, REST uç noktası, veritabanı); sayılar görününce sıfırdan sayar (`data-to`).
-   Fiyat kutusu kullanıcının isteğiyle kaldırıldı; sitede fiyat gösterilmez. Sayı `.stat b .n` içindedir, etiket `.stat > span`
-   (alt seçici `.stat span` sayıya da uyup fontunu bozmuştu).
+   Fiyat kutusu kullanıcının isteğiyle kaldırıldı; sitede fiyat gösterilmez. Sayı `<em class="n">` içindedir ve başlıklardaki
+   gibi Pagella italik yazılır (kullanıcı istedi); etiket `.stat > span` (alt seçici `.stat span` sayıya da uyup fontunu bozmuştu).
 5. **Nasıl çalışır** (`#how`): logodaki üç sembol, bir cezanın üç adımı (Göz Bağı: kayıt, Terazi: sicilin tartılması, Kılıç: yaptırım). Sağdaki terminal `TERM` dizisinden yazılır.
 6. **SSS** (`#faq`): aynı adım kutularıyla sekiz soru (iki sütun; çift sayıda tut).
 7. **Footer**: "Adalet kodda yazılıdır.", butonlar ve alt satır. Alt satırda **yalnızca** `© 2026 THEMIS` durur; ikili rakamlar
