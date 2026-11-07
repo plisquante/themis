@@ -49,6 +49,14 @@
 <p>Evet. config.yml'deki <code>limits</code> ile grup başına en uzun süreyi belirleyin ve yetkiliye <code>themis.limit.&lt;grup&gt;</code> verin. Süresiz ceza için ayrıca <code>themis.ban.permanent</code> ya da <code>themis.mute.permanent</code> gerekir. Bkz. <a href="yetkiler.html#sinirlar">rütbe sınırları</a>.</p>
 <h3>Bir yetkili kendini ya da yöneticiyi cezalandırabilir mi?</h3>
 <p><code>prevent-self-punish: true</code> (varsayılan) kendini cezalandırmayı engeller. Yöneticilere <code>themis.exempt.ban</code>, <code>themis.exempt.mute</code> gibi muafiyetler verirseniz çevrimiçiyken o türde ceza alamazlar.</p>
+<h3>Ceza verirken kanıt nasıl saklanır?</h3>
+<p>Kendiliğinden. Ceza verildiği an oyuncunun son mesajları ve fısıltıları dosyaya eklenir; <code>/case #kod evidence</code>, REST API ve webhook'lar gösterir. Bkz. <a href="koruma.html#kanit">Kanıt ve koruma</a>.</p>
+<h3>Spam botu ya da trol susturulduğunu anlamasın istiyorum.</h3>
+<p><code>/mute Steve 1d -shadow</code>: oyuncu yazmaya devam eder ve kendi mesajlarını görür, başka kimse görmez. Bkz. <a href="koruma.html#golge">gölge susturma</a>.</p>
+<h3>Bir yetkilinin hesabı çalınırsa?</h3>
+<p>Rütbe başına saatlik ceza sınırı (<code>per-hour</code>) zararı sınırlar, <code>/themis rollback &lt;yetkili&gt; &lt;süre&gt; -confirm</code> verdiği bütün etkin cezaları tek komutla geri alır.</p>
+<h3>Yasaklı oyuncu ikinci hesapla geri gelirse?</h3>
+<p>Varsayılan olarak yetkililer uyarılır. <code>evasion.action: BLOCK</code> girişi reddeder, <code>BAN</code> yeni hesabı da yasaklar. Bkz. <a href="koruma.html#kacak">ban kaçağı koruması</a>.</p>
 <h3>Mesajları değiştirebilir miyim?</h3>
 <p>Her satır <code>messages_tr.yml</code> ya da <code>messages_en.yml</code> içinde, hover ve tıklama destekli MiniMessage biçimindedir. Renkler dosyanın başında tek yerden ayarlanır. Bkz. <a href="mesajlar.html">Mesajlar ve diller</a>.</p>
 <h3>Komutlar başka bir eklentiyle çakışırsa?</h3>

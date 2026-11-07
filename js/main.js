@@ -9,10 +9,10 @@ bolt:["......XXX..",".....XXX...","....XXX....","...XXX.....","..XXXXXXX..","...
 function svg(name){let r="";ICONS[name].forEach((row,y)=>[...row].forEach((c,x)=>{if(c==="X")r+=`<rect x="${x}" y="${y}" width="1" height="1"/>`}));
   return `<svg viewBox="-.5 -.5 12 12" fill="#d9c58f">${r}</svg>`}
 const CARDS=[
- ["shield","DOSYA KODU","Kayda Geçmeyen Ceza Yok","Her cezanın #7KQ2MX gibi kısa bir dosya kodu vardır. Sebep, süre, veren ve kaldıran kaydedilir; itiraz, /case ve API aynı kodu kullanır.","kod","6 karakter"],
+ ["shield","DOSYA KODU","Kayda Geçmeyen Ceza Yok","Her cezanın #7KQ2MX gibi bir dosya kodu vardır ve ceza anındaki sohbet kanıt olarak kendiliğinden eklenir. İtiraz, /case ve API aynı kodu kullanır.","kanıt","otomatik"],
  ["chip","AĞ SENKRONU","Her Sunucuda Tek Sicil","Themis'i yalnızca Velocity ya da BungeeCord proxy'sine kurun ya da her Paper sunucusunu aynı veritabanına bağlayın. Ban, mute ve kick her sunucuda anında geçerli olur.","platform","paper · velocity · bungee"],
- ["eye","KAÇAK HESAP","Alt Hesap Tespiti","IP geçmişi ve bağlı hesaplar takip edilir. Yasaklı bir oyuncunun ikinci hesabı girdiği an yetkililere tıklanabilir bir uyarı düşer.","uyarı","girişte"],
- ["lock","RÜTBE SINIRI","Yetkisini Aşan Olmaz","Helper en fazla iki saat susturur, moderatör otuz gün yasaklar. Kalıcı ceza ayrı bir yetkidir; sınırlar config.yml'de rütbe başına ayarlanır.","helper","≤ 2 saat"],
+ ["eye","KAÇAK HESAP","Alt Hesap Tespiti","IP geçmişi ve bağlı hesaplar takip edilir. Yasaklı bir oyuncunun ikinci hesabı girdiği an yetkililer uyarılır; isterseniz giriş engellenir.","girişte","uyar · engelle"],
+ ["lock","RÜTBE SINIRI","Yetkisini Aşan Olmaz","Helper en fazla iki saat susturur ve saatte yirmi ceza verebilir. Çalınan bir yetkili hesabının verdiği cezalar tek komutla geri alınır.","helper","≤ 2 saat · 20/saat"],
  ["scales","CEZA MERDİVENİ","Aynı Suça Aynı Ceza","/punish Steve spam yazın; Themis oyuncunun siciline bakar ve şablondaki sıradaki basamağı uygular. Eski suçlar belirlediğiniz süre sonra unutulur.","spam şablonu","uyarı → ban"],
  ["bolt","GELİŞTİRİCİ API","Tamamen Açık API","MIT lisanslı Java API'si, iptal edilebilir olaylar, yetki kapsamlı anahtarlarla REST API, canlı olay akışı ve HMAC imzalı webhook'lar.","rest api","17 uç nokta"]];
 document.getElementById("grid").innerHTML=CARDS.map((c,i)=>`<div class="card reveal"><div class="sheen"></div>
@@ -30,6 +30,7 @@ const TERM=[
  ['<span class="g">[terazi]</span>  Steve: spam şablonunda 2 önceki suç',.6],
  ['<span class="g">[terazi]</span>  basamak 3/5 → susturma, 2 saat',.45],
  ['<span class="r">[kılıç]</span>   Steve <span class="r">SUSTURULDU</span> · dosya <span class="c">#Q4TW9K</span>',.55],
+ ['<span class="g">[kanıt]</span>   son 6 mesaj dosyaya eklendi',.4],
  ['<span class="g">[webhook]</span> discord-log ← punishment.issued <span class="g">204</span>',.45],
  ['<span class="g">[senkron]</span> hub, skyblock güncellendi',.4],
  ['<span class="g">[themis]</span>  adalet yerini buldu.',.5]];

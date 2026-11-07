@@ -74,7 +74,8 @@
 <tr><td><code>prevent-self-punish</code></td><td><code>true</code></td><td>Yetkilinin kendini cezalandırmasını engeller.</td></tr>
 <tr><td><code>default-reasons</code></td><td><code>…</code></td><td>Sebep yazılmazsa tür başına kullanılan sebep.</td></tr>
 <tr><td><code>muted-blocked-commands</code></td><td><code>[msg, tell, w, …]</code></td><td>Susturulmuş oyuncunun kullanamayacağı komutlar.</td></tr>
-<tr><td><code>appeal-url</code></td><td><code>https://discord.gg/…</code></td><td>Ban ekranında ve susturma mesajında <code>&lt;appeal_url&gt;</code> olarak görünür.</td></tr>
+<tr><td><code>appeal-url</code></td><td><code>https://discord.gg/…</code></td><td>Ban ekranında ve susturma mesajında <code>&lt;appeal_url&gt;</code> olarak görünür. <code>{code}</code> dosya koduyla değişir.</td></tr>
+<tr><td><code>shadow-staff-echo</code></td><td><code>true</code></td><td>Gölge susturulmuş oyuncuların yazdıkları <code>themis.notify.silent</code> sahiplerine gösterilsin mi.</td></tr>
 </table></div>
 
 <h2>broadcast</h2>
@@ -85,13 +86,34 @@
 </table></div>
 
 <h2>limits ve templates</h2>
-<p>Rütbe sınırları <a href="yetkiler.html#sinirlar">Yetkiler</a>, şablonlar <a href="sablonlar.html">Ceza merdivenleri</a> sayfasında.</p>
+<p>Rütbe sınırları (süre ve <code>per-hour</code>) <a href="yetkiler.html#sinirlar">Yetkiler</a>, şablonlar <a href="sablonlar.html">Ceza merdivenleri</a> sayfasında.</p>
+
+<h2>evidence</h2>
+<div class="table"><table>
+<tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
+<tr><td><code>evidence.enabled</code></td><td><code>true</code></td><td>Ceza anındaki sohbeti cezaya ekler.</td></tr>
+<tr><td><code>evidence.lines</code></td><td><code>15</code></td><td>Oyuncu başına tutulan en fazla satır (0–100).</td></tr>
+<tr><td><code>evidence.max-age</code></td><td><code>10m</code></td><td>Cezadan en fazla bu kadar önceki satırlar kanıt sayılır.</td></tr>
+<tr><td><code>evidence.commands</code></td><td><code>[msg, tell, w, …]</code></td><td>Sohbet dışında kaydedilen komutlar (fısıltılar).</td></tr>
+<tr><td><code>evidence.types</code></td><td><code>[ban, mute, warn, kick]</code></td><td>Kanıt eklenen ceza türleri.</td></tr>
+</table></div>
+
+<h2>evasion</h2>
+<div class="table"><table>
+<tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
+<tr><td><code>evasion.action</code></td><td><code>ALERT</code></td><td><code>ALERT</code> yetkiliyi uyarır, <code>BLOCK</code> girişi reddeder, <code>BAN</code> şablonu uygular.</td></tr>
+<tr><td><code>evasion.window</code></td><td><code>30d</code></td><td>Yasaklı hesabın IP'yi bu süre içinde kullanmış olması gerekir.</td></tr>
+<tr><td><code>evasion.template</code></td><td><code>evasion</code></td><td><code>BAN</code> eyleminde uygulanan şablon.</td></tr>
+<tr><td><code>evasion.exempt</code></td><td><code>[]</code></td><td>Hiçbir zaman kaçak sayılmayacak oyuncu adları ya da UUID'ler.</td></tr>
+</table></div>
+<p>Ayrıntılar: <a href="koruma.html">Kanıt ve koruma</a>.</p>
 
 <h2>proxy</h2>
 <div class="table"><table>
 <tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
 <tr><td><code>proxy.velocity-signed-chat</code></td><td><code>KICK</code></td><td>Köprüsüz bir sunucuda susturulmuş oyuncunun imzalı mesajı: <code>KICK</code> bağlantıyı susturma ekranıyla keser, <code>ALLOW</code> geçirir ve yetkilileri uyarır.</td></tr>
 <tr><td><code>proxy.fallback-server</code></td><td><code>""</code></td><td>Sunucuya özel ban alan oyuncunun gönderileceği sunucu. Boşsa proxy'nin deneme sırası.</td></tr>
+<tr><td><code>proxy.shadow-echo-format</code></td><td><code>&lt;{player}&gt; {message}</code></td><td>Proxy gölge susturmada mesajı düşürdüğünde oyuncuya kendi mesajını bu biçimde geri gösterir.</td></tr>
 </table></div>
 
 <h2>rest-api</h2>

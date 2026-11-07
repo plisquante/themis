@@ -37,7 +37,11 @@
 <li>Yalnızca proxy'ye kurulum: giriş banları, sunucuya özel ban ve susturmalar, sohbet ve komut engelleme, kick, duyurular. Velocity için isteğe bağlı backend köprüsü.</li>
 <li>Ban, süreli ban, IP ban, susturma, süreli susturma, IP susturma, uyarı, kick ve yetkili notları; her ceza için dosya kodu.</li>
 <li>Kendiliğinden kademelenen ceza şablonları (<code>/punish</code>) ve unutma süresi.</li>
-<li>Rütbe başına süre sınırları, muafiyetler, sessiz cezalar.</li>
+<li>Rütbe başına süre sınırları ve saatlik ceza sınırı, <code>/themis rollback</code> ile toplu geri alma, muafiyetler, sessiz cezalar.</li>
+<li>Ceza anındaki sohbetin otomatik kanıt olarak saklanması (<code>/case … evidence</code>, REST, webhook'lar).</li>
+<li>Gölge susturma (<code>-shadow</code>).</li>
+<li>Ban kaçağı koruması: uyar, girişi engelle ya da yeni hesabı da yasakla.</li>
+<li>Girişte bildirim: aktif susturma ve çevrimdışıyken alınan uyarılar; dosya kodlu itiraz bağlantısı.</li>
 <li>H2, SQLite, MySQL, MariaDB ve PostgreSQL; SQL ya da Redis ile ağ senkronu.</li>
 <li>Alt hesap tespiti ve uyarısı, <code>/check</code>, <code>/alts</code>, <code>/history</code>, <code>/staffhistory</code>, <code>/case</code>, <code>/editcase</code>.</li>
 <li>17 uç noktalı REST API, canlı olay akışı, Discord ve HMAC imzalı webhook'lar.</li>

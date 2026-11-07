@@ -56,11 +56,12 @@ Optional&lt;ThemisApi&gt; maybe = Themis.find();  // isteğe bağlı entegrasyon
         .duration(Duration.ofMinutes(10))
         .reason("Chat flood")
         .meta("detector", "flood-v2")
+        .shadow(false)              // true: gölge susturma
         .build())
     .thenAccept(result -&gt; {
         if (result.success()) logger.info("Dosya #" + result.punishment().code());
     });</code></pre>
-<p>Sonucun durumu <code>SUCCESS</code>, <code>ALREADY_PUNISHED</code>, <code>EXEMPT</code>, <code>CANCELLED</code>, <code>DENIED</code> ya da <code>FAILED</code> olur. Diğer işlemler: <code>revoke</code>, <code>revokeActive</code>, <code>revokeActiveIp</code>, <code>edit</code>, <code>byId</code>, <code>byCode</code>, <code>query</code>, <code>count</code>, <code>activeBan</code>, <code>activeMute</code> ve veritabanına gitmeyen <code>cachedMute</code>. Oyuncu bilgisi için <code>players()</code>: <code>byUuid</code>, <code>byName</code>, <code>ipHistory</code>, <code>playersOnIp</code>, <code>alts</code>.</p>
+<p>Sonucun durumu <code>SUCCESS</code>, <code>ALREADY_PUNISHED</code>, <code>EXEMPT</code>, <code>CANCELLED</code>, <code>DENIED</code> ya da <code>FAILED</code> olur. Diğer işlemler: <code>revoke</code>, <code>revokeActive</code>, <code>revokeActiveIp</code>, <code>edit</code>, <code>byId</code>, <code>byCode</code>, <code>query</code>, <code>count</code>, <code>activeBan</code>, <code>activeMute</code>, veritabanına gitmeyen <code>cachedMute</code> ve cezanın kanıtını veren <code>evidence(id)</code>. Gölge susturmayı <code>punishment.shadow()</code> söyler. Oyuncu bilgisi için <code>players()</code>: <code>byUuid</code>, <code>byName</code>, <code>ipHistory</code>, <code>playersOnIp</code>, <code>alts</code>.</p>
 
 <h2>Olaylar</h2>
 <pre><code>// Kaydedilmeden önce engelle ya da değiştir
@@ -85,6 +86,10 @@ themis.events().unsubscribeAll(this);</code></pre>
 <tr><td><code>AltJoinEvent</code></td><td>Cezalı bir hesapla IP paylaşan biri girdiğinde.</td></tr>
 </table></div>
 <div class="note"><b>İŞ PARÇACIKLARI</b>Future'lar ve olaylar Themis'in arka plan iş parçacıklarında çalışır. Paper'da oyuncuya ya da dünyaya dokunmadan önce ana iş parçacığına geçin (<code>Bukkit.getScheduler().runTask(…)</code>).</div>
+
+<h2>Kanıt</h2>
+<pre><code>themis.punishments().evidence(punishment.id()).thenAccept(lines -&gt; lines.forEach(e -&gt;
+        logger.info(e.at() + " [" + e.server() + "] " + e.content())));</code></pre>
 
 <h2>Sorgu</h2>
 <pre><code>themis.punishments().query(PunishmentQuery.builder()

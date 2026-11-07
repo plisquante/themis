@@ -53,7 +53,7 @@ GitHub Pages yayını `.github/workflows/deploy.yml` ile `main` dalına her push
 
 ## Wiki
 
-17 sayfa: index, kurulum, proxy, sss, komutlar, yetkiler, sablonlar, aktarma, yapilandirma, depolama, mesajlar,
+18 sayfa: index, kurulum, proxy, sss, komutlar, yetkiler, sablonlar, koruma, aktarma, yapilandirma, depolama, mesajlar,
 rest-api, webhooklar, java-api, placeholderapi, surumler, lisans. Yeni sayfa: `wiki/<anahtar>.html` oluştur (mevcut
 bir sayfayı kopyala, `data-page` değerini değiştir) ve `js/wiki.js` içindeki `PAGES` listesine ekle; smoke test ikisinin
 eşleştiğini kontrol eder. Eklentide komut, ayar, yetki, mesaj ya da REST değişirse ilgili wiki sayfasını da güncelle.

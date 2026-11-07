@@ -38,7 +38,9 @@
 <tr><td>Sunucuya özel ban (geçişte)</td><td>evet</td><td>evet</td></tr>
 <tr><td>İmzasız sohbet ve komut susturması</td><td>evet</td><td>evet</td></tr>
 <tr><td>İmzalı sohbet ve komut susturması</td><td>köprüyle sessiz, köprüsüz bağlantı kesme</td><td>evet</td></tr>
-<tr><td>Kick, uyarı, duyurular, kaçak hesap uyarısı</td><td>evet</td><td>evet</td></tr>
+<tr><td>Gölge susturma</td><td>köprüyle tam; köprüsüz yalnızca imzasız sohbette</td><td>evet</td></tr>
+<tr><td>Ceza anındaki sohbetin kanıt olarak kaydı</td><td>evet</td><td>evet</td></tr>
+<tr><td>Kick, uyarı, duyurular, kaçak hesap uyarısı ve engeli</td><td>evet</td><td>evet</td></tr>
 <tr><td>REST API, webhook'lar, ağ senkronu</td><td>evet</td><td>evet</td></tr>
 <tr><td>PlaceholderAPI</td><td colspan="2">yok (PlaceholderAPI bir Paper eklentisidir)</td></tr>
 <tr><td><code>/themis import vanilla</code></td><td colspan="2">yok (vanilla ban listeleri yalnızca oyun sunucusunda bulunur)</td></tr>
@@ -65,12 +67,13 @@
 <tr><td>Köprü yok, <code>velocity-signed-chat: ALLOW</code></td><td>Mesaj geçer; <code>themis.notify.silent</code> yetkisi olan yetkililere ve konsola bildirilir.</td></tr>
 </table></div>
 <p>İmzasız sohbet (çevrimdışı mod, 1.19 öncesi istemciler) ve imzasız komutlar her durumda proxy'de sessizce engellenir. BungeeCord bu mesajları kendisi düşürebildiği için köprüye ihtiyaç duymaz.</p>
+<p><strong>Gölge susturma</strong> köprülü sunucuda tam çalışır: mesaj backend'de yalnızca gönderene gösterilir. Proxy mesajı kendisi düşürmek zorunda kaldığında (BungeeCord, imzasız sohbet) oyuncuya kendi mesajını <code>proxy.shadow-echo-format</code> biçiminde geri gösterir. Köprüsüz bir Velocity sunucusunda imzalı mesajlar için <code>velocity-signed-chat</code> kuralı geçerlidir.</p>
 
 <h2>Köprü</h2>
 <p>Köprü, aynı jar'ın backend Paper sunucusunda <code>mode: BRIDGE</code> ile çalışmasıdır.</p>
 <ul>
 <li>Veritabanı açmaz, komut kaydetmez, başka bir ayar istemez.</li>
-<li>Proxy, oyuncu her sunucu değiştirdiğinde ve susturma her değiştiğinde oyuncunun susturma durumunu <code>themis:bridge</code> kanalından o sunucuya gönderir.</li>
+<li>Proxy, oyuncu her sunucu değiştirdiğinde ve susturma her değiştiğinde oyuncunun susturma durumunu (gölge susturma dahil) <code>themis:bridge</code> kanalından o sunucuya gönderir.</li>
 <li>Köprü yanıt verdiği için proxy o oyuncunun imzalı mesajlarını backend'e bırakır.</li>
 <li>Proxy, istemcilerden bu kanala gelen her mesajı düşürür; oyuncular köprüyle konuşamaz.</li>
 </ul>
