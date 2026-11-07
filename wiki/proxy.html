@@ -42,7 +42,7 @@
 <tr><td>Ceza anındaki sohbetin kanıt olarak kaydı</td><td>evet</td><td>evet</td></tr>
 <tr><td>Kick, uyarı, duyurular, kaçak hesap uyarısı ve engeli</td><td>evet</td><td>evet</td></tr>
 <tr><td>REST API, webhook'lar, ağ senkronu</td><td>evet</td><td>evet</td></tr>
-<tr><td>AutoMod (reklam, flood, tekrar)</td><td>imzasız sohbette engeller; imzalı sohbette uyarır ve şablon uygular</td><td>evet</td></tr>
+<tr><td>AutoMod (reklam, flood, tekrar)</td><td>imzasız sohbette proxy engeller; imzalı sohbette köprüyle engellenir, köprüsüz yalnızca uyarı ve şablon</td><td>evet</td></tr>
 <tr><td>Lockdown, yasak isimler, oyuncu başına dil</td><td>evet</td><td>evet</td></tr>
 <tr><td>PlaceholderAPI</td><td colspan="2">yok (PlaceholderAPI bir Paper eklentisidir)</td></tr>
 <tr><td><code translate="no">/themis import vanilla</code></td><td colspan="2">yok (vanilla ban listeleri yalnızca oyun sunucusunda bulunur)</td></tr>
@@ -71,12 +71,13 @@
 <p>İmzasız sohbet (çevrimdışı mod, 1.19 öncesi istemciler) ve imzasız komutlar her durumda proxy'de sessizce engellenir. BungeeCord bu mesajları kendisi düşürebildiği için köprüye ihtiyaç duymaz.</p>
 <p><strong>Gölge susturma</strong> köprülü sunucuda tam çalışır: mesaj backend'de yalnızca gönderene gösterilir. Proxy mesajı kendisi düşürmek zorunda kaldığında (BungeeCord, imzasız sohbet) oyuncuya kendi mesajını <code translate="no">proxy.shadow-echo-format</code> biçiminde geri gösterir. Köprüsüz bir Velocity sunucusunda imzalı mesajlar için <code translate="no">velocity-signed-chat</code> kuralı geçerlidir.</p>
 
-<h2>Köprü</h2>
+<h2 id="kopru">Köprü</h2>
 <p>Köprü, aynı jar'ın backend Paper sunucusunda <code translate="no">mode: BRIDGE</code> ile çalışmasıdır.</p>
 <ul>
 <li>Veritabanı açmaz, komut kaydetmez, başka bir ayar istemez.</li>
 <li>Proxy, oyuncu her sunucu değiştirdiğinde ve susturma her değiştiğinde oyuncunun susturma durumunu (gölge susturma dahil) <code translate="no">themis:bridge</code> kanalından o sunucuya gönderir.</li>
 <li>Köprü yanıt verdiği için proxy o oyuncunun imzalı mesajlarını backend'e bırakır.</li>
+<li><a href="koruma.html#automod">AutoMod</a>'un engellediği imzalı sohbet mesajlarını ve fısıltıları da köprü düşürür; proxy hangisini düşüreceğini mesajdan hemen önce bildirir.</li>
 <li>Proxy, istemcilerden bu kanala gelen her mesajı düşürür; oyuncular köprüyle konuşamaz.</li>
 </ul>
 <p>Standalone çalışan bir Paper Themis'i de proxy'den gelen susturma bilgisini uygular; bu yüzden ortak veritabanlı bir "her yerde Themis" kurulumunda da imzalı sohbet sessizce engellenir.</p>

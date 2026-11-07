@@ -93,7 +93,7 @@
 <li>Susturulmuş oyuncunun mesajı zaten susturmaya takılır; AutoMod yalnızca konuşabilen oyuncuları denetler.</li>
 <li><code translate="no">/themis reload</code> kuralları yeniden okur.</li>
 </ul>
-<div class="note"><b>VELOCITY</b>Velocity imzalı sohbet mesajını düşüremez. Çevrimiçi (premium) bir Velocity ağında imzalı mesajlar için AutoMod yetkilileri uyarır ve <code translate="no">TEMPLATE</code> eylemini uygular, ama mesajı durduramaz. İmzasız sohbette ve BungeeCord'da her şey tam çalışır. Bkz. <a href="proxy.html">Velocity ve BungeeCord</a>.</div>
+<div class="note"><b>VELOCITY</b>Velocity imzalı sohbet mesajını ve imzalı fısıltıyı düşüremez. Oyuncunun sunucusunda <a href="proxy.html#kopru">köprü</a> varsa AutoMod'un engellediği imzalı mesajı köprü düşürür; oyuncu bağlantısını kaybetmez. Köprü yoksa AutoMod yetkilileri uyarır ve <code translate="no">TEMPLATE</code> eylemini uygular, ama mesajı durduramaz. İmzasız sohbette (çevrimdışı mod) ve BungeeCord'da her şey proxy'de tam çalışır.</div>
 
 <h2 id="lockdown">Lockdown: bot saldırısında kapıyı kilitle</h2>
 <p>Bot saldırısında ya da bir baskında yüzlerce yeni hesap aynı anda girer. Lockdown açıkken <strong>daha önce hiç girmemiş</strong> hesaplar giremez; tanıdık oyuncular hiçbir şey fark etmez.</p>
