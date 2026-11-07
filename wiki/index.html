@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -28,20 +28,21 @@
 <main class="doc" id="content">
 <div class="kicker">// THEMIS WIKI</div>
 <h1>Terazinin <em>kullanım kılavuzu.</em></h1>
-<p class="lead">Themis'i kurmak, ayarlamak ve kendi sistemlerinize bağlamak için gereken her şey burada. Eklenti tek bir jar dosyasıdır; Paper sunucusunda, Velocity'de ve BungeeCord'da aynı dosya çalışır.</p>
+<p class="lead">Themis'i kurmak, ayarlamak ve kendi sistemlerinize bağlamak için gereken her şey burada. Eklenti tek bir jar dosyasıdır; Paper ve Folia sunucusunda, Velocity'de ve BungeeCord'da aynı dosya çalışır.</p>
 
 <h2>Üç adımda başla</h2>
 <ol>
-<li><strong>Jar'ı at.</strong> <code>Themis-&lt;sürüm&gt;.jar</code> dosyasını Paper sunucunuzun ya da Velocity/BungeeCord proxy'nizin <code>plugins</code> klasörüne koyun ve sunucuyu başlatın.</li>
-<li><strong>Ayarla.</strong> Oluşan <code>config.yml</code> içinde sunucu adını, veritabanını ve ceza şablonlarını düzenleyin, ardından <code>/themis reload</code> yazın.</li>
-<li><strong>Yetki ver.</strong> Yetkili ekibinize <code>themis.staff</code>, yöneticilere <code>themis.*</code> verin.</li>
+<li><strong>Jar'ı at.</strong> <code translate="no">Themis-&lt;sürüm&gt;.jar</code> dosyasını Paper sunucunuzun ya da Velocity/BungeeCord proxy'nizin <code translate="no">plugins</code> klasörüne koyun ve sunucuyu başlatın.</li>
+<li><strong>Ayarla.</strong> Oluşan <code translate="no">config.yml</code> içinde sunucu adını, veritabanını ve ceza şablonlarını düzenleyin, ardından <code translate="no">/themis reload</code> yazın.</li>
+<li><strong>Yetki ver.</strong> Yetkili ekibinize <code translate="no">themis.staff</code>, yöneticilere <code translate="no">themis.*</code> verin.</li>
 </ol>
 <p>Ayrıntılar <a href="kurulum.html">Kurulum</a> sayfasında. Ağınız bir proxy arkasındaysa önce <a href="proxy.html">Velocity ve BungeeCord</a> sayfasını okuyun.</p>
 
 <h2>Gereksinimler</h2>
 <div class="table"><table>
 <tr><th>PLATFORM</th><th>SÜRÜM</th><th>NOT</th></tr>
-<tr><td>Paper</td><td>1.21 – 26.x</td><td>Purpur gibi Paper çatalları da olur. Folia henüz desteklenmiyor.</td></tr>
+<tr><td>Paper</td><td>1.21 – 26.x</td><td>Purpur gibi Paper çatalları da olur.</td></tr>
+<tr><td>Folia</td><td>1.21 – 26.x</td><td>Tam destek: aynı jar, Folia'nın bölge zamanlayıcısıyla çalışır.</td></tr>
 <tr><td>Velocity</td><td>3.4 ve üstü</td><td>Backend sunuculara bir şey kurmak gerekmez.</td></tr>
 <tr><td>BungeeCord</td><td>güncel sürüm</td><td>Backend sunuculara bir şey kurmak gerekmez.</td></tr>
 <tr><td>Java</td><td>21 ve üstü</td><td>Sunucunuzun kendi Java sürümü yeterlidir.</td></tr>
@@ -51,20 +52,22 @@
 <div class="cards">
 <a href="kurulum.html"><span>// BAŞLANGIÇ</span><strong>Kurulum</strong><em>Tek sunucu, Paper ağı, proxy ve köprü kurulumu.</em></a>
 <a href="proxy.html"><span>// BAŞLANGIÇ</span><strong>Velocity ve BungeeCord</strong><em>Yalnızca proxy'ye kurulum, sunucuya özel cezalar.</em></a>
-<a href="komutlar.html"><span>// KULLANIM</span><strong>Komutlar</strong><em>20 komut, bayraklar ve süre yazımı.</em></a>
+<a href="komutlar.html"><span>// KULLANIM</span><strong>Komutlar</strong><em>22 komut, bayraklar ve süre yazımı.</em></a>
 <a href="yetkiler.html"><span>// KULLANIM</span><strong>Yetkiler</strong><em>Her yetki düğümü, rütbe sınırları, muafiyetler.</em></a>
 <a href="sablonlar.html"><span>// KULLANIM</span><strong>Ceza merdivenleri</strong><em>/punish ve kendiliğinden kademelenen cezalar.</em></a>
-<a href="koruma.html"><span>// KULLANIM</span><strong>Kanıt ve koruma</strong><em>Otomatik kanıt, gölge susturma, kaçak ve yetkili koruması.</em></a>
+<a href="koruma.html"><span>// KULLANIM</span><strong>Kanıt ve koruma</strong><em>Otomatik kanıt, gölge susturma, AutoMod, lockdown, kaçak ve yetkili koruması.</em></a>
 <a href="yapilandirma.html"><span>// AYARLAR</span><strong>config.yml</strong><em>Her ayar, varsayılanı ve ne işe yaradığı.</em></a>
-<a href="rest-api.html"><span>// GELİŞTİRİCİ</span><strong>REST API</strong><em>17 uç nokta, anahtarlar, canlı olay akışı.</em></a>
+<a href="rest-api.html"><span>// GELİŞTİRİCİ</span><strong>REST API</strong><em>20 uç nokta, anahtarlar, raporlar, canlı olay akışı.</em></a>
 <a href="aktarma.html"><span>// KULLANIM</span><strong>Başka eklentiden geçiş</strong><em>LiteBans, AdvancedBan ve vanilla listelerinden aktarma.</em></a>
 <a href="java-api.html"><span>// GELİŞTİRİCİ</span><strong>Java API</strong><em>Kendi eklentinizden ceza verin, olayları dinleyin.</em></a>
+<a href="raporlar.html"><span>// KULLANIM</span><strong>Oyuncu raporları</strong><em>/report, sohbet kanıtı, yetkili uyarısı ve Discord.</em></a>
+<a href="mesajlar.html"><span>// AYARLAR</span><strong>Mesajlar ve diller</strong><em>Dokuz hazır dil, oyuncu başına dil, konsol dili.</em></a>
 </div>
 <div class="pager" id="pager"></div>
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

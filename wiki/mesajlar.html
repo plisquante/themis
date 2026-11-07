@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -28,42 +28,67 @@
 <main class="doc" id="content">
 <div class="kicker">// AYARLAR</div>
 <h1>Mesajlar ve <em>diller</em></h1>
-<p class="lead">Oyuncunun ve yetkilinin gördüğü her satır <code>messages_tr.yml</code> ya da <code>messages_en.yml</code> içindedir. Dil config.yml'deki <code>language</code> ile seçilir.</p>
+<p class="lead">Oyuncunun, yetkilinin ve konsolun gördüğü her satır <code translate="no">messages_&lt;dil&gt;.yml</code> dosyalarındadır. Dokuz dil hazır gelir; her oyuncu Themis'i Minecraft'ta seçtiği dilde görür.</p>
+
+<h2 id="diller">Diller</h2>
+<p>İlk açılışta Themis klasörüne dokuz dil dosyası yazılır:</p>
+<div class="table"><table>
+<tr><th>KOD</th><th>DİL</th><th>KOD</th><th>DİL</th></tr>
+<tr><td><code translate="no">tr</code></td><td>Türkçe</td><td><code translate="no">pt</code></td><td>Portekizce</td></tr>
+<tr><td><code translate="no">en</code></td><td>İngilizce</td><td><code translate="no">ru</code></td><td>Rusça</td></tr>
+<tr><td><code translate="no">de</code></td><td>Almanca</td><td><code translate="no">pl</code></td><td>Lehçe</td></tr>
+<tr><td><code translate="no">es</code></td><td>İspanyolca</td><td><code translate="no">zh</code></td><td>Çince (basitleştirilmiş)</td></tr>
+<tr><td><code translate="no">fr</code></td><td>Fransızca</td><td></td><td></td></tr>
+</table></div>
+<pre translate="no"><code translate="no">language: tr                <span class="d"># varsayılan dil</span>
+per-player-language: true   <span class="d"># her oyuncuya kendi oyun dili</span>
+console-language: auto      <span class="d"># konsolun dili; auto = sunucunun sistem dili</span></code></pre>
+<ul>
+<li><strong>Oyuncu başına dil.</strong> Mesajlar, ceza duyuruları, <code translate="no">/history</code> ve <code translate="no">/case</code> çıktıları her alıcıya kendi dilinde gider: aynı duyuruyu Alman yetkili Almanca, Türk yetkili Türkçe okur. Süre birimleri de dile göre yazılır (<code translate="no">2sa</code>, <code translate="no">2Std</code>, <code translate="no">2ч</code>).</li>
+<li><strong>Ban ve giriş ekranları.</strong> Giriş anında oyuncunun dili henüz bilinmediği için Themis her oyuncunun son kullandığı dili saklar; ban, lockdown ve kaçak ekranları bu dilde çıkar. İlk kez giren oyuncu varsayılan dili görür.</li>
+<li><strong>Konsol.</strong> Konsola yazılan bütün satırlar (açılış, uyarılar, webhook ve senkron hataları) ve konsoldan çalışan komutların yanıtları <code translate="no">console-language</code> dilindedir. <code translate="no">auto</code>, sunucunun işletim sistemi dilini kullanır; o dilin dosyası yoksa varsayılan dile düşer.</li>
+<li><strong>Dosyası olmayan dil.</strong> Örneğin Japonca oynayan biri, <code translate="no">messages_ja.yml</code> yoksa varsayılan dili görür. <code translate="no">pt_BR</code> gibi bölgeli diller önce <code translate="no">messages_pt_br.yml</code>, sonra <code translate="no">messages_pt.yml</code> dosyasına bakar.</li>
+<li>Herkesin aynı dili görmesini istiyorsanız <code translate="no">per-player-language: false</code>.</li>
+</ul>
+<h3>Oyun içinden değiştirme</h3>
+<pre translate="no"><code translate="no">/themis language        <span class="d"># varsayılan dil, konsol dili ve yüklü diller</span>
+/themis language de     <span class="d"># varsayılan dili Almanca yapar, config.yml'e yazar</span></code></pre>
+<p><code translate="no">themis.command.admin</code> gerekir. Değişiklik config.yml'e kaydedilir ve sunucu yeniden başlatılmadan uygulanır.</p>
 
 <h2>Biçim</h2>
 <p>Mesajlar <a href="https://docs.advntr.dev/minimessage/format.html">MiniMessage</a> biçimindedir: renk, kalın yazı, üzerine gelince açılan bilgi ve tıklama desteklenir.</p>
-<pre><code>prefix: "&lt;accent&gt;&lt;bold&gt;⚖&lt;/bold&gt;&lt;/accent&gt; &lt;muted&gt;»&lt;/muted&gt; "
+<pre translate="no"><code translate="no">prefix: "&lt;accent&gt;&lt;bold&gt;⚖&lt;/bold&gt;&lt;/accent&gt; &lt;muted&gt;»&lt;/muted&gt; "
 player:
   muted: "&lt;prefix&gt;&lt;bad&gt;Susturuldun&lt;/bad&gt; &lt;muted&gt;(&lt;remaining&gt; kaldı)&lt;/muted&gt; &lt;text&gt;&lt;reason&gt;"</code></pre>
-<p>Dosyanın başındaki <code>colors</code> bölümü altı renk etiketini tanımlar: <code>&lt;accent&gt;</code>, <code>&lt;text&gt;</code>, <code>&lt;muted&gt;</code>, <code>&lt;gold&gt;</code>, <code>&lt;good&gt;</code>, <code>&lt;bad&gt;</code>. Rengi bir kez burada değiştirmek bütün mesajları değiştirir. <code>&lt;prefix&gt;</code> ve <code>&lt;appeal_url&gt;</code> her mesajda kullanılabilir. config.yml'deki <code>appeal-url</code> içinde <code>{code}</code> yazarsanız, bir cezayı anlatan mesajlarda dosya koduyla değişir.</p>
+<p>Dosyanın başındaki <code translate="no">colors</code> bölümü altı renk etiketini tanımlar: <code translate="no">&lt;accent&gt;</code>, <code translate="no">&lt;text&gt;</code>, <code translate="no">&lt;muted&gt;</code>, <code translate="no">&lt;gold&gt;</code>, <code translate="no">&lt;good&gt;</code>, <code translate="no">&lt;bad&gt;</code>. Rengi bir kez burada değiştirmek bütün mesajları değiştirir. <code translate="no">&lt;prefix&gt;</code> ve <code translate="no">&lt;appeal_url&gt;</code> her mesajda kullanılabilir. config.yml'deki <code translate="no">appeal-url</code> içinde <code translate="no">{code}</code> yazarsanız, bir cezayı anlatan mesajlarda dosya koduyla değişir.</p>
 
 <h2>Ceza yer tutucuları</h2>
 <p>Bir cezayı anlatan her mesajda (ban ekranı, duyurular, sicil satırları, /case) şunlar kullanılabilir:</p>
 <div class="table"><table>
 <tr><th>YER TUTUCU</th><th>DEĞER</th></tr>
-<tr><td><code>&lt;code&gt;</code></td><td>Dosya kodu, ör. 7KQ2MX</td></tr>
-<tr><td><code>&lt;target&gt;</code> · <code>&lt;issuer&gt;</code></td><td>Cezalı ve cezayı veren</td></tr>
-<tr><td><code>&lt;reason&gt;</code> · <code>&lt;reason_short&gt;</code></td><td>Sebep; kısa hali 32 karakter</td></tr>
-<tr><td><code>&lt;type&gt;</code></td><td>Tür adı (mesaj dosyasındaki <code>types</code>)</td></tr>
-<tr><td><code>&lt;duration&gt;</code> · <code>&lt;remaining&gt;</code></td><td>Toplam süre ve kalan süre</td></tr>
-<tr><td><code>&lt;expires&gt;</code> · <code>&lt;created&gt;</code> · <code>&lt;created_short&gt;</code></td><td>Bitiş ve veriliş tarihleri</td></tr>
-<tr><td><code>&lt;server&gt;</code></td><td>Cezanın verildiği sunucu</td></tr>
-<tr><td><code>&lt;status&gt;</code> · <code>&lt;status_icon&gt;</code></td><td>Etkin, süresi doldu ya da kaldırıldı</td></tr>
-<tr><td><code>&lt;revoker&gt;</code> · <code>&lt;revoke_reason&gt;</code></td><td>Kaldıran ve kaldırma sebebi</td></tr>
+<tr><td><code translate="no">&lt;code&gt;</code></td><td>Dosya kodu, ör. 7KQ2MX</td></tr>
+<tr><td><code translate="no">&lt;target&gt;</code> · <code translate="no">&lt;issuer&gt;</code></td><td>Cezalı ve cezayı veren</td></tr>
+<tr><td><code translate="no">&lt;reason&gt;</code> · <code translate="no">&lt;reason_short&gt;</code></td><td>Sebep; kısa hali 32 karakter</td></tr>
+<tr><td><code translate="no">&lt;type&gt;</code></td><td>Tür adı (mesaj dosyasındaki <code translate="no">types</code>)</td></tr>
+<tr><td><code translate="no">&lt;duration&gt;</code> · <code translate="no">&lt;remaining&gt;</code></td><td>Toplam süre ve kalan süre</td></tr>
+<tr><td><code translate="no">&lt;expires&gt;</code> · <code translate="no">&lt;created&gt;</code> · <code translate="no">&lt;created_short&gt;</code></td><td>Bitiş ve veriliş tarihleri</td></tr>
+<tr><td><code translate="no">&lt;server&gt;</code></td><td>Cezanın verildiği sunucu</td></tr>
+<tr><td><code translate="no">&lt;status&gt;</code> · <code translate="no">&lt;status_icon&gt;</code></td><td>Etkin, süresi doldu ya da kaldırıldı</td></tr>
+<tr><td><code translate="no">&lt;revoker&gt;</code> · <code translate="no">&lt;revoke_reason&gt;</code></td><td>Kaldıran ve kaldırma sebebi</td></tr>
 </table></div>
 
 <h2>Yeni bir dil</h2>
 <ol>
-<li><code>messages_en.yml</code> dosyasını <code>messages_de.yml</code> gibi bir adla kopyalayın.</li>
-<li>Satırları çevirin; anahtarları ve yer tutucuları değiştirmeyin.</li>
-<li>config.yml'de <code>language: de</code> yazıp <code>/themis reload</code> çalıştırın.</li>
+<li><code translate="no">messages_en.yml</code> dosyasını <code translate="no">messages_ja.yml</code> gibi, Minecraft'ın dil kodunun ilk kısmıyla adlandırarak kopyalayın.</li>
+<li>Satırları çevirin; anahtarları ve yer tutucuları değiştirmeyin. <code translate="no">units</code> bölümü süre birimlerini, <code translate="no">log</code> bölümü konsol satırlarını tutar.</li>
+<li><code translate="no">/themis reload</code> çalıştırın. O dilde oynayan oyuncular yeni dosyayı hemen görür; varsayılan yapmak için <code translate="no">/themis language ja</code>.</li>
 </ol>
-<p>Dosyada eksik kalan bir anahtar İngilizce metinle gösterilir; güncellemelerde gelen yeni satırlar böylece boş kalmaz.</p>
+<p>Dosyada eksik kalan bir anahtar, hazır dillerde jar'daki aynı dilin metniyle, diğerlerinde İngilizceyle gösterilir; güncellemelerde gelen yeni satırlar böylece boş kalmaz. Hazır dosyaları dilediğiniz gibi düzenleyebilirsiniz, Themis üzerine yazmaz.</p>
 <div class="pager" id="pager"></div>
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

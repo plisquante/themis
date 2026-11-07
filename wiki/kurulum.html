@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../assets/logo-128.png">
 <title>Kurulum · Themis Wiki</title>
-<meta name="description" content="Themis&#x27;i tek bir Paper sunucusuna, bir Paper ağına ya da yalnızca Velocity veya BungeeCord proxy&#x27;sine kurma.">
+<meta name="description" content="Themis&#x27;i tek bir Paper ya da Folia sunucusuna, bir Paper ağına ya da yalnızca Velocity veya BungeeCord proxy&#x27;sine kurma.">
 <meta name="theme-color" content="#13110e">
 <link rel="preload" href="../fonts/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/unifont.woff2" as="font" type="font/woff2" crossorigin>
@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -32,24 +32,25 @@
 
 <div class="table"><table>
 <tr><th>DURUM</th><th>NEREYE KURULUR</th><th>VERİTABANI</th></tr>
-<tr><td>Tek Paper sunucusu</td><td>O sunucunun <code>plugins</code> klasörü</td><td>H2 (kurulum gerekmez)</td></tr>
-<tr><td>Proxy'siz birden çok Paper sunucusu</td><td>Her sunucu</td><td>Ortak MySQL, MariaDB ya da PostgreSQL</td></tr>
+<tr><td>Tek Paper ya da Folia sunucusu</td><td>O sunucunun <code translate="no">plugins</code> klasörü</td><td>H2 (kurulum gerekmez)</td></tr>
+<tr><td>Proxy'siz birden çok Paper ya da Folia sunucusu</td><td>Her sunucu</td><td>Ortak MySQL, MariaDB ya da PostgreSQL</td></tr>
 <tr><td>Velocity ya da BungeeCord ağı</td><td>Yalnızca proxy</td><td>H2 ya da harici veritabanı</td></tr>
 <tr><td>Velocity ağı, imzalı sohbette sessiz susturma</td><td>Proxy + backend'lerde köprü</td><td>Yalnızca proxy'de</td></tr>
 </table></div>
 
-<h2>Tek Paper sunucusu</h2>
+<h2>Tek Paper ya da Folia sunucusu</h2>
 <ol>
-<li><code>Themis-&lt;sürüm&gt;.jar</code> dosyasını <code>plugins/</code> klasörüne koyun ve sunucuyu başlatın.</li>
+<li><code translate="no">Themis-&lt;sürüm&gt;.jar</code> dosyasını <code translate="no">plugins/</code> klasörüne koyun ve sunucuyu başlatın.</li>
 <li>İlk açılışta Paper, Themis'in kullandığı kütüphaneleri (bağlantı havuzu ve veritabanı sürücüleri) bir kez indirir.</li>
-<li><code>plugins/Themis/config.yml</code> dosyasında <code>server-name</code>, <code>language</code> ve <code>punishments.appeal-url</code> değerlerini düzenleyin.</li>
-<li>Konsolda <code>themis reload</code>, oyunda <code>/themis about</code> ile kurulumu doğrulayın.</li>
+<li><code translate="no">plugins/Themis/config.yml</code> dosyasında <code translate="no">server-name</code>, <code translate="no">language</code> ve <code translate="no">punishments.appeal-url</code> değerlerini düzenleyin.</li>
+<li>Konsolda <code translate="no">themis reload</code>, oyunda <code translate="no">/themis about</code> ile kurulumu doğrulayın.</li>
 </ol>
-<p>Varsayılan veritabanı H2'dir: dosya <code>plugins/Themis/</code> içinde tutulur, hiçbir şey kurmanız gerekmez.</p>
+<p>Varsayılan veritabanı H2'dir: dosya <code translate="no">plugins/Themis/</code> içinde tutulur, hiçbir şey kurmanız gerekmez.</p>
+<div class="note"><b>FOLIA</b>Folia'da adımlar aynıdır. Themis Folia'yı kendiliğinden tanır: oyuncuyu sunucudan atmak gibi oyuncuya dokunan işler oyuncunun kendi bölgesinde, geri kalanı küresel bölge zamanlayıcısında çalışır. Ayrı bir jar ya da ayar gerekmez.</div>
 
 <h2>Proxy'siz Paper ağı</h2>
-<p>Her sunucuya Themis kurun ve hepsini aynı veritabanına bağlayın. Her sunucuya farklı bir <code>server-name</code> verin.</p>
-<pre><code>server-name: "survival"     # her sunucuda farklı
+<p>Her sunucuya Themis kurun ve hepsini aynı veritabanına bağlayın. Her sunucuya farklı bir <code translate="no">server-name</code> verin.</p>
+<pre translate="no"><code translate="no">server-name: "survival"     # her sunucuda farklı
 storage:
   type: MYSQL               # ya da MARIADB, POSTGRESQL
   host: db.example.net
@@ -64,28 +65,28 @@ sync:
 <h2>Velocity ya da BungeeCord ağı</h2>
 <p>Themis'i <strong>yalnızca proxy'ye</strong> kurun. Backend sunuculara hiçbir şey kurmanız gerekmez.</p>
 <ol>
-<li>Jar'ı proxy'nin <code>plugins/</code> klasörüne koyun ve proxy'yi başlatın.</li>
-<li>Velocity'de Themis ihtiyaç duyduğu kütüphaneleri ilk açılışta Maven Central'dan indirir ve <code>plugins/themis/libraries/</code> içine koyar. Her dosyanın SHA-256 özeti jar'ın içinde sabittir; tutmayan bir dosya asla yüklenmez. BungeeCord bu kütüphaneleri kendisi indirir.</li>
-<li>Ayar dosyası Velocity'de <code>plugins/themis/config.yml</code>, BungeeCord'da <code>plugins/Themis/config.yml</code> olur. <code>server-name</code> proxy'de <code>network</code> olarak gelir; bir backend sunucusunun adıyla aynı olmasın.</li>
+<li>Jar'ı proxy'nin <code translate="no">plugins/</code> klasörüne koyun ve proxy'yi başlatın.</li>
+<li>Velocity'de Themis ihtiyaç duyduğu kütüphaneleri ilk açılışta Maven Central'dan indirir ve <code translate="no">plugins/themis/libraries/</code> içine koyar. Her dosyanın SHA-256 özeti jar'ın içinde sabittir; tutmayan bir dosya asla yüklenmez. BungeeCord bu kütüphaneleri kendisi indirir.</li>
+<li>Ayar dosyası Velocity'de <code translate="no">plugins/themis/config.yml</code>, BungeeCord'da <code translate="no">plugins/Themis/config.yml</code> olur. <code translate="no">server-name</code> proxy'de <code translate="no">network</code> olarak gelir; bir backend sunucusunun adıyla aynı olmasın.</li>
 </ol>
 <p>Proxy'de komutlar, giriş kontrolü, sohbet ve komut susturması, sunucuya özel banlar ve duyurular çalışır. Nasıl çalıştığı ve sınırları: <a href="proxy.html">Velocity ve BungeeCord</a>.</p>
 
 <h2>Velocity ağı ve köprü</h2>
-<p>Velocity, imzalı bir sohbet mesajını iptal eden eklentiyi desteklemez. Susturulmuş bir oyuncunun imzalı mesajları için Themis varsayılan olarak oyuncunun bağlantısını susturma ekranıyla keser. Bunu istemiyorsanız aynı jar'ı backend sunuculara da koyun ve orada <code>config.yml</code> dosyasını tek satıra indirin:</p>
-<pre><code>mode: BRIDGE</code></pre>
+<p>Velocity, imzalı bir sohbet mesajını iptal eden eklentiyi desteklemez. Susturulmuş bir oyuncunun imzalı mesajları için Themis varsayılan olarak oyuncunun bağlantısını susturma ekranıyla keser. Bunu istemiyorsanız aynı jar'ı backend sunuculara da koyun ve orada <code translate="no">config.yml</code> dosyasını tek satıra indirin:</p>
+<pre translate="no"><code translate="no">mode: BRIDGE</code></pre>
 <p>Köprü veritabanı kullanmaz, komut kaydetmez; yalnızca proxy'nin gönderdiği susturma bilgisine göre o sunucudaki sohbeti sessizce engeller. BungeeCord'da köprüye gerek yoktur.</p>
 
 <h2>Güncelleme ve kaldırma</h2>
 <ul>
 <li><strong>Güncelleme:</strong> eski jar'ı silip yenisini koyun ve sunucuyu yeniden başlatın. Veritabanı şeması kendiliğinden güncellenir; ayar dosyalarınız korunur.</li>
-<li><strong>Kaldırma:</strong> jar'ı silin. Kayıtlar veritabanında ve <code>plugins/Themis/</code> klasöründe kalır.</li>
+<li><strong>Kaldırma:</strong> jar'ı silin. Kayıtlar veritabanında ve <code translate="no">plugins/Themis/</code> klasöründe kalır.</li>
 <li>Başka bir moderasyon eklentisinden geliyorsanız: <a href="aktarma.html">Başka eklentiden geçiş</a>.</li>
 </ul>
 <div class="pager" id="pager"></div>
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

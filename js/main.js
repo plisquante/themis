@@ -10,30 +10,38 @@ function svg(name){let r="";ICONS[name].forEach((row,y)=>[...row].forEach((c,x)=
   return `<svg viewBox="-.5 -.5 12 12" fill="#d9c58f">${r}</svg>`}
 const CARDS=[
  ["shield","DOSYA KODU","Kayda Geçmeyen Ceza Yok","Her cezanın #7KQ2MX gibi bir dosya kodu vardır ve ceza anındaki sohbet kanıt olarak kendiliğinden eklenir. İtiraz, /case ve API aynı kodu kullanır.","kanıt","otomatik"],
- ["chip","AĞ SENKRONU","Her Sunucuda Tek Sicil","Themis'i yalnızca Velocity ya da BungeeCord proxy'sine kurun ya da her Paper sunucusunu aynı veritabanına bağlayın. Ban, mute ve kick her sunucuda anında geçerli olur.","platform","paper · velocity · bungee"],
+ ["chip","AĞ SENKRONU","Her Sunucuda Tek Sicil","Themis'i yalnızca Velocity ya da BungeeCord proxy'sine kurun ya da her Paper ve Folia sunucusunu aynı veritabanına bağlayın. Ban, mute ve kick her sunucuda anında geçerli olur.","platform","paper · folia · velocity · bungee"],
  ["eye","KAÇAK HESAP","Alt Hesap Tespiti","IP geçmişi ve bağlı hesaplar takip edilir. Yasaklı bir oyuncunun ikinci hesabı girdiği an yetkililer uyarılır; isterseniz giriş engellenir.","girişte","uyar · engelle"],
  ["lock","RÜTBE SINIRI","Yetkisini Aşan Olmaz","Helper en fazla iki saat susturur ve saatte yirmi ceza verebilir. Çalınan bir yetkili hesabının verdiği cezalar tek komutla geri alınır.","helper","≤ 2 saat · 20/saat"],
  ["scales","CEZA MERDİVENİ","Aynı Suça Aynı Ceza","/punish Steve spam yazın; Themis oyuncunun siciline bakar ve şablondaki sıradaki basamağı uygular. Eski suçlar belirlediğiniz süre sonra unutulur.","spam şablonu","uyarı → ban"],
- ["bolt","GELİŞTİRİCİ API","Tamamen Açık API","MIT lisanslı Java API'si, iptal edilebilir olaylar, yetki kapsamlı anahtarlarla REST API, canlı olay akışı ve HMAC imzalı webhook'lar.","rest api","17 uç nokta"]];
+ ["bolt","GELİŞTİRİCİ API","Tamamen Açık API","MIT lisanslı Java API'si, iptal edilebilir olaylar, yetki kapsamlı anahtarlarla REST API, canlı olay akışı ve HMAC imzalı webhook'lar.","rest api","20 uç nokta"]];
 document.getElementById("grid").innerHTML=CARDS.map((c,i)=>`<div class="card reveal"><div class="sheen"></div>
  <div class="top">${svg(c[0])}<span class="num">0${i+1}/06</span></div><div class="tag">${c[1]}</div><h3>${c[2]}</h3><p>${c[3]}</p>
  <div class="foot"><span>${c[4]}</span><span>${c[5]}</span></div></div>`).join("");
 
 // ---------- terminal script ----------
+// Commands, codes and event names carry translate="no": when a visitor's browser translates the
+// page, the prose lines follow their language and the commands stay as typed.
 const TERM=[
- ['<span class="d">themis@survival:~$</span> <span class="c">themis about</span>',0],
+ ['<span class="d" translate="no">themis@survival:~$</span> <span class="c" translate="no">themis about</span>',0],
  ['<span class="g">[themis]</span>  v1.0.0 · mysql · senkron redis    <span class="g">OK</span>',.5],
  ['<span class="g">[themis]</span>  REST API :8787/v1 dinliyor        <span class="g">OK</span>',.35],
  ['<span class="g">[themis]</span>  5 ceza şablonu yüklendi           <span class="g">OK</span>',.35],
- ['<span class="d">------------------------------------------------</span>',.3],
- ['<span class="d">themis@survival:~$</span> <span class="c">punish Steve spam</span>',.5],
+ ['<span class="d" translate="no">------------------------------------------------</span>',.3],
+ ['<span class="d" translate="no">themis@survival:~$</span> <span class="c" translate="no">punish Steve spam</span>',.5],
  ['<span class="g">[terazi]</span>  Steve: spam şablonunda 2 önceki suç',.6],
  ['<span class="g">[terazi]</span>  basamak 3/5 → susturma, 2 saat',.45],
- ['<span class="r">[kılıç]</span>   Steve <span class="r">SUSTURULDU</span> · dosya <span class="c">#Q4TW9K</span>',.55],
+ ['<span class="r">[kılıç]</span>   Steve <span class="r">SUSTURULDU</span> · dosya <span class="c" translate="no">#Q4TW9K</span>',.55],
  ['<span class="g">[kanıt]</span>   son 6 mesaj dosyaya eklendi',.4],
- ['<span class="g">[webhook]</span> discord-log ← punishment.issued <span class="g">204</span>',.45],
+ ['<span class="g" translate="no">[webhook]</span> <span translate="no">discord-log ← punishment.issued</span> <span class="g" translate="no">204</span>',.45],
  ['<span class="g">[senkron]</span> hub, skyblock güncellendi',.4],
  ['<span class="g">[themis]</span>  adalet yerini buldu.',.5]];
+
+// The terminal is built once and its lines are shown on time. Nothing is rewritten while it
+// plays, so a browser translation of the page stays in place.
+const termEl=document.getElementById("term");
+termEl.innerHTML=TERM.map(([l])=>`<div class="ln" hidden>${l}</div>`).join("")+'<div class="ln"><span class="cursor"></span></div>';
+const termLines=[...termEl.children].slice(0,-1),termCursor=termEl.querySelector(".cursor");
 
 // ---------- background bits ----------
 const cv=document.getElementById("bits"),ctx=cv.getContext("2d");
@@ -129,13 +137,13 @@ window.render=function(t){
   document.querySelectorAll(".step .bar").forEach(b=>{b.style.transform=`scaleY(${b.parentNode.__p||0})`});
   // stats count-up (1.6 s)
   document.querySelectorAll(".stat b").forEach(b=>{const card=b.closest(".stats"),t0=card.__t0;
-    const to=parseFloat(b.dataset.to),p=t0==null?0:seg(t,t0,t0+1.6,easeOut),v=to*p,sm=b.querySelector("small").outerHTML;
-    b.innerHTML=(to%1?v.toFixed(1):Math.round(v))+sm});
+    const to=parseFloat(b.dataset.to),p=t0==null?0:seg(t,t0,t0+1.6,easeOut),v=to*p,n=b.querySelector(".n");
+    const txt=String(to%1?v.toFixed(1):Math.round(v));if(n.textContent!==txt)n.textContent=txt});
   // terminal typing, at a reading pace
-  const term=document.querySelector(".term"),t0=term.__t0;let out="",acc=0;
-  if(t0!=null){const el=t-t0;for(const [line,d] of TERM){acc+=d*1.1;if(el>=acc)out+=line+"\n";else break}}
-  else out=TERM[0][0]+"\n";
-  document.getElementById("term").innerHTML=out+'<span class="cursor" style="opacity:'+(0.5+0.5*Math.cos(t*Math.PI*1.4)).toFixed(2)+'"></span>';
+  const t0=document.querySelector(".term").__t0;let shown=1,acc=0;
+  if(t0!=null){shown=0;for(const [,d] of TERM){acc+=d*1.1;if(t-t0>=acc)shown++;else break}}
+  termLines.forEach((ln,i)=>{const h=i>=shown;if(ln.hidden!==h)ln.hidden=h});
+  termCursor.style.opacity=(0.5+0.5*Math.cos(t*Math.PI*1.4)).toFixed(2);
 };
 // animation loop
 addEventListener("load",()=>{const s=performance.now();

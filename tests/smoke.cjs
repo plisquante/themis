@@ -62,6 +62,8 @@ const check = (name, ok, detail = '') => { results.push(ok); console.log(`${ok ?
     const noAlt = await p.evaluate(() => [...document.querySelectorAll('img')].filter((i) => !i.hasAttribute('alt')).length);
     check('every image has alt', noAlt === 0, `${noAlt} without alt`);
     check('one h1', (await p.locator('h1').count()) === 1);
+    check('footer shows only © 2026 THEMIS', (await p.locator('footer .bottom').innerText()).trim() === '© 2026 THEMIS');
+    const firstLine = await p.evaluate(() => { window.__line = document.querySelector('#term .ln'); return !!window.__line; });
 
     console.log('Motion');
     const H = await p.evaluate(() => document.body.scrollHeight);
@@ -73,6 +75,14 @@ const check = (name, ok, detail = '') => { results.push(ok); console.log(`${ok ?
     await p.locator('.term').scrollIntoViewIfNeeded();
     await p.waitForTimeout(11000);
     check('terminal finishes its script', (await p.locator('#term').innerText()).includes('adalet yerini buldu'));
+    // A browser translation replaces text nodes in place; the terminal must not rebuild them.
+    check('terminal lines are built once, so a translated page stays translated',
+      firstLine && await p.evaluate(() => window.__line === document.querySelector('#term .ln') && document.querySelector('#term .ln').isConnected));
+    await p.evaluate(() => { const n = document.querySelectorAll('#term .ln')[1].lastChild; window.__tx = n; n.textContent = ' (translated)'; });
+    await p.waitForTimeout(600);
+    check('text a translator puts into the terminal survives the animation', await p.evaluate(() => window.__tx.isConnected && document.getElementById('term').innerText.includes('(translated)')));
+    const untranslated = await p.evaluate(() => [...document.querySelectorAll('#term .c, #term .d, code, #title, nav .brand')].filter((e) => !e.closest('[translate=no]')).length);
+    check('commands, code and the brand are marked translate="no"', untranslated === 0, `${untranslated} unmarked`);
     const hidden = await p.evaluate(() => [...document.querySelectorAll('.reveal')].filter((e) => e.getBoundingClientRect().bottom < innerHeight && Number(e.style.opacity) < 0.95).length);
     check('scrolled-past sections are visible', hidden === 0, `${hidden} still hidden`);
     await p.evaluate(() => scrollTo(0, document.getElementById('faq').offsetTop));
@@ -101,8 +111,11 @@ const check = (name, ok, detail = '') => { results.push(ok); console.log(`${ok ?
           sideLinks: document.querySelectorAll('#side a').length,
           title: document.title,
           links: [...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')),
+          untranslatedCode: [...document.querySelectorAll('pre, code')].filter((e) => !e.closest('[translate=no]')).length,
+          foot: document.querySelector('.wiki-foot')?.innerText.trim(),
         }));
-        const ok = !errors.length && !bad.length && info.overflow <= 0 && info.h1 === 1 && info.current === 1 && info.sideLinks === files.length && info.title.endsWith('Themis Wiki');
+        const ok = !errors.length && !bad.length && info.overflow <= 0 && info.h1 === 1 && info.current === 1 && info.sideLinks === files.length && info.title.endsWith('Themis Wiki')
+          && info.untranslatedCode === 0 && info.foot === '© 2026 THEMIS · Lisans';
         if (!ok) broken.push(`${key}@${width}: ${JSON.stringify({ ...info, links: undefined, errors, bad })}`);
         if (width === 1440) {
           for (const href of info.links) {

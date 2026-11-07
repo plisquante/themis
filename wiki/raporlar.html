@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../assets/logo-128.png">
+<title>Oyuncu raporları · Themis Wiki</title>
+<meta name="description" content="/report ve /reports: oyuncu raporları, rapora eklenen sohbet, yetkili uyarıları, Discord ve kendiliğinden kapanma.">
+<meta name="theme-color" content="#13110e">
+<link rel="preload" href="../fonts/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/unifont.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/wiki.css">
+</head>
+<body class="wiki-page" data-page="raporlar">
+<canvas id="bits" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+
+<nav>
+  <div class="bgfill"></div>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
+  <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
+</nav>
+
+<div class="wiki">
+<aside id="side" aria-label="Wiki sayfaları"></aside>
+<main class="doc" id="content">
+<div class="kicker">// KULLANIM</div>
+<h1>Oyuncu <em>raporları</em></h1>
+<p class="lead">Oyuncular kuralları çiğneyeni <code translate="no">/report</code> ile bildirir. Her rapor, raporlanan oyuncunun o ana kadar yazdıklarını taşır; yetkili ekran görüntüsü istemeden ne olduğunu görür.</p>
+
+<h2 id="report">/report</h2>
+<pre translate="no"><code translate="no">/report Steve küfür ediyor</code></pre>
+<ul>
+<li>Sebep zorunludur. Kimse kendini raporlayamaz.</li>
+<li>Bir oyuncu iki rapor arasında <code translate="no">reports.cooldown</code> kadar bekler (varsayılan 60 saniye). Yetkililer beklemez.</li>
+<li>Rapor, raporlanan oyuncunun son mesajlarını ve fısıltılarını kanıt olarak saklar (<a href="koruma.html#kanit">kanıt</a> ayarlarıyla aynı: <code translate="no">evidence.lines</code>, <code translate="no">evidence.max-age</code>).</li>
+<li>Herkes kullanabilir: <code translate="no">themis.command.report</code> varsayılan olarak herkeste açıktır. Kapatmak için yetki eklentinizde reddedin ya da <code translate="no">reports.enabled: false</code> yapın.</li>
+</ul>
+
+<h2 id="uyari">Yetkililere uyarı</h2>
+<p><code translate="no">themis.command.reports</code> sahibi her çevrimiçi yetkiliye ve konsola şöyle bir satır gider; <code translate="no">[göster]</code> raporu açar:</p>
+<pre translate="no"><code translate="no">⚖ » Rapor #12 Alex, Steve oyuncusunu raporladı: küfür ediyor (survival) [göster]</code></pre>
+<ul>
+<li>Uyarı her yetkiliye kendi dilinde gider.</li>
+<li>Proxy kurulumunda bütün ağdaki yetkililer görür. Proxy'siz ağda ağ senkronu (<code translate="no">sync</code>) raporu diğer sunuculara taşır; her sunucu, oyuncunun kendi sunucusunda yazdıklarını da rapora ekler.</li>
+<li>Yetkili girişte açık rapor sayısını görür (<code translate="no">reports.remind-on-join</code>).</li>
+<li>Discord'a ve kendi sisteminize <code translate="no">report.created</code> olayıyla gider. Bkz. <a href="webhooklar.html#rapor">webhook'lar</a>. Paneller raporları <a href="rest-api.html">REST API</a> ile listeler ve kapatır.</li>
+</ul>
+
+<h2 id="reports">/reports</h2>
+<pre translate="no"><code translate="no">/reports [sayfa]                    <span class="d"># açık raporlar, en yenisi üstte</span>
+/reports view &lt;numara&gt;              <span class="d"># rapor, sebep ve oyuncunun yazdıkları</span>
+/reports close &lt;numara&gt; [sonuç]     <span class="d"># raporu kapatır</span></code></pre>
+<p>Rapor ekranındaki <code translate="no">[sicil]</code>, <code translate="no">[cezalandır]</code> ve <code translate="no">[kapat]</code> düğmeleri ilgili komutu hazırlar. <code translate="no">themis.command.reports</code> gerekir; <code translate="no">themis.staff</code> içindedir.</p>
+
+<h2 id="kapanma">Kendiliğinden kapanma</h2>
+<p>Raporlanan oyuncuya ban, susturma, uyarı ya da kick verildiği an o oyuncu hakkındaki bütün açık raporlar kapanır. Kapatan cezayı veren yetkili, sonuç cezanın dosya kodudur (ör. <code translate="no">#7KQ2MX</code>). Rapor eden oyuncu çevrimiçiyse "raporunla ilgilenildi, teşekkürler" mesajını alır; hangi cezanın verildiğini görmez.</p>
+
+<h2 id="ayarlar">Ayarlar</h2>
+<pre translate="no"><code translate="no">reports:
+  enabled: true
+  cooldown: 60s          <span class="d"># iki rapor arası bekleme</span>
+  remind-on-join: true   <span class="d"># yetkiliye girişte açık rapor sayısı</span></code></pre>
+<div class="pager" id="pager"></div>
+</main>
+</div>
+
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
+<script src="../js/wiki.js"></script>
+</body>
+</html>

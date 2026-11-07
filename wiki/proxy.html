@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -33,7 +33,7 @@
 <h2>Proxy'de ne çalışır</h2>
 <div class="table"><table>
 <tr><th>ÖZELLİK</th><th>VELOCITY</th><th>BUNGEECORD</th></tr>
-<tr><td>20 komutun hepsi</td><td>evet</td><td>evet</td></tr>
+<tr><td>22 komutun hepsi</td><td>evet</td><td>evet</td></tr>
 <tr><td>Ağ girişinde ban kontrolü</td><td>evet</td><td>evet</td></tr>
 <tr><td>Sunucuya özel ban (geçişte)</td><td>evet</td><td>evet</td></tr>
 <tr><td>İmzasız sohbet ve komut susturması</td><td>evet</td><td>evet</td></tr>
@@ -42,54 +42,58 @@
 <tr><td>Ceza anındaki sohbetin kanıt olarak kaydı</td><td>evet</td><td>evet</td></tr>
 <tr><td>Kick, uyarı, duyurular, kaçak hesap uyarısı ve engeli</td><td>evet</td><td>evet</td></tr>
 <tr><td>REST API, webhook'lar, ağ senkronu</td><td>evet</td><td>evet</td></tr>
+<tr><td>AutoMod (reklam, flood, tekrar)</td><td>imzasız sohbette proxy engeller; imzalı sohbette köprüyle engellenir, köprüsüz yalnızca uyarı ve şablon</td><td>evet</td></tr>
+<tr><td>Lockdown, yasak isimler, oyuncu başına dil</td><td>evet</td><td>evet</td></tr>
+<tr><td>Oyuncu raporları (<code translate="no">/report</code>)</td><td>evet</td><td>evet</td></tr>
 <tr><td>PlaceholderAPI</td><td colspan="2">yok (PlaceholderAPI bir Paper eklentisidir)</td></tr>
-<tr><td><code>/themis import vanilla</code></td><td colspan="2">yok (vanilla ban listeleri yalnızca oyun sunucusunda bulunur)</td></tr>
+<tr><td><code translate="no">/themis import vanilla</code></td><td colspan="2">yok (vanilla ban listeleri yalnızca oyun sunucusunda bulunur)</td></tr>
 </table></div>
 
 <h2>Sunucuya özel cezalar</h2>
-<p>Proxy'deki sunucu adları (Velocity'de <code>velocity.toml</code>, BungeeCord'da <code>config.yml</code> içindeki <code>servers</code>) Themis'te kapsam olur:</p>
-<pre><code>/ban Steve 7d -scope=survival Hile
+<p>Proxy'deki sunucu adları (Velocity'de <code translate="no">velocity.toml</code>, BungeeCord'da <code translate="no">config.yml</code> içindeki <code translate="no">servers</code>) Themis'te kapsam olur:</p>
+<pre translate="no"><code translate="no">/ban Steve 7d -scope=survival Hile
 /mute Steve 1h -scope=lobby Spam</code></pre>
 <ul>
 <li><strong>Sunucuya özel ban:</strong> oyuncu ağa girebilir ama o sunucuya geçemez; yasağı ekranda görür. Ban verildiği an o sunucudaysa izin verilen başka bir sunucuya taşınır, böyle bir sunucu yoksa bağlantısı kesilir.</li>
 <li><strong>Sunucuya özel susturma:</strong> yalnızca oyuncu o sunucudayken geçerlidir.</li>
-<li><strong>Kapsamsız ceza</strong> (ya da <code>-scope=*</code>) bütün ağda geçerlidir.</li>
+<li><strong>Kapsamsız ceza</strong> (ya da <code translate="no">-scope=*</code>) bütün ağda geçerlidir.</li>
 </ul>
-<p>Oyuncunun taşınacağı sunucuyu <code>proxy.fallback-server</code> belirler. Boşsa proxy'nin deneme sırası (Velocity <code>try</code>, BungeeCord <code>priorities</code>) kullanılır.</p>
-<div class="note"><b>DİKKAT</b>Proxy'de yeni oluşan config.yml <code>server-name: "network"</code> ile başlar. Bu adı bir backend sunucusuyla aynı yapmayın: proxy'nin kendi adıyla verilen kapsam bütün ağı kapsar. Çakışma olursa Themis açılışta uyarır.</div>
+<p>Oyuncunun taşınacağı sunucuyu <code translate="no">proxy.fallback-server</code> belirler. Boşsa proxy'nin deneme sırası (Velocity <code translate="no">try</code>, BungeeCord <code translate="no">priorities</code>) kullanılır.</p>
+<div class="note"><b>DİKKAT</b>Proxy'de yeni oluşan config.yml <code translate="no">server-name: "network"</code> ile başlar. Bu adı bir backend sunucusuyla aynı yapmayın: proxy'nin kendi adıyla verilen kapsam bütün ağı kapsar. Çakışma olursa Themis açılışta uyarır.</div>
 
 <h2>Velocity ve imzalı sohbet</h2>
-<p>Minecraft 1.19.1'den beri istemciler sohbet mesajlarını ve <code>/msg</code>, <code>/me</code> gibi bazı vanilla komutlarını imzalar. Velocity, bir eklentinin imzalı mesajı iptal etmesine izin vermez; iptal edilen her imzalı mesajda oyuncunun bağlantısını keser. Themis bu yüzden susturulmuş oyuncunun imzalı mesajında şöyle davranır:</p>
+<p>Minecraft 1.19.1'den beri istemciler sohbet mesajlarını ve <code translate="no">/msg</code>, <code translate="no">/me</code> gibi bazı vanilla komutlarını imzalar. Velocity, bir eklentinin imzalı mesajı iptal etmesine izin vermez; iptal edilen her imzalı mesajda oyuncunun bağlantısını keser. Themis bu yüzden susturulmuş oyuncunun imzalı mesajında şöyle davranır:</p>
 <div class="table"><table>
 <tr><th>DURUM</th><th>NE OLUR</th></tr>
 <tr><td>Oyuncunun sunucusunda köprü var</td><td>Mesaj backend'de sessizce engellenir, oyuncu susturma mesajını görür. Bağlantı kesilmez.</td></tr>
-<tr><td>Köprü yok, <code>velocity-signed-chat: KICK</code></td><td>Oyuncunun bağlantısı susturma ekranıyla kesilir, mesaj sunucuya ulaşmaz. Oyuncu tekrar girebilir.</td></tr>
-<tr><td>Köprü yok, <code>velocity-signed-chat: ALLOW</code></td><td>Mesaj geçer; <code>themis.notify.silent</code> yetkisi olan yetkililere ve konsola bildirilir.</td></tr>
+<tr><td>Köprü yok, <code translate="no">velocity-signed-chat: KICK</code></td><td>Oyuncunun bağlantısı susturma ekranıyla kesilir, mesaj sunucuya ulaşmaz. Oyuncu tekrar girebilir.</td></tr>
+<tr><td>Köprü yok, <code translate="no">velocity-signed-chat: ALLOW</code></td><td>Mesaj geçer; <code translate="no">themis.notify.silent</code> yetkisi olan yetkililere ve konsola bildirilir.</td></tr>
 </table></div>
 <p>İmzasız sohbet (çevrimdışı mod, 1.19 öncesi istemciler) ve imzasız komutlar her durumda proxy'de sessizce engellenir. BungeeCord bu mesajları kendisi düşürebildiği için köprüye ihtiyaç duymaz.</p>
-<p><strong>Gölge susturma</strong> köprülü sunucuda tam çalışır: mesaj backend'de yalnızca gönderene gösterilir. Proxy mesajı kendisi düşürmek zorunda kaldığında (BungeeCord, imzasız sohbet) oyuncuya kendi mesajını <code>proxy.shadow-echo-format</code> biçiminde geri gösterir. Köprüsüz bir Velocity sunucusunda imzalı mesajlar için <code>velocity-signed-chat</code> kuralı geçerlidir.</p>
+<p><strong>Gölge susturma</strong> köprülü sunucuda tam çalışır: mesaj backend'de yalnızca gönderene gösterilir. Proxy mesajı kendisi düşürmek zorunda kaldığında (BungeeCord, imzasız sohbet) oyuncuya kendi mesajını <code translate="no">proxy.shadow-echo-format</code> biçiminde geri gösterir. Köprüsüz bir Velocity sunucusunda imzalı mesajlar için <code translate="no">velocity-signed-chat</code> kuralı geçerlidir.</p>
 
-<h2>Köprü</h2>
-<p>Köprü, aynı jar'ın backend Paper sunucusunda <code>mode: BRIDGE</code> ile çalışmasıdır.</p>
+<h2 id="kopru">Köprü</h2>
+<p>Köprü, aynı jar'ın backend Paper sunucusunda <code translate="no">mode: BRIDGE</code> ile çalışmasıdır.</p>
 <ul>
 <li>Veritabanı açmaz, komut kaydetmez, başka bir ayar istemez.</li>
-<li>Proxy, oyuncu her sunucu değiştirdiğinde ve susturma her değiştiğinde oyuncunun susturma durumunu (gölge susturma dahil) <code>themis:bridge</code> kanalından o sunucuya gönderir.</li>
+<li>Proxy, oyuncu her sunucu değiştirdiğinde ve susturma her değiştiğinde oyuncunun susturma durumunu (gölge susturma dahil) <code translate="no">themis:bridge</code> kanalından o sunucuya gönderir.</li>
 <li>Köprü yanıt verdiği için proxy o oyuncunun imzalı mesajlarını backend'e bırakır.</li>
+<li><a href="koruma.html#automod">AutoMod</a>'un engellediği imzalı sohbet mesajlarını ve fısıltıları da köprü düşürür; proxy hangisini düşüreceğini mesajdan hemen önce bildirir.</li>
 <li>Proxy, istemcilerden bu kanala gelen her mesajı düşürür; oyuncular köprüyle konuşamaz.</li>
 </ul>
 <p>Standalone çalışan bir Paper Themis'i de proxy'den gelen susturma bilgisini uygular; bu yüzden ortak veritabanlı bir "her yerde Themis" kurulumunda da imzalı sohbet sessizce engellenir.</p>
 
 <h2 id="yetkiler">Yetkiler proxy'de</h2>
-<p>Yetkileri proxy'deki yetki eklentinizle (ör. LuckPerms'in Velocity veya BungeeCord sürümü) verin. <code>themis.staff</code> ve <code>themis.*</code> üst yetkileri proxy'de de çalışır. <code>themis.notify</code> herkese açıktır; Velocity'de bir yetki eklentisiyle kapatılabilir, BungeeCord'da herkese açık kalır.</p>
+<p>Yetkileri proxy'deki yetki eklentinizle (ör. LuckPerms'in Velocity veya BungeeCord sürümü) verin. <code translate="no">themis.staff</code> ve <code translate="no">themis.*</code> üst yetkileri proxy'de de çalışır. <code translate="no">themis.notify</code> herkese açıktır; Velocity'de bir yetki eklentisiyle kapatılabilir, BungeeCord'da herkese açık kalır.</p>
 <p>Velocity'de yetkisi olmayan bir oyuncu Themis komutlarını görmez ve yazdığı komut backend sunucusuna gider. BungeeCord'da yetkisiz oyuncu Themis'in yetki mesajını görür.</p>
 
 <h2>Birden çok proxy</h2>
-<p>Birden çok Velocity ya da BungeeCord kullanıyorsanız hepsine Themis kurun, aynı MySQL/MariaDB/PostgreSQL veritabanına bağlayın ve <code>sync.mode</code> değerini <code>SQL</code> ya da <code>REDIS</code> yapın. Her proxy'ye farklı bir <code>server-name</code> verin.</p>
+<p>Birden çok Velocity ya da BungeeCord kullanıyorsanız hepsine Themis kurun, aynı MySQL/MariaDB/PostgreSQL veritabanına bağlayın ve <code translate="no">sync.mode</code> değerini <code translate="no">SQL</code> ya da <code translate="no">REDIS</code> yapın. Her proxy'ye farklı bir <code translate="no">server-name</code> verin.</p>
 <div class="pager" id="pager"></div>
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

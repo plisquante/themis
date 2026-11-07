@@ -2,7 +2,7 @@
 // from PAGES, previous/next links, copy buttons on code blocks. Content lives in each page's HTML.
 const PAGES=[
  ["BAŞLANGIÇ",[["index","Wiki ana sayfası"],["kurulum","Kurulum"],["proxy","Velocity ve BungeeCord"],["sss","Sık sorulanlar"]]],
- ["KULLANIM",[["komutlar","Komutlar"],["yetkiler","Yetkiler"],["sablonlar","Ceza merdivenleri"],["koruma","Kanıt ve koruma"],["aktarma","Başka eklentiden geçiş"]]],
+ ["KULLANIM",[["komutlar","Komutlar"],["yetkiler","Yetkiler"],["sablonlar","Ceza merdivenleri"],["koruma","Kanıt ve koruma"],["raporlar","Oyuncu raporları"],["aktarma","Başka eklentiden geçiş"]]],
  ["AYARLAR",[["yapilandirma","config.yml"],["depolama","Veritabanı ve ağ senkronu"],["mesajlar","Mesajlar ve diller"]]],
  ["GELİŞTİRİCİ",[["rest-api","REST API"],["webhooklar","Webhook'lar"],["java-api","Java API"],["placeholderapi","PlaceholderAPI"]]],
  ["THEMIS",[["surumler","Sürüm notları"],["lisans","Lisans"]]]];
