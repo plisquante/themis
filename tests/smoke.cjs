@@ -72,6 +72,9 @@ const check = (name, ok, detail = '') => { results.push(ok); console.log(`${ok ?
     await p.waitForTimeout(5000);
     const stats = await p.evaluate(() => [...document.querySelectorAll('.stat b')].map((b) => [b.dataset.to, b.firstChild.textContent]));
     check('stats count up to their targets', stats.every(([to, v]) => Number(v) === Number(to)), JSON.stringify(stats));
+    const numberFonts = await p.evaluate(() => [...document.querySelectorAll('.stat b .n')].map((n) => [getComputedStyle(n).fontSize, getComputedStyle(n).fontFamily]));
+    check('stat numbers use the large serif, not the label font', numberFonts.length === 3 && numberFonts.every(([size, fam]) => parseFloat(size) >= 40 && /Pagella/.test(fam)), JSON.stringify(numberFonts));
+    check('no price on the page', !/\d\s*\$|\$\s*\d|TEK SEFERLİK/.test(await p.evaluate(() => document.body.innerText)));
     await p.locator('.term').scrollIntoViewIfNeeded();
     await p.waitForTimeout(11000);
     check('terminal finishes its script', (await p.locator('#term').innerText()).includes('adalet yerini buldu'));

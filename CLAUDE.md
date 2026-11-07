@@ -19,7 +19,7 @@ kullanıcı dokümantasyonu yalnızca burada, `wiki/` altında tutulur. Siteden 
 - Animasyonlar yumuşak ama ağır değil (kullanıcı önce "çok hızlı ve keskin", sonra "fazla yavaş" dedi): zamana bağlı
   in-out eğriler, açılış ~2.2 sn, bölümler görününce bir kez 0.8 sn'de belirir, hover yumuşak geçer (~0.3 sn),
   sayaç 1.6 sn, CSS geçişleri .3–.35 sn. Kaydırmaya bağlı ani geçiş ekleme; süreleri bu aralıkta tut.
-- Sitedeki her iddia eklentide gerçekten var olmalı. Rakamlar (22 komut, 20 REST uç noktası, 5 veritabanı, 20$)
+- Sitedeki her iddia eklentide gerçekten var olmalı. Rakamlar (22 komut, 20 REST uç noktası, 5 veritabanı)
   eklentiden sayılmıştır; eklenti değişirse burayı da güncelle. Uydurma istatistik yazma.
 - Kullanıcı Türkçe konuşur. Site Türkçedir.
 
@@ -46,7 +46,9 @@ GitHub Pages yayını `.github/workflows/deploy.yml` ile `main` dalına her push
 1. **Nav**: sabit üst bar. Logo, "THEMIS", menü (bölümlere ve dokümantasyona bağlantı) ve "Sunucuna Ekle". Kaydırınca arka planı belirginleşir; okunan bölüm menüde vurgulanır.
 2. **Hero** (`#hero`): logo (dönen kesikli halka ve nabız gibi atan glow), `THEMIS`, ayraç, "MODERASYONUN TANRIÇASI" ve iki buton.
 3. **Özellikler** (`#features`): "Hiçbir suç terazide hafif gelmez." ve 3×2 kart. Kartlar `main.js` içindeki `CARDS` dizisinden üretilir; ikonlar `ICONS` içindeki 11×11 piksel desenlerinden çizilir.
-4. **İstatistik şeridi** (`#stats`): sayılar görününce sıfırdan sayar (`data-to`).
+4. **İstatistik şeridi** (`#stats`): üç kutu (komut, REST uç noktası, veritabanı); sayılar görününce sıfırdan sayar (`data-to`).
+   Fiyat kutusu kullanıcının isteğiyle kaldırıldı; sitede fiyat gösterilmez. Sayı `.stat b .n` içindedir, etiket `.stat > span`
+   (alt seçici `.stat span` sayıya da uyup fontunu bozmuştu).
 5. **Nasıl çalışır** (`#how`): logodaki üç sembol, bir cezanın üç adımı (Göz Bağı: kayıt, Terazi: sicilin tartılması, Kılıç: yaptırım). Sağdaki terminal `TERM` dizisinden yazılır.
 6. **SSS** (`#faq`): aynı adım kutularıyla sekiz soru (iki sütun; çift sayıda tut).
 7. **Footer**: "Adalet kodda yazılıdır.", butonlar ve alt satır. Alt satırda **yalnızca** `© 2026 THEMIS` durur; ikili rakamlar

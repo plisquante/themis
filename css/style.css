@@ -90,13 +90,13 @@ h2 em{font-style:italic;color:var(--gold);font-weight:400}
   font-size:14px;color:var(--dim);display:flex;justify-content:space-between}
 .card .foot span:last-child{color:var(--gold)}
 
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--card);
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:var(--card);
   backdrop-filter:blur(6px)}
 .stat{padding:38px 34px;border-right:1px solid var(--line)}
 .stat:last-child{border-right:0}
 .stat b{display:block;font-family:var(--serif);font-size:58px;color:var(--cream);line-height:1}
 .stat b small{font-size:30px;color:var(--gold)}
-.stat span{display:block;margin-top:12px;font-family:var(--pix);color:var(--muted);font-size:15px;letter-spacing:.06em}
+.stat > span{display:block;margin-top:12px;font-family:var(--pix);color:var(--muted);font-size:15px;letter-spacing:.06em}
 
 .how{display:grid;grid-template-columns:1fr 1.08fr;gap:22px}
 .steps{display:flex;flex-direction:column;gap:22px}
@@ -160,9 +160,7 @@ code{font-family:var(--pix);color:var(--cream);font-size:.95em}
   h1{font-size:104px}
   .logo-wrap{width:360px;height:360px}
   .grid{grid-template-columns:repeat(2,1fr)}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .stat:nth-child(2){border-right:0}
-  .stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .stat{padding:32px 26px}
   .how{grid-template-columns:1fr}
   .sec-head{flex-direction:column;align-items:flex-start;gap:20px}
 }
