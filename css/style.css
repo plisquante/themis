@@ -95,6 +95,7 @@ h2 em{font-style:italic;color:var(--gold);font-weight:400}
 .stat{padding:38px 34px;border-right:1px solid var(--line)}
 .stat:last-child{border-right:0}
 .stat b{display:block;font-family:var(--serif);font-size:58px;color:var(--cream);line-height:1}
+.stat b .n{font-style:italic;font-weight:400}
 .stat b small{font-size:30px;color:var(--gold)}
 .stat > span{display:block;margin-top:12px;font-family:var(--pix);color:var(--muted);font-size:15px;letter-spacing:.06em}
 
@@ -197,7 +198,7 @@ code{font-family:var(--pix);color:var(--cream);font-size:.95em}
   .card h3{font-size:25px}
   .stat{border-right:0;border-bottom:1px solid var(--line);padding:28px 24px}
   .stat:last-child{border-bottom:0}
-  .stat b{font-size:48px}
+  .stat b{font-size:52px}
   .step{padding:22px 20px;gap:18px}
   .step .idx{font-size:36px;min-width:44px}
   .step h4{font-size:22px}
