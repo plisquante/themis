@@ -45,14 +45,14 @@
 <div class="table"><table>
 <tr><th>YETKİ</th><th>VARSAYILAN</th><th>NE İŞE YARAR</th></tr>
 <tr><td><code>themis.notify</code></td><td>herkes</td><td>Herkese açık ceza duyurularını görür.</td></tr>
-<tr><td><code>themis.notify.silent</code></td><td>op</td><td>Sessiz cezaları, notları ve yetkili bildirimlerini görür.</td></tr>
+<tr><td><code>themis.notify.silent</code></td><td>op</td><td>Sessiz cezaları, notları, yetkili bildirimlerini ve gölge susturulmuş oyuncuların yazdıklarını görür.</td></tr>
 <tr><td><code>themis.notify.alts</code></td><td>op</td><td>Yasaklı ya da susturulmuş bir oyuncunun alt hesabı girince uyarı alır.</td></tr>
 <tr><td><code>themis.ban.permanent</code></td><td>op</td><td>Süresiz ban verebilir.</td></tr>
 <tr><td><code>themis.mute.permanent</code></td><td>op</td><td>Süresiz susturma verebilir.</td></tr>
 <tr><td><code>themis.warn.permanent</code></td><td>op</td><td><code>/editcase</code> ile bir uyarıyı kalıcı yapabilir.</td></tr>
 <tr><td><code>themis.check.ip</code></td><td>op</td><td><code>/check</code> içinde IP'yi tam görür (yoksa <code>1.2.x.x</code> gibi maskelenir).</td></tr>
 <tr><td><code>themis.limit.&lt;grup&gt;</code></td><td>—</td><td>Oyuncuyu config.yml'deki o grubun süre sınırlarına bağlar.</td></tr>
-<tr><td><code>themis.limit.bypass</code></td><td>op</td><td>Süre sınırlarını yok sayar.</td></tr>
+<tr><td><code>themis.limit.bypass</code></td><td>op</td><td>Süre sınırlarını ve saatlik ceza sınırını yok sayar.</td></tr>
 <tr><td><code>themis.template.&lt;anahtar&gt;</code></td><td>—</td><td>O ceza şablonunu kullanabilir (şablonda başka bir yetki tanımlanabilir).</td></tr>
 <tr><td><code>themis.template.*</code></td><td>op</td><td>Bütün şablonları kullanabilir.</td></tr>
 <tr><td><code>themis.exempt.ban</code>, <code>.mute</code>, <code>.warn</code>, <code>.kick</code>, <code>.note</code></td><td>kimse</td><td>Çevrimiçiyken o türde ceza alamaz.</td></tr>
@@ -66,12 +66,15 @@
     mute: 2h
     ban: 1d
     warn: 30d
+    per-hour: 20
   moderator:
     mute: 7d
-    ban: 30d</code></pre>
+    ban: 30d
+    per-hour: 60</code></pre>
 <ul>
 <li><code>themis.limit.helper</code> yetkisi olan biri en fazla 2 saat susturabilir; süresiz ceza da sınırı aşmış sayılır.</li>
 <li>Birden çok gruba üye olan için en cömert sınır geçerlidir. Grupta tanımlanmamış bir tür o grup için sınırsızdır.</li>
+<li><code>per-hour</code>, gruptaki bir yetkilinin bir saatte verebileceği ceza sayısıdır; çalınan bir hesabın bütün sunucuyu yasaklamasını önler. Gerekirse <a href="koruma.html#yetkili"><code>/themis rollback</code></a> ile geri alın.</li>
 <li>Konsol, API ve <code>themis.limit.bypass</code> sahipleri sınırsızdır.</li>
 </ul>
 <div class="pager" id="pager"></div>

@@ -36,7 +36,7 @@
 <tr><td><code>/ban &lt;oyuncu&gt; [süre] [sebep]</code></td><td>—</td><td><code>themis.command.ban</code></td><td>Yasaklar. Süre yazılmazsa kalıcıdır (<code>themis.ban.permanent</code> gerekir).</td></tr>
 <tr><td><code>/tempban &lt;oyuncu&gt; &lt;süre&gt; [sebep]</code></td><td>—</td><td><code>themis.command.ban</code></td><td>Süreli yasak; süre zorunludur.</td></tr>
 <tr><td><code>/ipban &lt;oyuncu|ip&gt; [süre] [sebep]</code></td><td>banip</td><td><code>themis.command.ipban</code></td><td>Oyuncunun son IP'sini ya da doğrudan bir IP'yi yasaklar.</td></tr>
-<tr><td><code>/mute &lt;oyuncu&gt; [süre] [sebep]</code></td><td>—</td><td><code>themis.command.mute</code></td><td>Susturur. Sohbet ve <code>muted-blocked-commands</code> listesindeki komutlar engellenir.</td></tr>
+<tr><td><code>/mute &lt;oyuncu&gt; [süre] [sebep]</code></td><td>—</td><td><code>themis.command.mute</code></td><td>Susturur. Sohbet ve <code>muted-blocked-commands</code> listesindeki komutlar engellenir. <code>-shadow</code> ile gölge susturma.</td></tr>
 <tr><td><code>/tempmute &lt;oyuncu&gt; &lt;süre&gt; [sebep]</code></td><td>—</td><td><code>themis.command.mute</code></td><td>Süreli susturma; süre zorunludur.</td></tr>
 <tr><td><code>/ipmute &lt;oyuncu|ip&gt; [süre] [sebep]</code></td><td>muteip</td><td><code>themis.command.ipmute</code></td><td>IP'ye susturma: aynı IP'den giren her hesap susturulur.</td></tr>
 <tr><td><code>/warn &lt;oyuncu&gt; [süre] [sebep]</code></td><td>—</td><td><code>themis.command.warn</code></td><td>Uyarı. Süre verilirse uyarı o süre sonunda düşer.</td></tr>
@@ -50,9 +50,9 @@
 <tr><td><code>/staffhistory &lt;yetkili&gt; [sayfa]</code></td><td>shistory</td><td><code>themis.command.staffhistory</code></td><td>Bir yetkilinin verdiği cezalar. <code>console</code> konsolun verdiklerini gösterir.</td></tr>
 <tr><td><code>/check &lt;oyuncu&gt;</code></td><td>lookupplayer</td><td><code>themis.command.check</code></td><td>Durum, ceza sayıları, ilk/son giriş, IP ve alt hesap sayısı.</td></tr>
 <tr><td><code>/alts &lt;oyuncu&gt;</code></td><td>dupeip</td><td><code>themis.command.alts</code></td><td>Aynı IP'yi paylaşan hesaplar; yasaklı ve susturulmuş olanlar renklidir.</td></tr>
-<tr><td><code>/case &lt;#kod&gt;</code></td><td>—</td><td><code>themis.command.case</code></td><td>Tek bir cezanın bütün ayrıntıları.</td></tr>
+<tr><td><code>/case &lt;#kod&gt; [evidence]</code></td><td>—</td><td><code>themis.command.case</code></td><td>Tek bir cezanın bütün ayrıntıları; <code>evidence</code> ile ceza anındaki sohbet.</td></tr>
 <tr><td><code>/editcase &lt;#kod&gt; reason|duration &lt;değer&gt;</code></td><td>—</td><td><code>themis.command.edit</code></td><td>Sebebi ya da süreyi değiştirir. Süre cezanın verildiği andan ölçülür.</td></tr>
-<tr><td><code>/themis &lt;alt komut&gt;</code></td><td>—</td><td><code>themis.command.admin</code></td><td>Yönetim: about, reload, templates, token, import, webhook test.</td></tr>
+<tr><td><code>/themis &lt;alt komut&gt;</code></td><td>—</td><td><code>themis.command.admin</code></td><td>Yönetim: about, reload, templates, token, import, webhook test, rollback.</td></tr>
 </table></div>
 
 <h2>Bayraklar</h2>
@@ -63,6 +63,7 @@
 <tr><td><code>-p</code>, <code>--public</code></td><td><code>silent-by-default: true</code> iken cezayı herkese duyurur.</td></tr>
 <tr><td><code>-ip</code></td><td>Oyuncunun kayıtlı IP'sine de uygular (ban ve mute).</td></tr>
 <tr><td><code>-r</code>, <code>--replace</code></td><td>Oyuncunun etkin aynı türdeki cezasını yenisiyle değiştirir.</td></tr>
+<tr><td><code>-shadow</code></td><td>Gölge susturma (yalnızca susturmalar): oyuncu kendi mesajlarını görür, başkası görmez. Bkz. <a href="koruma.html#golge">Kanıt ve koruma</a>.</td></tr>
 <tr><td><code>-scope=&lt;sunucu&gt;</code></td><td>Cezayı tek bir sunucuyla sınırlar. Proxy'de bu, backend sunucusunun adıdır.</td></tr>
 </table></div>
 
@@ -70,6 +71,8 @@
 <p>Birimler: <code>s</code> saniye, <code>m</code> dakika, <code>h</code> saat, <code>d</code> gün, <code>w</code> hafta, <code>mo</code> ay, <code>y</code> yıl. Birleştirilebilir: <code>1d12h</code>. Kalıcı ceza için <code>perm</code> yazın ya da süreyi hiç yazmayın.</p>
 <pre><code>/ban Steve 7d Hile kullanımı
 /mute Steve 1h30m Spam -s
+/mute Steve 1d Trol -shadow
+/case #7KQ2MX evidence
 /ipban 203.0.113.7 perm Bot saldırısı
 /punish Steve spam
 /editcase #7KQ2MX duration 3d
@@ -88,6 +91,7 @@
 <tr><td><code>/themis token list</code> · <code>revoke &lt;ad&gt;</code></td><td>Anahtarları listeler, iptal eder.</td></tr>
 <tr><td><code>/themis import …</code></td><td>Vanilla, LiteBans ve AdvancedBan'dan aktarma. Bkz. <a href="aktarma.html">geçiş</a>.</td></tr>
 <tr><td><code>/themis webhook test</code></td><td>Açık webhook'lara örnek bir olay gönderir.</td></tr>
+<tr><td><code>/themis rollback &lt;yetkili&gt; &lt;süre&gt; [sebep] [-confirm]</code></td><td>Bir yetkilinin son verdiği etkin cezaları önce sayar, <code>-confirm</code> ile kaldırır. Bkz. <a href="koruma.html#yetkili">yetkili güvenliği</a>.</td></tr>
 </table></div>
 <div class="pager" id="pager"></div>
 </main>

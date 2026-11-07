@@ -61,7 +61,7 @@
 <tr><td>GET</td><td><code>/v1/stream</code></td><td>stream</td><td>Ağdaki her ceza değişikliğinin canlı akışı (Server-Sent Events).</td></tr>
 <tr><td>GET</td><td><code>/v1/punishments</code></td><td>read</td><td>Ceza arama.</td></tr>
 <tr><td>POST</td><td><code>/v1/punishments</code></td><td>write</td><td>Ceza verme.</td></tr>
-<tr><td>GET</td><td><code>/v1/punishments/{ref}</code></td><td>read</td><td>Tek ceza; <code>{ref}</code> sayısal kimlik ya da dosya kodu.</td></tr>
+<tr><td>GET</td><td><code>/v1/punishments/{ref}</code></td><td>read</td><td>Tek ceza ve kanıtı (<code>evidence</code>); <code>{ref}</code> sayısal kimlik ya da dosya kodu.</td></tr>
 <tr><td>PATCH</td><td><code>/v1/punishments/{ref}</code></td><td>write</td><td>Sebep, süre/bitiş ya da metadata düzenleme.</td></tr>
 <tr><td>DELETE</td><td><code>/v1/punishments/{ref}</code></td><td>write</td><td>Kaldırma.</td></tr>
 <tr><td>POST</td><td><code>/v1/punishments/{ref}/revoke</code></td><td>write</td><td>Sebeple kaldırma.</td></tr>
@@ -91,7 +91,8 @@ curl -X POST http://127.0.0.1:8787/v1/punishments/7KQ2MX/revoke \
 
 <span class="d"># canlı akış</span>
 curl -N -H "Authorization: Bearer thm_…" http://127.0.0.1:8787/v1/stream</code></pre>
-<p>Ceza gövdesi: <code>type</code> (zorunlu), <code>target</code> (<code>uuid</code>, <code>name</code> ya da <code>ip</code>; <code>ip_based</code>), <code>reason</code>, <code>duration</code> (<code>"7d"</code>, saniye sayısı ya da kalıcı için <code>null</code>/<code>"perm"</code>), <code>silent</code>, <code>replace</code>, <code>scope</code>, <code>issuer</code>, <code>metadata</code>.</p>
+<p>Ceza gövdesi: <code>type</code> (zorunlu), <code>target</code> (<code>uuid</code>, <code>name</code> ya da <code>ip</code>; <code>ip_based</code>), <code>reason</code>, <code>duration</code> (<code>"7d"</code>, saniye sayısı ya da kalıcı için <code>null</code>/<code>"perm"</code>), <code>silent</code>, <code>shadow</code> (yalnızca mute: gölge susturma), <code>replace</code>, <code>scope</code>, <code>issuer</code>, <code>metadata</code>.</p>
+<p>Tek ceza yanıtında <code>evidence</code> dizisi, oyuncunun ceza anından önce yazdıklarını eskiden yeniye verir: <code>{"at": "…", "server": "survival", "kind": "chat", "content": "…"}</code>. Her cezada <code>shadow</code> alanı gölge susturmayı gösterir.</p>
 
 <h2>Yanıt biçimi ve hatalar</h2>
 <pre><code>{ "data": { … } }

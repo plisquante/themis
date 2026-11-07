@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../assets/logo-128.png">
+<title>Kanıt ve koruma · Themis Wiki</title>
+<meta name="description" content="Themis&#x27;in koruma özellikleri: cezaya otomatik eklenen sohbet kanıtı, gölge susturma, ban kaçağı engeli, yetkili saatlik sınırı ve toplu geri alma.">
+<meta name="theme-color" content="#13110e">
+<link rel="preload" href="../fonts/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/unifont.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/wiki.css">
+</head>
+<body class="wiki-page" data-page="koruma">
+<canvas id="bits" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+
+<nav>
+  <div class="bgfill"></div>
+  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
+  <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
+</nav>
+
+<div class="wiki">
+<aside id="side" aria-label="Wiki sayfaları"></aside>
+<main class="doc" id="content">
+<div class="kicker">// KULLANIM</div>
+<h1>Kanıt ve <em>koruma</em></h1>
+<p class="lead">Bir moderasyon eklentisinin asıl işi ceza vermek değil, doğru cezayı verip arkasında durabilmektir. Bu sayfadaki özellikler bunun için var: her cezanın kanıtı, trolleri boşa konuşturan gölge susturma, ikinci hesapla dönenlere karşı koruma ve ele geçirilen bir yetkili hesabına karşı sigorta.</p>
+
+<h2 id="kanit">Kanıt: ceza anındaki sohbet</h2>
+<p>Themis her oyuncunun son yazdıklarını bellekte tutar. Bir ban, susturma, uyarı ya da kick verildiği an oyuncunun son mesajları ve fısıltıları cezaya <strong>kendiliğinden</strong> eklenir. Ekran görüntüsü istemeye, sohbet kaydı aramaya gerek kalmaz.</p>
+<pre><code>/case #7KQ2MX            <span class="d"># dosyada "Kanıt 6 satır [göster]"</span>
+/case #7KQ2MX evidence   <span class="d"># satırlar: saat, sunucu, mesaj</span></code></pre>
+<ul>
+<li>Kanıt REST API'de (<code>GET /v1/punishments/{ref}</code> yanıtında <code>evidence</code>), THEMIS webhook'larında (<code>data.evidence</code>) ve Discord embed'inde ("Recent chat") da görünür.</li>
+<li>Oyuncu çıkış yaptıktan hemen sonra verilen cezada da çalışır: satırlar <code>max-age</code> boyunca tutulur.</li>
+<li>Ağda her sunucu kendi gördüğünü ekler; proxy'de Themis bütün sunuculardaki sohbeti görür.</li>
+</ul>
+<pre><code>evidence:
+  enabled: true
+  lines: 15          <span class="d"># oyuncu başına en fazla satır</span>
+  max-age: 10m       <span class="d"># cezadan en fazla bu kadar önceki satırlar</span>
+  commands: [msg, tell, w, whisper, r, reply, me]
+  types: [ban, mute, warn, kick]</code></pre>
+
+<h2 id="golge">Gölge susturma</h2>
+<p>Normal susturmada oyuncu susturulduğunu anlar, yeni hesap açar ya da başka yoldan rahatsız etmeye devam eder. Gölge susturmada oyuncu yazmaya devam eder ve <strong>kendi mesajlarını görür</strong>, ama başka kimse görmez. Oyuncuya hiçbir bildirim gitmez, duyuru yalnızca yetkililere yapılır.</p>
+<pre><code>/mute Steve 1d Spam -shadow
+/tempmute Steve 2h Trol -shadow</code></pre>
+<ul>
+<li><code>themis.notify.silent</code> yetkisi olan yetkililer gölgedeki mesajları <code>[gölge] Steve: …</code> olarak görür (<code>punishments.shadow-staff-echo</code>).</li>
+<li><code>muted-blocked-commands</code> listesindeki komutlar sessizce engellenir.</li>
+<li>PlaceholderAPI'deki <code>%themis_muted%</code> gölge susturmada <code>false</code> döner; oyuncu hiçbir yerden anlayamaz.</li>
+<li>Kaldırmak için normal <code>/unmute</code>; oyuncuya "artık yazabilirsin" mesajı gitmez.</li>
+</ul>
+<div class="note"><b>PROXY</b>BungeeCord'da ve imzasız sohbette proxy mesajı düşürür ve oyuncuya kendi mesajını geri gösterir (<code>proxy.shadow-echo-format</code>). Velocity'de imzalı sohbet için backend'de köprü gerekir; köprüsüz sunucuda <code>proxy.velocity-signed-chat</code> kuralı geçerli olur. Bkz. <a href="proxy.html">Velocity ve BungeeCord</a>.</div>
+
+<h2 id="kacak">Ban kaçağı koruması</h2>
+<p>Yasaklı bir oyuncu ikinci hesabıyla aynı bağlantıdan girdiğinde Themis bunu fark eder. Ne yapılacağını siz seçersiniz:</p>
+<div class="table"><table>
+<tr><th>EYLEM</th><th>NE OLUR</th></tr>
+<tr><td><code>ALERT</code></td><td>Varsayılan. Yetkililere (<code>themis.notify.alts</code>) tıklanabilir bir uyarı gider.</td></tr>
+<tr><td><code>BLOCK</code></td><td>Giriş reddedilir; ekranda bağlı yasaklı hesap ve onun dosya kodu görünür.</td></tr>
+<tr><td><code>BAN</code></td><td>Yeni hesaba <code>evasion</code> şablonu uygulanır; yeni ceza asıl dosyanın koduyla bağlanır.</td></tr>
+</table></div>
+<pre><code>evasion:
+  action: BLOCK
+  window: 30d        <span class="d"># yasaklı hesabın bu IP'yi en son kullandığı tarih bu kadar yeni olmalı</span>
+  template: evasion
+  exempt: [KardesHesabi]</code></pre>
+<p>Yalnızca bütün ağı kapsayan ve hesaba verilmiş banlar sayılır (IP banları zaten girişte uygulanır). Aynı evi ya da okulu paylaşan oyuncular için <code>exempt</code> listesini kullanın.</p>
+
+<h2 id="yetkili">Yetkili hesabı güvenliği</h2>
+<p>Bir yetkilinin hesabı çalınırsa ya da biri yetkisini kötüye kullanırsa, birkaç dakikada yüzlerce oyuncu yasaklanabilir. Themis buna iki önlem alır.</p>
+<h3>Saatlik sınır</h3>
+<pre><code>limits:
+  helper:
+    mute: 2h
+    per-hour: 20     <span class="d"># saatte en fazla 20 ceza</span></code></pre>
+<p>Sınıra ulaşan yetkili bir saat dolana kadar yeni ceza veremez. Konsol, API ve <code>themis.limit.bypass</code> sahipleri sınırsızdır.</p>
+<h3>Toplu geri alma</h3>
+<pre><code>/themis rollback &lt;yetkili|console&gt; &lt;süre&gt; [sebep]
+/themis rollback KotuMod 2h Hesap çalındı
+/themis rollback KotuMod 2h Hesap çalındı -confirm</code></pre>
+<p>İlk komut, o yetkilinin son 2 saatte verdiği etkin ban, susturma ve uyarıları yalnızca sayar. <code>-confirm</code> ile hepsi kaldırılır; her biri sebebiyle kayda geçer ve oyunculara bildirilir. Yalnızca <code>themis.command.admin</code> yetkisiyle çalışır.</p>
+
+<h2 id="bildirim">Girişte bildirim</h2>
+<ul>
+<li>Susturulmuş bir oyuncu girişte susturulduğunu, sebebini ve kalan süreyi görür; yazmaya çalışınca öğrenmez.</li>
+<li>Çevrimdışıyken aldığı uyarılar girişte listelenir: "Sen yokken 2 uyarı aldın".</li>
+<li>İtiraz bağlantısı dosya kodunu taşıyabilir: <code>appeal-url: "https://site.com/itiraz?dosya={code}"</code>. Ban ekranındaki bağlantı oyuncuyu formunuza kodu doldurulmuş olarak götürür.</li>
+</ul>
+<div class="pager" id="pager"></div>
+</main>
+</div>
+
+<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<script src="../js/wiki.js"></script>
+</body>
+</html>
