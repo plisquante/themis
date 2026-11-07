@@ -36,8 +36,8 @@
     enabled: true
     url: "https://discord.com/api/webhooks/..."
     format: DISCORD
-    events: ["punishment.issued", "punishment.revoked"]
-    types: []                 # boş = hepsi; ya da ban, mute, warn, kick, note
+    events: ["punishment.issued", "punishment.revoked", "report.created"]
+    types: []                 # boş = hepsi; ya da ban, mute, warn, kick, note, report
     include-silent: false
   - name: my-backend
     enabled: true
@@ -50,8 +50,8 @@
     expose-ips: false</code></pre>
 <div class="table"><table>
 <tr><th>ALAN</th><th>AÇIKLAMA</th></tr>
-<tr><td><code translate="no">events</code></td><td><code translate="no">punishment.issued</code>, <code translate="no">punishment.revoked</code>, <code translate="no">punishment.edited</code>, <code translate="no">punishment.expired</code> ya da <code translate="no">*</code>.</td></tr>
-<tr><td><code translate="no">types</code></td><td>Yalnızca bu ceza türleri; boşsa hepsi.</td></tr>
+<tr><td><code translate="no">events</code></td><td><code translate="no">punishment.issued</code>, <code translate="no">punishment.revoked</code>, <code translate="no">punishment.edited</code>, <code translate="no">punishment.expired</code>, <code translate="no">report.created</code> ya da <code translate="no">*</code>.</td></tr>
+<tr><td><code translate="no">types</code></td><td>Yalnızca bu ceza türleri; boşsa hepsi. Raporlar için <code translate="no">report</code> (liste boşsa raporlar da gider).</td></tr>
 <tr><td><code translate="no">include-silent</code></td><td>Sessiz cezalar da gönderilsin mi.</td></tr>
 <tr><td><code translate="no">secret</code></td><td><code translate="no">THEMIS</code> biçiminde imza anahtarı.</td></tr>
 <tr><td><code translate="no">expose-ips</code></td><td>Yükte tam IP'ler; kapalıyken maskelidir.</td></tr>
@@ -72,6 +72,27 @@
 }</code></pre>
 <p><code translate="no">evidence</code>, <code translate="no">punishment.issued</code> olaylarında oyuncunun ceza anından önce yazdıklarıdır (diğer olaylarda boş). DISCORD biçiminde aynı satırlar "Recent chat" alanında görünür.</p>
 <p>Başlıklar: <code translate="no">X-Themis-Event</code>, <code translate="no">X-Themis-Delivery</code> (teslimat kimliği), <code translate="no">X-Themis-Signature</code>.</p>
+
+<h2 id="rapor">Rapor olayı</h2>
+<p>Bir oyuncu <a href="raporlar.html">/report</a> yazdığında <code translate="no">report.created</code> gönderilir. DISCORD biçiminde başlık "Steve reported", alanlar sebep, raporlayan, sunucu, rapor numarası ve "Recent chat"tir. THEMIS yükü:</p>
+<pre translate="no"><code translate="no">{
+  "id": "evt_9a1e…",
+  "type": "report.created",
+  "created_at": "2026-11-07T19:00:00Z",
+  "server": "survival",
+  "api_version": 1,
+  "data": {
+    "report": {
+      "id": 12,
+      "reporter": { "uuid": "…", "name": "Alex" },
+      "target": { "uuid": "…", "name": "Steve" },
+      "reason": "küfür ediyor",
+      "server": "survival",
+      "created_at": "2026-11-07T18:59:58Z"
+    },
+    "evidence": [ { "at": "2026-11-07T18:59:41Z", "server": "survival", "kind": "chat", "content": "…" } ]
+  }
+}</code></pre>
 
 <h2>İmzayı doğrulama</h2>
 <p><code translate="no">X-Themis-Signature: t=&lt;unix&gt;,v1=&lt;hex&gt;</code>, burada <code translate="no">v1 = HMAC_SHA256(secret, t + "." + ham_gövde)</code>. Beş dakikadan eski teslimatları reddedin.</p>
