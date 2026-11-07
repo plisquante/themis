@@ -6,11 +6,11 @@
 <link rel="icon" href="assets/logo-128.png">
 <link rel="apple-touch-icon" href="assets/logo-128.png">
 <title>Themis · Paper, Velocity ve BungeeCord için moderasyon eklentisi</title>
-<meta name="description" content="Themis, Paper, Velocity ve BungeeCord için tek jar'lık bir moderasyon eklentisi: kendiliğinden kademelenen ban, mute ve uyarılar, ağın tamamında tek sicil, kaçak hesap tespiti, REST API ve webhook'lar. Bir kez 20$.">
+<meta name="description" content="Themis, Paper, Folia, Velocity ve BungeeCord için tek jar'lık bir moderasyon eklentisi: kendiliğinden kademelenen ban, mute ve uyarılar, ağın tamamında tek sicil, kaçak hesap tespiti, AutoMod, dokuz dil, REST API ve webhook'lar. Bir kez 20$.">
 <meta name="theme-color" content="#13110e">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Themis · Moderasyonun tanrıçası">
-<meta property="og:description" content="Paper, Velocity ve BungeeCord için moderasyon eklentisi. Ceza merdivenleri, ağ senkronu, kaçak hesap tespiti ve tamamen açık bir API.">
+<meta property="og:description" content="Paper, Folia, Velocity ve BungeeCord için moderasyon eklentisi. Ceza merdivenleri, ağ senkronu, kaçak hesap tespiti ve tamamen açık bir API.">
 <meta property="og:image" content="assets/logo.png">
 <link rel="preload" href="fonts/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/unifont.woff2" as="font" type="font/woff2" crossorigin>
@@ -22,7 +22,7 @@
 
 <nav>
   <div class="bgfill" id="navbg"></div>
-  <a class="brand" href="#hero"><img src="assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="#hero" translate="no"><img src="assets/logo-128.png" alt="">THEMIS</a>
   <ul id="navlinks"><li class="on"><a href="#hero">Ana Sayfa</a></li><li><a href="#features">Özellikler</a></li><li><a href="#how">Nasıl Çalışır</a></li><li><a href="wiki/">Wiki</a></li><li><a href="#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -30,7 +30,7 @@
 <main>
 <header class="hero" id="hero">
   <div class="logo-wrap" id="logo"><div class="glow" id="glow"></div><div class="ring r2" id="ring2"></div><div class="ring" id="ring1"></div><img src="assets/logo.png" alt="Themis logosu: gözleri bağlı, elinde terazi ve kılıç tutan tanrıça"></div>
-  <h1 id="title">THEMIS</h1>
+  <h1 id="title" translate="no">THEMIS</h1>
   <div class="divider" id="div"><i></i><b></b><i></i></div>
   <div class="sub" id="sub">MODERASYONUN TANRIÇASI</div>
   <div class="btns" id="btns"><a class="btn p" href="https://builtbybit.com/">&gt; Sunucunu Koru</a><a class="btn s" href="wiki/">Wiki_</a></div>
@@ -50,10 +50,10 @@
 <section id="stats" style="padding-top:0">
   <div class="wrap">
     <div class="stats reveal">
-      <div class="stat"><b data-to="20">0<small></small></b><span>HAZIR KOMUT</span></div>
-      <div class="stat"><b data-to="17">0<small></small></b><span>REST API UÇ NOKTASI</span></div>
-      <div class="stat"><b data-to="5">0<small></small></b><span>VERİTABANI SEÇENEĞİ</span></div>
-      <div class="stat"><b data-to="20">0<small>$</small></b><span>TEK SEFERLİK LİSANS</span></div>
+      <div class="stat"><b data-to="20" translate="no"><span class="n">0</span><small></small></b><span>HAZIR KOMUT</span></div>
+      <div class="stat"><b data-to="17" translate="no"><span class="n">0</span><small></small></b><span>REST API UÇ NOKTASI</span></div>
+      <div class="stat"><b data-to="5" translate="no"><span class="n">0</span><small></small></b><span>VERİTABANI SEÇENEĞİ</span></div>
+      <div class="stat"><b data-to="20" translate="no"><span class="n">0</span><small>$</small></b><span>TEK SEFERLİK LİSANS</span></div>
     </div>
   </div>
 </section>
@@ -71,8 +71,8 @@
         <div class="step reveal"><div class="bar"></div><div class="idx">III.</div><div><h4>Kılıç <small>YAPTIRIM</small></h4><p>Hüküm uygulanır: uyarı, susturma, atma ya da yasak. Oyuncuya dosya kodlu ban ekranı, yetkililere duyuru, Discord'a webhook gider; ağdaki her sunucu anında haberdar olur.</p></div></div>
       </div>
       <div class="term reveal">
-        <div class="tb"><i></i><i></i><i></i><span>themis@survival: ~</span></div>
-        <pre id="term"></pre>
+        <div class="tb"><i></i><i></i><i></i><span translate="no">themis@survival: ~</span></div>
+        <pre id="term" aria-live="off"></pre>
       </div>
     </div>
   </div>
@@ -85,12 +85,14 @@
       <p>Satın almadan önce en çok sorulanlar. Fazlası için <a href="wiki/sss.html">wiki</a>'ye bakın.</p>
     </div>
     <div class="faq">
-      <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>Velocity ya da BungeeCord'da çalışır mı?</h4><p>Evet, aynı jar. Proxy'nin <code>plugins</code> klasörüne atın; backend sunuculara hiçbir şey kurmanız gerekmez. Proxy'siz ağlarda Themis'i her Paper sunucusuna kurup tek bir MySQL, MariaDB ya da PostgreSQL veritabanına bağlayın.</p></div></div>
-      <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>LiteBans banlarıma ne olur?</h4><p>Konsoldan <code>/themis import litebans</code> çalıştırın. Her ban, mute, uyarı ve kick tarihleriyle, kimin verdiğiyle ve kaldırılıp kaldırılmadığıyla gelir. AdvancedBan ve vanilla ban listeleri de aynı şekilde aktarılır.</p></div></div>
+      <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>Velocity ya da BungeeCord'da çalışır mı?</h4><p>Evet, aynı jar. Proxy'nin <code translate="no">plugins</code> klasörüne atın; backend sunuculara hiçbir şey kurmanız gerekmez. Proxy'siz ağlarda Themis'i her Paper sunucusuna kurup tek bir MySQL, MariaDB ya da PostgreSQL veritabanına bağlayın.</p></div></div>
+      <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>LiteBans banlarıma ne olur?</h4><p>Konsoldan <code translate="no">/themis import litebans</code> çalıştırın. Her ban, mute, uyarı ve kick tarihleriyle, kimin verdiğiyle ve kaldırılıp kaldırılmadığıyla gelir. AdvancedBan ve vanilla ban listeleri de aynı şekilde aktarılır.</p></div></div>
       <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>Kendi eklentim ceza verebilir mi?</h4><p>Evet. Java API'si MIT lisanslıdır ve Bukkit'e bağlı değildir. Eklentiniz ceza verebilir, kaldırabilir, arayabilir; her cezayı kaydedilmeden önce engelleyebilir ya da değiştirebilir.</p></div></div>
       <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>Bir site ya da Discord botu bağlanabilir mi?</h4><p>REST API'yi açın ve yalnızca ihtiyaç duyduğu yetkilere sahip bir anahtar oluşturun. OpenAPI ile tanımlı 17 uç nokta, canlı olay akışı, anahtar başına hız sınırı ve HMAC imzalı webhook'lar hazır.</p></div></div>
-      <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>Hangi sürümlerde çalışır?</h4><p>Paper 1.21 ile 26.x arası ve Purpur gibi Paper çatalları, Velocity 3.4 ve üstü, BungeeCord; Java 21 ile. Folia henüz desteklenmiyor.</p></div></div>
-      <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>Mesajları değiştirebilir miyim?</h4><p>Her satır <code>messages_tr.yml</code> ya da <code>messages_en.yml</code> içinde, hover ve tıklama destekli MiniMessage biçimindedir. Renkler dosyanın başında tek yerden ayarlanır.</p></div></div>
+      <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>Hangi sürümlerde çalışır?</h4><p>Paper 1.21 ile 26.x arası ve Purpur gibi Paper çatalları, Velocity 3.4 ve üstü, BungeeCord; Java 21 ile. Folia da tam desteklenir: aynı jar, bölge zamanlayıcısıyla çalışır.</p></div></div>
+      <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>Mesajları değiştirebilir miyim?</h4><p>Her satır <code translate="no">messages_tr.yml</code> gibi dosyalarda, hover ve tıklama destekli MiniMessage biçimindedir. Renkler dosyanın başında tek yerden ayarlanır.</p></div></div>
+      <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>Oyuncular kendi dilinde mi görür?</h4><p>Evet. Türkçe, İngilizce, Almanca, İspanyolca, Fransızca, Portekizce, Rusça, Lehçe ve Çince hazır gelir. Her oyuncu mesajları, duyuruları ve ban ekranını kendi oyun dilinde görür; konsol sunucunun dilinde yazar. Varsayılan dil oyun içinden <code translate="no">/themis language</code> ile değişir.</p></div></div>
+      <div class="step reveal"><div class="bar"></div><div class="idx">?</div><div><h4>Reklam, flood ve bot saldırısı?</h4><p>AutoMod reklamı, flood'u, aynı mesajı tekrar tekrar yazmayı ve yasak isimleri kimse görmeden engeller; isterseniz bir ceza şablonu uygular. Bot saldırısında <code translate="no">/themis lockdown on</code> yeni hesapları dışarıda tutar, tanıdık oyuncular girmeye devam eder.</p></div></div>
     </div>
   </div>
 </section>
@@ -100,7 +102,7 @@
   <div class="quote">Adalet <em>kodda</em> yazılıdır.</div>
   <div class="q2">Sunucunu Themis'e emanet et. Gerisini tanrıça halleder.</div>
   <div class="btns"><a class="btn p" href="https://builtbybit.com/">&gt; Hemen Başla</a><a class="btn s" href="wiki/kurulum.html">Kurulum_</a></div>
-  <div class="bottom"><span>© 2026 THEMIS</span><span>01110100 01101000 01100101 01101101 01101001 01110011</span><span class="sig">made by cemo</span></div>
+  <div class="bottom"><span translate="no">© 2026 THEMIS</span></div>
 </footer>
 </main>
 

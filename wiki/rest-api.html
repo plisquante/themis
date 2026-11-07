@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -31,51 +31,51 @@
 <p class="lead">Paneller, Discord botları ve siteler Themis'e HTTP ile bağlanır. API, OpenAPI 3.1 ile tanımlı 17 uç noktadan oluşur.</p>
 
 <h2>Açma</h2>
-<pre><code>rest-api:
+<pre translate="no"><code translate="no">rest-api:
   enabled: true
   bind: "127.0.0.1"
   port: 8787</code></pre>
-<p><code>/themis reload</code> sonrası API <code>http://127.0.0.1:8787/v1</code> adresinde dinler. Dışarıya açacaksanız önüne HTTPS'li bir ters vekil (nginx, Caddy) koyun.</p>
+<p><code translate="no">/themis reload</code> sonrası API <code translate="no">http://127.0.0.1:8787/v1</code> adresinde dinler. Dışarıya açacaksanız önüne HTTPS'li bir ters vekil (nginx, Caddy) koyun.</p>
 
 <h2>Anahtarlar ve kapsamlar</h2>
-<pre><code>/themis token create panel read,write,stream
+<pre translate="no"><code translate="no">/themis token create panel read,write,stream
 /themis token list
 /themis token revoke panel</code></pre>
-<p>Anahtar <code>thm_</code> ile başlar ve yalnızca bir kez gösterilir; Themis yalnızca SHA-256 özetini saklar.</p>
+<p>Anahtar <code translate="no">thm_</code> ile başlar ve yalnızca bir kez gösterilir; Themis yalnızca SHA-256 özetini saklar.</p>
 <div class="table"><table>
 <tr><th>KAPSAM</th><th>İZİN</th></tr>
-<tr><td><code>read</code></td><td>Cezaları, oyuncuları, şablonları ve istatistikleri okuma.</td></tr>
-<tr><td><code>write</code></td><td>Ceza verme, düzenleme, kaldırma, şablon uygulama.</td></tr>
-<tr><td><code>stream</code></td><td>Canlı olay akışı.</td></tr>
-<tr><td><code>admin</code></td><td>Hepsi + IP geçmişi; <code>expose-ips: true</code> ise tam IP'ler.</td></tr>
+<tr><td><code translate="no">read</code></td><td>Cezaları, oyuncuları, şablonları ve istatistikleri okuma.</td></tr>
+<tr><td><code translate="no">write</code></td><td>Ceza verme, düzenleme, kaldırma, şablon uygulama.</td></tr>
+<tr><td><code translate="no">stream</code></td><td>Canlı olay akışı.</td></tr>
+<tr><td><code translate="no">admin</code></td><td>Hepsi + IP geçmişi; <code translate="no">expose-ips: true</code> ise tam IP'ler.</td></tr>
 </table></div>
-<p>Anahtarı <code>Authorization: Bearer thm_…</code> ya da <code>X-Themis-Token: thm_…</code> başlığıyla gönderin.</p>
+<p>Anahtarı <code translate="no">Authorization: Bearer thm_…</code> ya da <code translate="no">X-Themis-Token: thm_…</code> başlığıyla gönderin.</p>
 
 <h2>Uç noktalar</h2>
 <div class="table"><table>
 <tr><th>YÖNTEM</th><th>YOL</th><th>KAPSAM</th><th>NE YAPAR</th></tr>
-<tr><td>GET</td><td><code>/v1/health</code></td><td>—</td><td>Çalışıyor mu, sürüm. Anahtar gerekmez.</td></tr>
-<tr><td>GET</td><td><code>/v1/openapi.json</code></td><td>—</td><td>OpenAPI 3.1 sözleşmesi. Anahtar gerekmez.</td></tr>
-<tr><td>GET</td><td><code>/v1/whoami</code></td><td>herhangi</td><td>Anahtarın adı ve kapsamları.</td></tr>
-<tr><td>GET</td><td><code>/v1/stats</code></td><td>read</td><td>Tür başına etkin, son 24 saat, son 7 gün ve toplam sayılar.</td></tr>
-<tr><td>GET</td><td><code>/v1/stream</code></td><td>stream</td><td>Ağdaki her ceza değişikliğinin canlı akışı (Server-Sent Events).</td></tr>
-<tr><td>GET</td><td><code>/v1/punishments</code></td><td>read</td><td>Ceza arama.</td></tr>
-<tr><td>POST</td><td><code>/v1/punishments</code></td><td>write</td><td>Ceza verme.</td></tr>
-<tr><td>GET</td><td><code>/v1/punishments/{ref}</code></td><td>read</td><td>Tek ceza ve kanıtı (<code>evidence</code>); <code>{ref}</code> sayısal kimlik ya da dosya kodu.</td></tr>
-<tr><td>PATCH</td><td><code>/v1/punishments/{ref}</code></td><td>write</td><td>Sebep, süre/bitiş ya da metadata düzenleme.</td></tr>
-<tr><td>DELETE</td><td><code>/v1/punishments/{ref}</code></td><td>write</td><td>Kaldırma.</td></tr>
-<tr><td>POST</td><td><code>/v1/punishments/{ref}/revoke</code></td><td>write</td><td>Sebeple kaldırma.</td></tr>
-<tr><td>GET</td><td><code>/v1/players/{ref}</code></td><td>read</td><td>Profil, etkin ban/mute ve sayılar; <code>{ref}</code> ad ya da UUID.</td></tr>
-<tr><td>GET</td><td><code>/v1/players/{ref}/punishments</code></td><td>read</td><td>Oyuncunun sicili; <code>/punishments</code> filtrelerini alır.</td></tr>
-<tr><td>GET</td><td><code>/v1/players/{ref}/alts</code></td><td>read</td><td>Aynı IP'yi paylaşan hesaplar.</td></tr>
-<tr><td>GET</td><td><code>/v1/players/{ref}/ips</code></td><td>admin</td><td>IP geçmişi.</td></tr>
-<tr><td>GET</td><td><code>/v1/templates</code></td><td>read</td><td>Ceza şablonları.</td></tr>
-<tr><td>POST</td><td><code>/v1/templates/{key}/apply</code></td><td>write</td><td>Şablonun sıradaki basamağını uygulama.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/health</code></td><td>—</td><td>Çalışıyor mu, sürüm. Anahtar gerekmez.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/openapi.json</code></td><td>—</td><td>OpenAPI 3.1 sözleşmesi. Anahtar gerekmez.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/whoami</code></td><td>herhangi</td><td>Anahtarın adı ve kapsamları.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/stats</code></td><td>read</td><td>Tür başına etkin, son 24 saat, son 7 gün ve toplam sayılar.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/stream</code></td><td>stream</td><td>Ağdaki her ceza değişikliğinin canlı akışı (Server-Sent Events).</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/punishments</code></td><td>read</td><td>Ceza arama.</td></tr>
+<tr><td>POST</td><td><code translate="no">/v1/punishments</code></td><td>write</td><td>Ceza verme.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/punishments/{ref}</code></td><td>read</td><td>Tek ceza ve kanıtı (<code translate="no">evidence</code>); <code translate="no">{ref}</code> sayısal kimlik ya da dosya kodu.</td></tr>
+<tr><td>PATCH</td><td><code translate="no">/v1/punishments/{ref}</code></td><td>write</td><td>Sebep, süre/bitiş ya da metadata düzenleme.</td></tr>
+<tr><td>DELETE</td><td><code translate="no">/v1/punishments/{ref}</code></td><td>write</td><td>Kaldırma.</td></tr>
+<tr><td>POST</td><td><code translate="no">/v1/punishments/{ref}/revoke</code></td><td>write</td><td>Sebeple kaldırma.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/players/{ref}</code></td><td>read</td><td>Profil, etkin ban/mute ve sayılar; <code translate="no">{ref}</code> ad ya da UUID.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/players/{ref}/punishments</code></td><td>read</td><td>Oyuncunun sicili; <code translate="no">/punishments</code> filtrelerini alır.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/players/{ref}/alts</code></td><td>read</td><td>Aynı IP'yi paylaşan hesaplar.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/players/{ref}/ips</code></td><td>admin</td><td>IP geçmişi.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/templates</code></td><td>read</td><td>Ceza şablonları.</td></tr>
+<tr><td>POST</td><td><code translate="no">/v1/templates/{key}/apply</code></td><td>write</td><td>Şablonun sıradaki basamağını uygulama.</td></tr>
 </table></div>
-<p>Arama filtreleri: <code>target</code>, <code>ip</code>, <code>issuer</code>, <code>type</code> (virgüllü: <code>ban,mute</code>), <code>status</code> (<code>active,expired,revoked</code>), <code>template</code>, <code>search</code>, <code>since</code>, <code>until</code> (ISO-8601 ya da unix saniye), <code>limit</code>, <code>offset</code>, <code>order</code>.</p>
+<p>Arama filtreleri: <code translate="no">target</code>, <code translate="no">ip</code>, <code translate="no">issuer</code>, <code translate="no">type</code> (virgüllü: <code translate="no">ban,mute</code>), <code translate="no">status</code> (<code translate="no">active,expired,revoked</code>), <code translate="no">template</code>, <code translate="no">search</code>, <code translate="no">since</code>, <code translate="no">until</code> (ISO-8601 ya da unix saniye), <code translate="no">limit</code>, <code translate="no">offset</code>, <code translate="no">order</code>.</p>
 
 <h2>Örnekler</h2>
-<pre><code><span class="d"># oyuncu</span>
+<pre translate="no"><code translate="no"><span class="d"># oyuncu</span>
 curl -H "Authorization: Bearer thm_…" http://127.0.0.1:8787/v1/players/Steve
 
 <span class="d"># ceza ver (aynı Idempotency-Key ile tekrar gönderilirse ikinci ceza oluşmaz)</span>
@@ -91,43 +91,43 @@ curl -X POST http://127.0.0.1:8787/v1/punishments/7KQ2MX/revoke \
 
 <span class="d"># canlı akış</span>
 curl -N -H "Authorization: Bearer thm_…" http://127.0.0.1:8787/v1/stream</code></pre>
-<p>Ceza gövdesi: <code>type</code> (zorunlu), <code>target</code> (<code>uuid</code>, <code>name</code> ya da <code>ip</code>; <code>ip_based</code>), <code>reason</code>, <code>duration</code> (<code>"7d"</code>, saniye sayısı ya da kalıcı için <code>null</code>/<code>"perm"</code>), <code>silent</code>, <code>shadow</code> (yalnızca mute: gölge susturma), <code>replace</code>, <code>scope</code>, <code>issuer</code>, <code>metadata</code>.</p>
-<p>Tek ceza yanıtında <code>evidence</code> dizisi, oyuncunun ceza anından önce yazdıklarını eskiden yeniye verir: <code>{"at": "…", "server": "survival", "kind": "chat", "content": "…"}</code>. Her cezada <code>shadow</code> alanı gölge susturmayı gösterir.</p>
+<p>Ceza gövdesi: <code translate="no">type</code> (zorunlu), <code translate="no">target</code> (<code translate="no">uuid</code>, <code translate="no">name</code> ya da <code translate="no">ip</code>; <code translate="no">ip_based</code>), <code translate="no">reason</code>, <code translate="no">duration</code> (<code translate="no">"7d"</code>, saniye sayısı ya da kalıcı için <code translate="no">null</code>/<code translate="no">"perm"</code>), <code translate="no">silent</code>, <code translate="no">shadow</code> (yalnızca mute: gölge susturma), <code translate="no">replace</code>, <code translate="no">scope</code>, <code translate="no">issuer</code>, <code translate="no">metadata</code>.</p>
+<p>Tek ceza yanıtında <code translate="no">evidence</code> dizisi, oyuncunun ceza anından önce yazdıklarını eskiden yeniye verir: <code translate="no">{"at": "…", "server": "survival", "kind": "chat", "content": "…"}</code>. Her cezada <code translate="no">shadow</code> alanı gölge susturmayı gösterir.</p>
 
 <h2>Yanıt biçimi ve hatalar</h2>
-<pre><code>{ "data": { … } }
+<pre translate="no"><code translate="no">{ "data": { … } }
 { "error": { "code": "player_not_found", "message": "Player 'Steve' has never joined this network" } }</code></pre>
 <div class="table"><table>
 <tr><th>HTTP</th><th>KOD</th><th>ANLAMI</th></tr>
-<tr><td>400</td><td><code>invalid_request, invalid_json, invalid_type, invalid_status, invalid_duration</code></td><td>İstek hatalı.</td></tr>
-<tr><td>401</td><td><code>unauthorized</code></td><td>Anahtar yok ya da geçersiz.</td></tr>
-<tr><td>403</td><td><code>insufficient_scope, target_exempt, denied</code></td><td>Kapsam yetmiyor, hedef muaf ya da bir eklenti reddetti.</td></tr>
-<tr><td>404</td><td><code>not_found, punishment_not_found, player_not_found, template_not_found</code></td><td>Bulunamadı.</td></tr>
-<tr><td>409</td><td><code>already_punished, not_active, cancelled</code></td><td>Zaten etkin bir ceza var (<code>error.existing</code> içinde), ceza etkin değil ya da bir eklenti iptal etti.</td></tr>
-<tr><td>413</td><td><code>payload_too_large</code></td><td>Gövde 64 KiB'tan büyük.</td></tr>
-<tr><td>422</td><td><code>no_known_ip</code></td><td>IP cezası için oyuncunun kayıtlı IP'si yok.</td></tr>
-<tr><td>429</td><td><code>rate_limited</code></td><td>Dakikalık sınır aşıldı; <code>Retry-After</code> başlığına bakın.</td></tr>
-<tr><td>500</td><td><code>internal_error</code></td><td>Sunucu hatası.</td></tr>
+<tr><td>400</td><td><code translate="no">invalid_request, invalid_json, invalid_type, invalid_status, invalid_duration</code></td><td>İstek hatalı.</td></tr>
+<tr><td>401</td><td><code translate="no">unauthorized</code></td><td>Anahtar yok ya da geçersiz.</td></tr>
+<tr><td>403</td><td><code translate="no">insufficient_scope, target_exempt, denied</code></td><td>Kapsam yetmiyor, hedef muaf ya da bir eklenti reddetti.</td></tr>
+<tr><td>404</td><td><code translate="no">not_found, punishment_not_found, player_not_found, template_not_found</code></td><td>Bulunamadı.</td></tr>
+<tr><td>409</td><td><code translate="no">already_punished, not_active, cancelled</code></td><td>Zaten etkin bir ceza var (<code translate="no">error.existing</code> içinde), ceza etkin değil ya da bir eklenti iptal etti.</td></tr>
+<tr><td>413</td><td><code translate="no">payload_too_large</code></td><td>Gövde 64 KiB'tan büyük.</td></tr>
+<tr><td>422</td><td><code translate="no">no_known_ip</code></td><td>IP cezası için oyuncunun kayıtlı IP'si yok.</td></tr>
+<tr><td>429</td><td><code translate="no">rate_limited</code></td><td>Dakikalık sınır aşıldı; <code translate="no">Retry-After</code> başlığına bakın.</td></tr>
+<tr><td>500</td><td><code translate="no">internal_error</code></td><td>Sunucu hatası.</td></tr>
 </table></div>
 
 <h2>Hız sınırı, idempotency, CORS</h2>
 <ul>
-<li>Her anahtar dakikada <code>requests-per-minute</code> istek yapabilir. Yanıtlarda <code>X-RateLimit-Limit</code>, <code>X-RateLimit-Remaining</code>, <code>X-RateLimit-Reset</code> vardır.</li>
-<li>POST isteklerinde <code>Idempotency-Key</code> başlığı 24 saat boyunca aynı yanıtı döndürür; ağ hatasında güvenle tekrar deneyin.</li>
-<li>Tarayıcıdan çağırmak için siteyi <code>cors-origins</code> listesine ekleyin.</li>
+<li>Her anahtar dakikada <code translate="no">requests-per-minute</code> istek yapabilir. Yanıtlarda <code translate="no">X-RateLimit-Limit</code>, <code translate="no">X-RateLimit-Remaining</code>, <code translate="no">X-RateLimit-Reset</code> vardır.</li>
+<li>POST isteklerinde <code translate="no">Idempotency-Key</code> başlığı 24 saat boyunca aynı yanıtı döndürür; ağ hatasında güvenle tekrar deneyin.</li>
+<li>Tarayıcıdan çağırmak için siteyi <code translate="no">cors-origins</code> listesine ekleyin.</li>
 </ul>
 
 <h2>Canlı olay akışı</h2>
-<p><code>/v1/stream</code> bir Server-Sent Events bağlantısıdır. Her olay şöyle gelir; 15 saniyede bir <code>: ping</code> satırı bağlantıyı açık tutar:</p>
-<pre><code>event: punishment.issued
+<p><code translate="no">/v1/stream</code> bir Server-Sent Events bağlantısıdır. Her olay şöyle gelir; 15 saniyede bir <code translate="no">: ping</code> satırı bağlantıyı açık tutar:</p>
+<pre translate="no"><code translate="no">event: punishment.issued
 id: 42-0
 data: {"type":"punishment.issued","created_at":"2026-11-05T19:00:00Z","remote":false,"punishment":{…}}</code></pre>
-<p>Olay türleri: <code>punishment.issued</code>, <code>punishment.revoked</code>, <code>punishment.edited</code>, <code>punishment.expired</code>. <code>remote: true</code>, olayın ağdaki başka bir sunucudan geldiğini söyler.</p>
+<p>Olay türleri: <code translate="no">punishment.issued</code>, <code translate="no">punishment.revoked</code>, <code translate="no">punishment.edited</code>, <code translate="no">punishment.expired</code>. <code translate="no">remote: true</code>, olayın ağdaki başka bir sunucudan geldiğini söyler.</p>
 <div class="pager" id="pager"></div>
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

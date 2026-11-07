@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -33,10 +33,10 @@
 <h2>Hangi veritabanı</h2>
 <div class="table"><table>
 <tr><th>TÜR</th><th>NE ZAMAN</th><th>DOSYA / SUNUCU</th></tr>
-<tr><td><code>H2</code></td><td>Tek sunucu ya da tek proxy. Varsayılan.</td><td><code>plugins/Themis/themis.mv.db</code></td></tr>
-<tr><td><code>SQLITE</code></td><td>Tek sunucu, tek dosya isteyenler.</td><td><code>plugins/Themis/themis.db</code></td></tr>
-<tr><td><code>MYSQL</code> / <code>MARIADB</code></td><td>Birden çok sunucu ya da proxy.</td><td>Harici sunucu</td></tr>
-<tr><td><code>POSTGRESQL</code></td><td>Birden çok sunucu ya da proxy.</td><td>Harici sunucu</td></tr>
+<tr><td><code translate="no">H2</code></td><td>Tek sunucu ya da tek proxy. Varsayılan.</td><td><code translate="no">plugins/Themis/themis.mv.db</code></td></tr>
+<tr><td><code translate="no">SQLITE</code></td><td>Tek sunucu, tek dosya isteyenler.</td><td><code translate="no">plugins/Themis/themis.db</code></td></tr>
+<tr><td><code translate="no">MYSQL</code> / <code translate="no">MARIADB</code></td><td>Birden çok sunucu ya da proxy.</td><td>Harici sunucu</td></tr>
+<tr><td><code translate="no">POSTGRESQL</code></td><td>Birden çok sunucu ya da proxy.</td><td>Harici sunucu</td></tr>
 </table></div>
 <p>Tablolar ilk açılışta oluşur ve sürüm güncellemelerinde kendiliğinden güncellenir. Veritabanı kullanıcısının tablo oluşturma yetkisi olmalıdır.</p>
 
@@ -44,14 +44,14 @@
 <p>Ortak veritabanı sicili paylaştırır; senkron ise bir sunucuda olan şeyin diğerlerinde anında etki etmesini sağlar: başka sunucudaki oyuncunun atılması, susturmanın her yerde başlaması, duyurular ve API olayları.</p>
 <div class="table"><table>
 <tr><th>MOD</th><th>GECİKME</th><th>GEREKEN</th></tr>
-<tr><td><code>NONE</code></td><td>—</td><td>Tek sunucu.</td></tr>
-<tr><td><code>SQL</code></td><td><code>poll-interval</code> kadar (varsayılan 2 sn)</td><td>Yalnızca ortak veritabanı.</td></tr>
-<tr><td><code>REDIS</code></td><td>Anında</td><td>Ortak veritabanı + Redis.</td></tr>
+<tr><td><code translate="no">NONE</code></td><td>—</td><td>Tek sunucu.</td></tr>
+<tr><td><code translate="no">SQL</code></td><td><code translate="no">poll-interval</code> kadar (varsayılan 2 sn)</td><td>Yalnızca ortak veritabanı.</td></tr>
+<tr><td><code translate="no">REDIS</code></td><td>Anında</td><td>Ortak veritabanı + Redis.</td></tr>
 </table></div>
-<div class="note"><b>NOT</b>H2 ve SQLite dosya tabanlıdır, sunucular arasında paylaşılamaz. Bu türlerle <code>sync.mode</code> açılırsa Themis uyarı verir ve senkronu kapatır.</div>
+<div class="note"><b>NOT</b>H2 ve SQLite dosya tabanlıdır, sunucular arasında paylaşılamaz. Bu türlerle <code translate="no">sync.mode</code> açılırsa Themis uyarı verir ve senkronu kapatır.</div>
 
 <h2>Örnek: üç sunuculu ağ</h2>
-<pre><code><span class="d"># her sunucuda aynı, yalnızca server-name farklı</span>
+<pre translate="no"><code translate="no"><span class="d"># her sunucuda aynı, yalnızca server-name farklı</span>
 server-name: "skyblock"
 storage:
   type: MARIADB
@@ -69,7 +69,7 @@ sync:
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

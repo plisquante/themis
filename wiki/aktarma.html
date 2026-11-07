@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -31,17 +31,17 @@
 <p class="lead">Mevcut cezalarınız tarihleri, verenleri ve kaldırılma bilgileriyle Themis'e gelir. Aktarma sunucu açıkken arka planda çalışır.</p>
 
 <h2>Vanilla</h2>
-<pre><code>/themis import vanilla</code></pre>
-<p>Sunucu klasöründeki <code>banned-players.json</code> ve <code>banned-ips.json</code> okunur. Yalnızca Paper'da çalışır; proxy'lerde bu dosyalar yoktur.</p>
+<pre translate="no"><code translate="no">/themis import vanilla</code></pre>
+<p>Sunucu klasöründeki <code translate="no">banned-players.json</code> ve <code translate="no">banned-ips.json</code> okunur. Yalnızca Paper'da çalışır; proxy'lerde bu dosyalar yoktur.</p>
 
 <h2>LiteBans</h2>
-<pre><code>themis import litebans &lt;jdbc-url&gt; &lt;kullanıcı&gt; &lt;şifre&gt; [tablo-öneki]
+<pre translate="no"><code translate="no">themis import litebans &lt;jdbc-url&gt; &lt;kullanıcı&gt; &lt;şifre&gt; [tablo-öneki]
 themis import litebans jdbc:mysql://localhost:3306/litebans root gizli litebans_</code></pre>
-<p>Banlar, susturmalar, uyarılar, kickler ve oyuncu geçmişi (<code>litebans_bans</code>, <code>_mutes</code>, <code>_warnings</code>, <code>_kicks</code>, <code>_history</code>) aktarılır. Önek yazılmazsa <code>litebans_</code> kullanılır.</p>
+<p>Banlar, susturmalar, uyarılar, kickler ve oyuncu geçmişi (<code translate="no">litebans_bans</code>, <code translate="no">_mutes</code>, <code translate="no">_warnings</code>, <code translate="no">_kicks</code>, <code translate="no">_history</code>) aktarılır. Önek yazılmazsa <code translate="no">litebans_</code> kullanılır.</p>
 
 <h2>AdvancedBan</h2>
-<pre><code>themis import advancedban &lt;jdbc-url&gt; &lt;kullanıcı&gt; &lt;şifre&gt;</code></pre>
-<p><code>Punishments</code> (etkin) ve <code>PunishmentHistory</code> tabloları aktarılır.</p>
+<pre translate="no"><code translate="no">themis import advancedban &lt;jdbc-url&gt; &lt;kullanıcı&gt; &lt;şifre&gt;</code></pre>
+<p><code translate="no">Punishments</code> (etkin) ve <code translate="no">PunishmentHistory</code> tabloları aktarılır.</p>
 
 <div class="note warn"><b>YALNIZCA KONSOL</b>Veritabanı aktarmaları konsoldan çalıştırılır: sohbete yazılan şifreler günlüklere ve sohbet geçmişine düşer.</div>
 
@@ -55,7 +55,7 @@ themis import litebans jdbc:mysql://localhost:3306/litebans root gizli litebans_
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

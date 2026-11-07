@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -28,104 +28,123 @@
 <main class="doc" id="content">
 <div class="kicker">// AYARLAR</div>
 <h1>config.yml</h1>
-<p class="lead">Ayar dosyası ilk açılışta oluşur: Paper ve BungeeCord'da <code>plugins/Themis/config.yml</code>, Velocity'de <code>plugins/themis/config.yml</code>. Dosyada olmayan her ayar varsayılan değerini alır.</p>
-<p>Değişiklikten sonra <code>/themis reload</code> yazın. <code>storage</code> ve <code>sync</code> değişiklikleri sunucuyu yeniden başlatınca uygulanır; REST API ayarları reload ile yeniden başlar.</p>
-<p>Süreler her yerde aynı yazılır: <code>30s 10m 2h 7d 2w 1mo 1y</code>, birleşik <code>1d12h</code> ya da <code>perm</code>.</p>
+<p class="lead">Ayar dosyası ilk açılışta oluşur: Paper ve BungeeCord'da <code translate="no">plugins/Themis/config.yml</code>, Velocity'de <code translate="no">plugins/themis/config.yml</code>. Dosyada olmayan her ayar varsayılan değerini alır.</p>
+<p>Değişiklikten sonra <code translate="no">/themis reload</code> yazın. <code translate="no">storage</code> ve <code translate="no">sync</code> değişiklikleri sunucuyu yeniden başlatınca uygulanır; REST API ayarları reload ile yeniden başlar.</p>
+<p>Süreler her yerde aynı yazılır: <code translate="no">30s 10m 2h 7d 2w 1mo 1y</code>, birleşik <code translate="no">1d12h</code> ya da <code translate="no">perm</code>.</p>
 
 <h2>Genel</h2>
 <div class="table"><table>
 <tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
-<tr><td><code>server-name</code></td><td><code>survival</code></td><td>Bu sunucunun benzersiz adı. Kapsamlarda ve kayıtlarda kullanılır. Yalnızca harf, rakam, <code>_ . -</code>. Proxy'de yeni config <code>network</code> ile gelir; bir backend sunucusunun adını vermeyin.</td></tr>
-<tr><td><code>mode</code></td><td><code>STANDALONE</code></td><td>Yalnızca Paper. <code>STANDALONE</code> tam kurulum, <code>BRIDGE</code> proxy'deki Themis'in susturmalarını uygulayan köprü. Bkz. <a href="proxy.html">proxy</a>.</td></tr>
-<tr><td><code>language</code></td><td><code>en</code></td><td>Mesaj dili: <code>en</code>, <code>tr</code> ya da eklediğiniz <code>messages_&lt;kod&gt;.yml</code>.</td></tr>
+<tr><td><code translate="no">server-name</code></td><td><code translate="no">survival</code></td><td>Bu sunucunun benzersiz adı. Kapsamlarda ve kayıtlarda kullanılır. Yalnızca harf, rakam, <code translate="no">_ . -</code>. Proxy'de yeni config <code translate="no">network</code> ile gelir; bir backend sunucusunun adını vermeyin.</td></tr>
+<tr><td><code translate="no">mode</code></td><td><code translate="no">STANDALONE</code></td><td>Yalnızca Paper. <code translate="no">STANDALONE</code> tam kurulum, <code translate="no">BRIDGE</code> proxy'deki Themis'in susturmalarını uygulayan köprü. Bkz. <a href="proxy.html">proxy</a>.</td></tr>
+<tr><td><code translate="no">language</code></td><td><code translate="no">en</code></td><td>Varsayılan dil: <code translate="no">en</code>, <code translate="no">tr</code>, <code translate="no">de</code>, <code translate="no">es</code>, <code translate="no">fr</code>, <code translate="no">pt</code>, <code translate="no">ru</code>, <code translate="no">pl</code>, <code translate="no">zh</code> ya da eklediğiniz <code translate="no">messages_&lt;kod&gt;.yml</code>. Oyun içinden <code translate="no">/themis language &lt;kod&gt;</code>.</td></tr>
+<tr><td><code translate="no">per-player-language</code></td><td><code translate="no">true</code></td><td>Her oyuncu Themis'i Minecraft'ta seçtiği dilde görür; dosyası olmayan diller varsayılana düşer.</td></tr>
+<tr><td><code translate="no">console-language</code></td><td><code translate="no">auto</code></td><td>Konsol satırlarının ve konsol komut yanıtlarının dili. <code translate="no">auto</code> sunucunun sistem dilidir. Bkz. <a href="mesajlar.html#diller">diller</a>.</td></tr>
 </table></div>
 
 <h2>storage</h2>
 <div class="table"><table>
 <tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
-<tr><td><code>storage.type</code></td><td><code>H2</code></td><td><code>H2</code>, <code>SQLITE</code>, <code>MYSQL</code>, <code>MARIADB</code> ya da <code>POSTGRESQL</code>.</td></tr>
-<tr><td><code>storage.host</code></td><td><code>localhost</code></td><td>Veritabanı sunucusu (MySQL, MariaDB, PostgreSQL).</td></tr>
-<tr><td><code>storage.port</code></td><td><code>3306</code></td><td>PostgreSQL için 5432 yazın.</td></tr>
-<tr><td><code>storage.database</code></td><td><code>themis</code></td><td>Veritabanı adı. H2 ve SQLite'ta dosya adı.</td></tr>
-<tr><td><code>storage.username / password</code></td><td><code>root / ""</code></td><td>Bağlantı bilgileri.</td></tr>
-<tr><td><code>storage.table-prefix</code></td><td><code>themis_</code></td><td>Tablo adlarının öneki; aynı veritabanında birden çok kurulum için.</td></tr>
-<tr><td><code>storage.pool-size</code></td><td><code>8</code></td><td>Bağlantı havuzu boyutu (en az 2).</td></tr>
-<tr><td><code>storage.parameters</code></td><td><code>""</code></td><td>Ek JDBC parametreleri, ör. <code>useSSL=false&amp;serverTimezone=UTC</code>.</td></tr>
+<tr><td><code translate="no">storage.type</code></td><td><code translate="no">H2</code></td><td><code translate="no">H2</code>, <code translate="no">SQLITE</code>, <code translate="no">MYSQL</code>, <code translate="no">MARIADB</code> ya da <code translate="no">POSTGRESQL</code>.</td></tr>
+<tr><td><code translate="no">storage.host</code></td><td><code translate="no">localhost</code></td><td>Veritabanı sunucusu (MySQL, MariaDB, PostgreSQL).</td></tr>
+<tr><td><code translate="no">storage.port</code></td><td><code translate="no">3306</code></td><td>PostgreSQL için 5432 yazın.</td></tr>
+<tr><td><code translate="no">storage.database</code></td><td><code translate="no">themis</code></td><td>Veritabanı adı. H2 ve SQLite'ta dosya adı.</td></tr>
+<tr><td><code translate="no">storage.username / password</code></td><td><code translate="no">root / ""</code></td><td>Bağlantı bilgileri.</td></tr>
+<tr><td><code translate="no">storage.table-prefix</code></td><td><code translate="no">themis_</code></td><td>Tablo adlarının öneki; aynı veritabanında birden çok kurulum için.</td></tr>
+<tr><td><code translate="no">storage.pool-size</code></td><td><code translate="no">8</code></td><td>Bağlantı havuzu boyutu (en az 2).</td></tr>
+<tr><td><code translate="no">storage.parameters</code></td><td><code translate="no">""</code></td><td>Ek JDBC parametreleri, ör. <code translate="no">useSSL=false&amp;serverTimezone=UTC</code>.</td></tr>
 </table></div>
 
 <h2>sync</h2>
 <div class="table"><table>
 <tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
-<tr><td><code>sync.mode</code></td><td><code>NONE</code></td><td><code>NONE</code> tek sunucu, <code>SQL</code> ortak veritabanını yoklar, <code>REDIS</code> anında. Ortak veritabanı gerektirir.</td></tr>
-<tr><td><code>sync.redis-uri</code></td><td><code>redis://localhost:6379</code></td><td>Redis adresi; şifre için <code>redis://:şifre@host:6379</code>.</td></tr>
-<tr><td><code>sync.channel</code></td><td><code>themis:sync</code></td><td>Redis kanalı.</td></tr>
-<tr><td><code>sync.poll-interval</code></td><td><code>2s</code></td><td><code>SQL</code> modunda yoklama aralığı.</td></tr>
+<tr><td><code translate="no">sync.mode</code></td><td><code translate="no">NONE</code></td><td><code translate="no">NONE</code> tek sunucu, <code translate="no">SQL</code> ortak veritabanını yoklar, <code translate="no">REDIS</code> anında. Ortak veritabanı gerektirir.</td></tr>
+<tr><td><code translate="no">sync.redis-uri</code></td><td><code translate="no">redis://localhost:6379</code></td><td>Redis adresi; şifre için <code translate="no">redis://:şifre@host:6379</code>.</td></tr>
+<tr><td><code translate="no">sync.channel</code></td><td><code translate="no">themis:sync</code></td><td>Redis kanalı.</td></tr>
+<tr><td><code translate="no">sync.poll-interval</code></td><td><code translate="no">2s</code></td><td><code translate="no">SQL</code> modunda yoklama aralığı.</td></tr>
 </table></div>
 
 <h2>punishments</h2>
 <div class="table"><table>
 <tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
-<tr><td><code>log-ips</code></td><td><code>true</code></td><td>Oyuncu IP'lerini kaydeder. IP cezaları ve alt hesap tespiti için gereklidir.</td></tr>
-<tr><td><code>fail-closed</code></td><td><code>false</code></td><td>Girişte veritabanına ulaşılamazsa: <code>false</code> oyuncuyu alır, <code>true</code> girişi reddeder.</td></tr>
-<tr><td><code>alt-detection</code></td><td><code>true</code></td><td>Yasaklı/susturulmuş bir hesapla IP paylaşan biri girince yetkilileri uyarır.</td></tr>
-<tr><td><code>count-revoked-offences</code></td><td><code>false</code></td><td>Kaldırılan cezalar şablon merdivenlerinde sayılsın mı.</td></tr>
-<tr><td><code>expiry-check-interval</code></td><td><code>30s</code></td><td>Süresi dolan cezaların kontrol aralığı (en az 5 saniye).</td></tr>
-<tr><td><code>silent-by-default</code></td><td><code>false</code></td><td>Her ceza sessiz olur; <code>-p</code> ile duyurulur.</td></tr>
-<tr><td><code>prevent-self-punish</code></td><td><code>true</code></td><td>Yetkilinin kendini cezalandırmasını engeller.</td></tr>
-<tr><td><code>default-reasons</code></td><td><code>…</code></td><td>Sebep yazılmazsa tür başına kullanılan sebep.</td></tr>
-<tr><td><code>muted-blocked-commands</code></td><td><code>[msg, tell, w, …]</code></td><td>Susturulmuş oyuncunun kullanamayacağı komutlar.</td></tr>
-<tr><td><code>appeal-url</code></td><td><code>https://discord.gg/…</code></td><td>Ban ekranında ve susturma mesajında <code>&lt;appeal_url&gt;</code> olarak görünür. <code>{code}</code> dosya koduyla değişir.</td></tr>
-<tr><td><code>shadow-staff-echo</code></td><td><code>true</code></td><td>Gölge susturulmuş oyuncuların yazdıkları <code>themis.notify.silent</code> sahiplerine gösterilsin mi.</td></tr>
+<tr><td><code translate="no">log-ips</code></td><td><code translate="no">true</code></td><td>Oyuncu IP'lerini kaydeder. IP cezaları ve alt hesap tespiti için gereklidir.</td></tr>
+<tr><td><code translate="no">fail-closed</code></td><td><code translate="no">false</code></td><td>Girişte veritabanına ulaşılamazsa: <code translate="no">false</code> oyuncuyu alır, <code translate="no">true</code> girişi reddeder.</td></tr>
+<tr><td><code translate="no">alt-detection</code></td><td><code translate="no">true</code></td><td>Yasaklı/susturulmuş bir hesapla IP paylaşan biri girince yetkilileri uyarır.</td></tr>
+<tr><td><code translate="no">count-revoked-offences</code></td><td><code translate="no">false</code></td><td>Kaldırılan cezalar şablon merdivenlerinde sayılsın mı.</td></tr>
+<tr><td><code translate="no">expiry-check-interval</code></td><td><code translate="no">30s</code></td><td>Süresi dolan cezaların kontrol aralığı (en az 5 saniye).</td></tr>
+<tr><td><code translate="no">silent-by-default</code></td><td><code translate="no">false</code></td><td>Her ceza sessiz olur; <code translate="no">-p</code> ile duyurulur.</td></tr>
+<tr><td><code translate="no">prevent-self-punish</code></td><td><code translate="no">true</code></td><td>Yetkilinin kendini cezalandırmasını engeller.</td></tr>
+<tr><td><code translate="no">default-reasons</code></td><td><code translate="no">…</code></td><td>Sebep yazılmazsa tür başına kullanılan sebep.</td></tr>
+<tr><td><code translate="no">muted-blocked-commands</code></td><td><code translate="no">[msg, tell, w, …]</code></td><td>Susturulmuş oyuncunun kullanamayacağı komutlar.</td></tr>
+<tr><td><code translate="no">appeal-url</code></td><td><code translate="no">https://discord.gg/…</code></td><td>Ban ekranında ve susturma mesajında <code translate="no">&lt;appeal_url&gt;</code> olarak görünür. <code translate="no">{code}</code> dosya koduyla değişir.</td></tr>
+<tr><td><code translate="no">shadow-staff-echo</code></td><td><code translate="no">true</code></td><td>Gölge susturulmuş oyuncuların yazdıkları <code translate="no">themis.notify.silent</code> sahiplerine gösterilsin mi.</td></tr>
 </table></div>
 
 <h2>broadcast</h2>
 <div class="table"><table>
 <tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
-<tr><td><code>broadcast.network</code></td><td><code>true</code></td><td>Ağdaki diğer sunucularda verilen cezaları da duyurur (senkron gerekir).</td></tr>
-<tr><td><code>broadcast.console</code></td><td><code>true</code></td><td>Her cezayı konsola yazar.</td></tr>
+<tr><td><code translate="no">broadcast.network</code></td><td><code translate="no">true</code></td><td>Ağdaki diğer sunucularda verilen cezaları da duyurur (senkron gerekir).</td></tr>
+<tr><td><code translate="no">broadcast.console</code></td><td><code translate="no">true</code></td><td>Her cezayı konsola yazar.</td></tr>
 </table></div>
 
 <h2>limits ve templates</h2>
-<p>Rütbe sınırları (süre ve <code>per-hour</code>) <a href="yetkiler.html#sinirlar">Yetkiler</a>, şablonlar <a href="sablonlar.html">Ceza merdivenleri</a> sayfasında.</p>
+<p>Rütbe sınırları (süre ve <code translate="no">per-hour</code>) <a href="yetkiler.html#sinirlar">Yetkiler</a>, şablonlar <a href="sablonlar.html">Ceza merdivenleri</a> sayfasında.</p>
 
 <h2>evidence</h2>
 <div class="table"><table>
 <tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
-<tr><td><code>evidence.enabled</code></td><td><code>true</code></td><td>Ceza anındaki sohbeti cezaya ekler.</td></tr>
-<tr><td><code>evidence.lines</code></td><td><code>15</code></td><td>Oyuncu başına tutulan en fazla satır (0–100).</td></tr>
-<tr><td><code>evidence.max-age</code></td><td><code>10m</code></td><td>Cezadan en fazla bu kadar önceki satırlar kanıt sayılır.</td></tr>
-<tr><td><code>evidence.commands</code></td><td><code>[msg, tell, w, …]</code></td><td>Sohbet dışında kaydedilen komutlar (fısıltılar).</td></tr>
-<tr><td><code>evidence.types</code></td><td><code>[ban, mute, warn, kick]</code></td><td>Kanıt eklenen ceza türleri.</td></tr>
+<tr><td><code translate="no">evidence.enabled</code></td><td><code translate="no">true</code></td><td>Ceza anındaki sohbeti cezaya ekler.</td></tr>
+<tr><td><code translate="no">evidence.lines</code></td><td><code translate="no">15</code></td><td>Oyuncu başına tutulan en fazla satır (0–100).</td></tr>
+<tr><td><code translate="no">evidence.max-age</code></td><td><code translate="no">10m</code></td><td>Cezadan en fazla bu kadar önceki satırlar kanıt sayılır.</td></tr>
+<tr><td><code translate="no">evidence.commands</code></td><td><code translate="no">[msg, tell, w, …]</code></td><td>Sohbet dışında kaydedilen komutlar (fısıltılar).</td></tr>
+<tr><td><code translate="no">evidence.types</code></td><td><code translate="no">[ban, mute, warn, kick]</code></td><td>Kanıt eklenen ceza türleri.</td></tr>
 </table></div>
 
 <h2>evasion</h2>
 <div class="table"><table>
 <tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
-<tr><td><code>evasion.action</code></td><td><code>ALERT</code></td><td><code>ALERT</code> yetkiliyi uyarır, <code>BLOCK</code> girişi reddeder, <code>BAN</code> şablonu uygular.</td></tr>
-<tr><td><code>evasion.window</code></td><td><code>30d</code></td><td>Yasaklı hesabın IP'yi bu süre içinde kullanmış olması gerekir.</td></tr>
-<tr><td><code>evasion.template</code></td><td><code>evasion</code></td><td><code>BAN</code> eyleminde uygulanan şablon.</td></tr>
-<tr><td><code>evasion.exempt</code></td><td><code>[]</code></td><td>Hiçbir zaman kaçak sayılmayacak oyuncu adları ya da UUID'ler.</td></tr>
+<tr><td><code translate="no">evasion.action</code></td><td><code translate="no">ALERT</code></td><td><code translate="no">ALERT</code> yetkiliyi uyarır, <code translate="no">BLOCK</code> girişi reddeder, <code translate="no">BAN</code> şablonu uygular.</td></tr>
+<tr><td><code translate="no">evasion.window</code></td><td><code translate="no">30d</code></td><td>Yasaklı hesabın IP'yi bu süre içinde kullanmış olması gerekir.</td></tr>
+<tr><td><code translate="no">evasion.template</code></td><td><code translate="no">evasion</code></td><td><code translate="no">BAN</code> eyleminde uygulanan şablon.</td></tr>
+<tr><td><code translate="no">evasion.exempt</code></td><td><code translate="no">[]</code></td><td>Hiçbir zaman kaçak sayılmayacak oyuncu adları ya da UUID'ler.</td></tr>
 </table></div>
 <p>Ayrıntılar: <a href="koruma.html">Kanıt ve koruma</a>.</p>
+
+<h2>automod</h2>
+<div class="table"><table>
+<tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
+<tr><td><code translate="no">automod.enabled</code></td><td><code translate="no">true</code></td><td>AutoMod'u tamamen açar ya da kapatır.</td></tr>
+<tr><td><code translate="no">automod.rules</code></td><td><code translate="no">advertising</code></td><td>Her kural: <code translate="no">name</code>, <code translate="no">pattern</code> (Java düzenli ifadesi), <code translate="no">action</code> (<code translate="no">BLOCK</code>, <code translate="no">ALERT</code>, <code translate="no">TEMPLATE</code>) ve <code translate="no">TEMPLATE</code> için <code translate="no">template</code>. Sohbete ve fısıltılara uygulanır.</td></tr>
+<tr><td><code translate="no">automod.flood</code></td><td><code translate="no">6</code> mesaj / <code translate="no">4s</code></td><td><code translate="no">messages</code> sayısından fazla mesaj <code translate="no">within</code> süresinde gelirse; <code translate="no">action</code> ve <code translate="no">template</code> kurallardaki gibi.</td></tr>
+<tr><td><code translate="no">automod.repeat</code></td><td><code translate="no">3</code> kez / <code translate="no">30s</code></td><td>Aynı mesaj <code translate="no">times</code> kez üst üste <code translate="no">within</code> içinde yazılırsa.</td></tr>
+<tr><td><code translate="no">automod.blocked-names</code></td><td><code translate="no">[]</code></td><td>Bu desenlerden birine uyan isimler sunucuya giremez (büyük-küçük harf fark etmez).</td></tr>
+</table></div>
+
+<h2>lockdown</h2>
+<div class="table"><table>
+<tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
+<tr><td><code translate="no">lockdown.allow</code></td><td><code translate="no">[]</code></td><td>Lockdown açıkken ilk kez girebilecek oyuncu adları ya da UUID'ler. Lockdown <code translate="no">/themis lockdown on</code> ile açılır; durumu config'te değil veritabanında tutulur.</td></tr>
+</table></div>
+<p>Ayrıntılar: <a href="koruma.html#automod">AutoMod</a> ve <a href="koruma.html#lockdown">lockdown</a>.</p>
 
 <h2>proxy</h2>
 <div class="table"><table>
 <tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
-<tr><td><code>proxy.velocity-signed-chat</code></td><td><code>KICK</code></td><td>Köprüsüz bir sunucuda susturulmuş oyuncunun imzalı mesajı: <code>KICK</code> bağlantıyı susturma ekranıyla keser, <code>ALLOW</code> geçirir ve yetkilileri uyarır.</td></tr>
-<tr><td><code>proxy.fallback-server</code></td><td><code>""</code></td><td>Sunucuya özel ban alan oyuncunun gönderileceği sunucu. Boşsa proxy'nin deneme sırası.</td></tr>
-<tr><td><code>proxy.shadow-echo-format</code></td><td><code>&lt;{player}&gt; {message}</code></td><td>Proxy gölge susturmada mesajı düşürdüğünde oyuncuya kendi mesajını bu biçimde geri gösterir.</td></tr>
+<tr><td><code translate="no">proxy.velocity-signed-chat</code></td><td><code translate="no">KICK</code></td><td>Köprüsüz bir sunucuda susturulmuş oyuncunun imzalı mesajı: <code translate="no">KICK</code> bağlantıyı susturma ekranıyla keser, <code translate="no">ALLOW</code> geçirir ve yetkilileri uyarır.</td></tr>
+<tr><td><code translate="no">proxy.fallback-server</code></td><td><code translate="no">""</code></td><td>Sunucuya özel ban alan oyuncunun gönderileceği sunucu. Boşsa proxy'nin deneme sırası.</td></tr>
+<tr><td><code translate="no">proxy.shadow-echo-format</code></td><td><code translate="no">&lt;{player}&gt; {message}</code></td><td>Proxy gölge susturmada mesajı düşürdüğünde oyuncuya kendi mesajını bu biçimde geri gösterir.</td></tr>
 </table></div>
 
 <h2>rest-api</h2>
 <div class="table"><table>
 <tr><th>AYAR</th><th>VARSAYILAN</th><th>AÇIKLAMA</th></tr>
-<tr><td><code>rest-api.enabled</code></td><td><code>false</code></td><td>HTTP API'yi açar.</td></tr>
-<tr><td><code>rest-api.bind</code></td><td><code>127.0.0.1</code></td><td>Dinlenen adres. Dışarıya açmak için önüne HTTPS'li bir ters vekil koyun.</td></tr>
-<tr><td><code>rest-api.port</code></td><td><code>8787</code></td><td>Port.</td></tr>
-<tr><td><code>rest-api.expose-ips</code></td><td><code>false</code></td><td><code>admin</code> kapsamlı anahtarlara tam IP gösterir; diğerleri her zaman maskeli görür.</td></tr>
-<tr><td><code>rest-api.requests-per-minute</code></td><td><code>120</code></td><td>Anahtar başına dakikalık istek sınırı.</td></tr>
-<tr><td><code>rest-api.cors-origins</code></td><td><code>[]</code></td><td>Tarayıcıdan çağırabilecek siteler, ör. <code>["https://panel.example.com"]</code>.</td></tr>
-<tr><td><code>rest-api.tokens</code></td><td><code>[]</code></td><td>Dosyada tanımlı anahtarlar: <code>"ad:anahtar:kapsam1,kapsam2"</code> (anahtar en az 16 karakter).</td></tr>
+<tr><td><code translate="no">rest-api.enabled</code></td><td><code translate="no">false</code></td><td>HTTP API'yi açar.</td></tr>
+<tr><td><code translate="no">rest-api.bind</code></td><td><code translate="no">127.0.0.1</code></td><td>Dinlenen adres. Dışarıya açmak için önüne HTTPS'li bir ters vekil koyun.</td></tr>
+<tr><td><code translate="no">rest-api.port</code></td><td><code translate="no">8787</code></td><td>Port.</td></tr>
+<tr><td><code translate="no">rest-api.expose-ips</code></td><td><code translate="no">false</code></td><td><code translate="no">admin</code> kapsamlı anahtarlara tam IP gösterir; diğerleri her zaman maskeli görür.</td></tr>
+<tr><td><code translate="no">rest-api.requests-per-minute</code></td><td><code translate="no">120</code></td><td>Anahtar başına dakikalık istek sınırı.</td></tr>
+<tr><td><code translate="no">rest-api.cors-origins</code></td><td><code translate="no">[]</code></td><td>Tarayıcıdan çağırabilecek siteler, ör. <code translate="no">["https://panel.example.com"]</code>.</td></tr>
+<tr><td><code translate="no">rest-api.tokens</code></td><td><code translate="no">[]</code></td><td>Dosyada tanımlı anahtarlar: <code translate="no">"ad:anahtar:kapsam1,kapsam2"</code> (anahtar en az 16 karakter).</td></tr>
 </table></div>
 <p>Ayrıntılar: <a href="rest-api.html">REST API</a>.</p>
 
@@ -135,7 +154,7 @@
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

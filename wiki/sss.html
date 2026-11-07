@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -30,42 +30,48 @@
 <h1>Sık <em>sorulanlar</em></h1>
 <p class="lead">En çok sorulanlar. Aradığınızı bulamazsanız soldaki sayfalara bakın.</p>
 <h3>Velocity ya da BungeeCord gerekir mi?</h3>
-<p>Hayır. Tek bir Paper sunucusunda ya da ortak veritabanına bağlı birkaç Paper sunucusunda çalışır. Proxy kullanıyorsanız Themis'i yalnızca proxy'ye de kurabilirsiniz; aynı jar Velocity ve BungeeCord'un <code>plugins</code> klasöründe çalışır ve backend sunuculara bir şey kurmanız gerekmez. Bkz. <a href="proxy.html">Velocity ve BungeeCord</a>.</p>
+<p>Hayır. Tek bir Paper sunucusunda ya da ortak veritabanına bağlı birkaç Paper sunucusunda çalışır. Proxy kullanıyorsanız Themis'i yalnızca proxy'ye de kurabilirsiniz; aynı jar Velocity ve BungeeCord'un <code translate="no">plugins</code> klasöründe çalışır ve backend sunuculara bir şey kurmanız gerekmez. Bkz. <a href="proxy.html">Velocity ve BungeeCord</a>.</p>
 <h3>Proxy'ye kurunca backend'e de kurmam gerekir mi?</h3>
-<p>Gerekmez. BungeeCord'da her şey proxy'de çalışır. Velocity'de de çalışır; tek fark, susturulmuş bir oyuncunun imzalı sohbet mesajını Velocity'nin iptal edememesidir. Bu durumda Themis oyuncunun bağlantısını susturma ekranıyla keser. Bunu istemiyorsanız jar'ı backend'lere <code>mode: BRIDGE</code> ile koyun.</p>
+<p>Gerekmez. BungeeCord'da her şey proxy'de çalışır. Velocity'de de çalışır; tek fark, susturulmuş bir oyuncunun imzalı sohbet mesajını Velocity'nin iptal edememesidir. Bu durumda Themis oyuncunun bağlantısını susturma ekranıyla keser. Bunu istemiyorsanız jar'ı backend'lere <code translate="no">mode: BRIDGE</code> ile koyun.</p>
 <h3>Velocity'de susturulmuş oyuncu neden atılıyor?</h3>
-<p>1.19.1'den beri sohbet mesajları istemci tarafından imzalanır ve Velocity, bir eklentinin imzalı mesajı iptal etmesine izin vermez. Themis mesajın sunucuya ulaşmasına izin vermek yerine bağlantıyı keser. Köprü kurarak mesajı sessizce engelleyebilir ya da <code>proxy.velocity-signed-chat: ALLOW</code> ile geçirip yetkilileri uyarabilirsiniz.</p>
+<p>1.19.1'den beri sohbet mesajları istemci tarafından imzalanır ve Velocity, bir eklentinin imzalı mesajı iptal etmesine izin vermez. Themis mesajın sunucuya ulaşmasına izin vermek yerine bağlantıyı keser. Köprü kurarak mesajı sessizce engelleyebilir ya da <code translate="no">proxy.velocity-signed-chat: ALLOW</code> ile geçirip yetkilileri uyarabilirsiniz.</p>
 <h3>LiteBans banlarıma ne olur?</h3>
-<p>Konsoldan <code>themis import litebans &lt;jdbc-url&gt; &lt;kullanıcı&gt; &lt;şifre&gt;</code> çalıştırın. Her ban, mute, uyarı ve kick tarihleriyle, kimin verdiğiyle ve kaldırılıp kaldırılmadığıyla gelir. AdvancedBan ve vanilla ban listeleri de aktarılır. Bkz. <a href="aktarma.html">geçiş</a>.</p>
+<p>Konsoldan <code translate="no">themis import litebans &lt;jdbc-url&gt; &lt;kullanıcı&gt; &lt;şifre&gt;</code> çalıştırın. Her ban, mute, uyarı ve kick tarihleriyle, kimin verdiğiyle ve kaldırılıp kaldırılmadığıyla gelir. AdvancedBan ve vanilla ban listeleri de aktarılır. Bkz. <a href="aktarma.html">geçiş</a>.</p>
 <h3>Kendi eklentim ceza verebilir mi?</h3>
 <p>Evet. <a href="java-api.html">Java API</a> MIT lisanslıdır ve sunucu yazılımına bağlı değildir. Eklentiniz ceza verebilir, kaldırabilir, arayabilir; her cezayı kaydedilmeden önce engelleyebilir ya da değiştirebilir.</p>
 <h3>Bir site ya da Discord botu bağlanabilir mi?</h3>
 <p><a href="rest-api.html">REST API</a>'yi açın ve yalnızca ihtiyaç duyduğu kapsamlara sahip bir anahtar oluşturun. 17 uç nokta, canlı olay akışı, anahtar başına hız sınırı ve HMAC imzalı <a href="webhooklar.html">webhook'lar</a> hazır.</p>
 <h3>Hangi sürümlerde çalışır?</h3>
-<p>Paper 1.21 ile 26.x arası ve Purpur gibi Paper çatalları, Velocity 3.4 ve üstü, güncel BungeeCord; Java 21 ve üstü. Folia henüz desteklenmiyor.</p>
+<p>Paper 1.21 ile 26.x arası ve Purpur gibi Paper çatalları, Velocity 3.4 ve üstü, güncel BungeeCord; Java 21 ve üstü. Folia da tam desteklenir; aynı jar, Folia'nın bölge zamanlayıcısıyla çalışır.</p>
 <h3>Veritabanına ulaşılamazsa ne olur?</h3>
-<p>Varsayılan olarak oyuncular girebilir ve hata konsola yazılır. <code>punishments.fail-closed: true</code> yaparsanız veritabanına ulaşılamadığı sürece giriş reddedilir.</p>
+<p>Varsayılan olarak oyuncular girebilir ve hata konsola yazılır. <code translate="no">punishments.fail-closed: true</code> yaparsanız veritabanına ulaşılamadığı sürece giriş reddedilir.</p>
 <h3>Yetkilinin verebileceği cezayı sınırlayabilir miyim?</h3>
-<p>Evet. config.yml'deki <code>limits</code> ile grup başına en uzun süreyi belirleyin ve yetkiliye <code>themis.limit.&lt;grup&gt;</code> verin. Süresiz ceza için ayrıca <code>themis.ban.permanent</code> ya da <code>themis.mute.permanent</code> gerekir. Bkz. <a href="yetkiler.html#sinirlar">rütbe sınırları</a>.</p>
+<p>Evet. config.yml'deki <code translate="no">limits</code> ile grup başına en uzun süreyi belirleyin ve yetkiliye <code translate="no">themis.limit.&lt;grup&gt;</code> verin. Süresiz ceza için ayrıca <code translate="no">themis.ban.permanent</code> ya da <code translate="no">themis.mute.permanent</code> gerekir. Bkz. <a href="yetkiler.html#sinirlar">rütbe sınırları</a>.</p>
 <h3>Bir yetkili kendini ya da yöneticiyi cezalandırabilir mi?</h3>
-<p><code>prevent-self-punish: true</code> (varsayılan) kendini cezalandırmayı engeller. Yöneticilere <code>themis.exempt.ban</code>, <code>themis.exempt.mute</code> gibi muafiyetler verirseniz çevrimiçiyken o türde ceza alamazlar.</p>
+<p><code translate="no">prevent-self-punish: true</code> (varsayılan) kendini cezalandırmayı engeller. Yöneticilere <code translate="no">themis.exempt.ban</code>, <code translate="no">themis.exempt.mute</code> gibi muafiyetler verirseniz çevrimiçiyken o türde ceza alamazlar.</p>
 <h3>Ceza verirken kanıt nasıl saklanır?</h3>
-<p>Kendiliğinden. Ceza verildiği an oyuncunun son mesajları ve fısıltıları dosyaya eklenir; <code>/case #kod evidence</code>, REST API ve webhook'lar gösterir. Bkz. <a href="koruma.html#kanit">Kanıt ve koruma</a>.</p>
+<p>Kendiliğinden. Ceza verildiği an oyuncunun son mesajları ve fısıltıları dosyaya eklenir; <code translate="no">/case #kod evidence</code>, REST API ve webhook'lar gösterir. Bkz. <a href="koruma.html#kanit">Kanıt ve koruma</a>.</p>
 <h3>Spam botu ya da trol susturulduğunu anlamasın istiyorum.</h3>
-<p><code>/mute Steve 1d -shadow</code>: oyuncu yazmaya devam eder ve kendi mesajlarını görür, başka kimse görmez. Bkz. <a href="koruma.html#golge">gölge susturma</a>.</p>
+<p><code translate="no">/mute Steve 1d -shadow</code>: oyuncu yazmaya devam eder ve kendi mesajlarını görür, başka kimse görmez. Bkz. <a href="koruma.html#golge">gölge susturma</a>.</p>
 <h3>Bir yetkilinin hesabı çalınırsa?</h3>
-<p>Rütbe başına saatlik ceza sınırı (<code>per-hour</code>) zararı sınırlar, <code>/themis rollback &lt;yetkili&gt; &lt;süre&gt; -confirm</code> verdiği bütün etkin cezaları tek komutla geri alır.</p>
+<p>Rütbe başına saatlik ceza sınırı (<code translate="no">per-hour</code>) zararı sınırlar, <code translate="no">/themis rollback &lt;yetkili&gt; &lt;süre&gt; -confirm</code> verdiği bütün etkin cezaları tek komutla geri alır.</p>
 <h3>Yasaklı oyuncu ikinci hesapla geri gelirse?</h3>
-<p>Varsayılan olarak yetkililer uyarılır. <code>evasion.action: BLOCK</code> girişi reddeder, <code>BAN</code> yeni hesabı da yasaklar. Bkz. <a href="koruma.html#kacak">ban kaçağı koruması</a>.</p>
+<p>Varsayılan olarak yetkililer uyarılır. <code translate="no">evasion.action: BLOCK</code> girişi reddeder, <code translate="no">BAN</code> yeni hesabı da yasaklar. Bkz. <a href="koruma.html#kacak">ban kaçağı koruması</a>.</p>
 <h3>Mesajları değiştirebilir miyim?</h3>
-<p>Her satır <code>messages_tr.yml</code> ya da <code>messages_en.yml</code> içinde, hover ve tıklama destekli MiniMessage biçimindedir. Renkler dosyanın başında tek yerden ayarlanır. Bkz. <a href="mesajlar.html">Mesajlar ve diller</a>.</p>
+<p>Her satır <code translate="no">messages_tr.yml</code> gibi dil dosyalarında, hover ve tıklama destekli MiniMessage biçimindedir. Renkler dosyanın başında tek yerden ayarlanır. Bkz. <a href="mesajlar.html">Mesajlar ve diller</a>.</p>
+<h3>Oyuncular mesajları kendi dilinde mi görür?</h3>
+<p>Evet. Türkçe, İngilizce, Almanca, İspanyolca, Fransızca, Portekizce, Rusça, Lehçe ve Çince hazır gelir. Her oyuncu mesajları, duyuruları ve ban ekranını Minecraft'ta seçtiği dilde görür; dosyası olmayan diller varsayılan dile düşer. Konsol <code translate="no">console-language</code> ile kendi dilinde yazar, varsayılan dil oyun içinden <code translate="no">/themis language &lt;kod&gt;</code> ile değişir. Bkz. <a href="mesajlar.html#diller">diller</a>.</p>
+<h3>Reklam ve flood'u kendiliğinden engeller mi?</h3>
+<p>Evet. <a href="koruma.html#automod">AutoMod</a> Discord davetlerini ve IP:port adreslerini, flood'u ve aynı mesajın tekrarını kimse görmeden engeller. Kendi kalıplarınızı ekleyebilir, engellemek yerine yalnızca yetkilileri uyarabilir ya da bir ceza şablonu uygulatabilirsiniz.</p>
+<h3>Bot saldırısı başladı, ne yapmalıyım?</h3>
+<p><code translate="no">/themis lockdown on bot saldırısı</code>. Daha önce hiç girmemiş hesaplar giremez, tanıdık oyuncular etkilenmez; aynı veritabanını kullanan her sunucu birkaç saniye içinde uyar. Saldırı bitince <code translate="no">/themis lockdown off</code>. Bkz. <a href="koruma.html#lockdown">lockdown</a>.</p>
 <h3>Komutlar başka bir eklentiyle çakışırsa?</h3>
-<p>Paper'da <code>/themis:ban</code> gibi ön ekli adlar her zaman Themis'e gider. Proxy'de Themis'in komutları backend komutlarından önce çalışır. Başka bir moderasyon eklentisinden geçiyorsanız aktarmadan sonra onu kaldırın.</p>
+<p>Paper'da <code translate="no">/themis:ban</code> gibi ön ekli adlar her zaman Themis'e gider. Proxy'de Themis'in komutları backend komutlarından önce çalışır. Başka bir moderasyon eklentisinden geçiyorsanız aktarmadan sonra onu kaldırın.</p>
 <div class="pager" id="pager"></div>
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

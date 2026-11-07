@@ -61,7 +61,7 @@ body.wiki-page{min-height:100vh}
 .doc .pager a{text-decoration:none;font-family:var(--pix);font-size:16px;color:var(--muted);transition:color .35s ease}
 .doc .pager a:hover{color:var(--cream)}
 .doc .pager a.next{margin-left:auto;text-align:right}
-.wiki-foot{position:relative;z-index:1;border-top:1px solid var(--line);padding:28px 56px;display:flex;justify-content:space-between;
+.wiki-foot{position:relative;z-index:1;border-top:1px solid var(--line);padding:28px 56px;display:flex;justify-content:center;
   font-family:var(--pix);font-size:14px;color:var(--dim)}
 .wiki-foot a{color:var(--muted)}
 

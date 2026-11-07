@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -31,26 +31,26 @@
 <p class="lead">Themis'in API'si MIT lisanslıdır ve hiçbir sunucu yazılımına bağlı değildir: aynı kod Paper, Velocity ve BungeeCord eklentilerinde çalışır.</p>
 
 <h2>Projeye ekleme</h2>
-<p>API jar'ı (<code>themis-api-&lt;sürüm&gt;.jar</code>) eklentiyle birlikte indirme sayfasında gelir. Projenize koyup derleme zamanına ekleyin; çalışırken sınıflar Themis'in kendisinden gelir.</p>
-<pre><code>// build.gradle.kts
+<p>API jar'ı (<code translate="no">themis-api-&lt;sürüm&gt;.jar</code>) eklentiyle birlikte indirme sayfasında gelir. Projenize koyup derleme zamanına ekleyin; çalışırken sınıflar Themis'in kendisinden gelir.</p>
+<pre translate="no"><code translate="no">// build.gradle.kts
 dependencies {
     compileOnly(files("libs/themis-api-1.0.0.jar"))
 }</code></pre>
 <p>Eklentinizin Themis'ten sonra yüklenmesi için bağımlılık ekleyin:</p>
 <div class="table"><table>
 <tr><th>PLATFORM</th><th>NEREYE</th></tr>
-<tr><td>Paper</td><td><code>plugin.yml</code>: <code>depend: [Themis]</code> (ya da <code>softdepend</code>)</td></tr>
-<tr><td>Velocity</td><td><code>@Plugin(dependencies = @Dependency(id = "themis"))</code></td></tr>
-<tr><td>BungeeCord</td><td><code>bungee.yml</code>: <code>depends: [Themis]</code></td></tr>
+<tr><td>Paper</td><td><code translate="no">plugin.yml</code>: <code translate="no">depend: [Themis]</code> (ya da <code translate="no">softdepend</code>)</td></tr>
+<tr><td>Velocity</td><td><code translate="no">@Plugin(dependencies = @Dependency(id = "themis"))</code></td></tr>
+<tr><td>BungeeCord</td><td><code translate="no">bungee.yml</code>: <code translate="no">depends: [Themis]</code></td></tr>
 </table></div>
 
 <h2>Erişim</h2>
-<pre><code>ThemisApi themis = Themis.api();            // Themis yoksa IllegalStateException
+<pre translate="no"><code translate="no">ThemisApi themis = Themis.api();            // Themis yoksa IllegalStateException
 Optional&lt;ThemisApi&gt; maybe = Themis.find();  // isteğe bağlı entegrasyon için</code></pre>
-<p>Paper'da aynı nesne Bukkit <code>ServicesManager</code> üzerinden de alınabilir (<code>ThemisApi.class</code>).</p>
+<p>Paper'da aynı nesne Bukkit <code translate="no">ServicesManager</code> üzerinden de alınabilir (<code translate="no">ThemisApi.class</code>).</p>
 
 <h2>Ceza verme</h2>
-<pre><code>themis.punishments().issue(PunishmentRequest.builder(PunishmentType.MUTE)
+<pre translate="no"><code translate="no">themis.punishments().issue(PunishmentRequest.builder(PunishmentType.MUTE)
         .target(Target.player(uuid, "Steve"))
         .issuer(Actor.plugin("MyAntiSpam"))
         .duration(Duration.ofMinutes(10))
@@ -61,10 +61,10 @@ Optional&lt;ThemisApi&gt; maybe = Themis.find();  // isteğe bağlı entegrasyon
     .thenAccept(result -&gt; {
         if (result.success()) logger.info("Dosya #" + result.punishment().code());
     });</code></pre>
-<p>Sonucun durumu <code>SUCCESS</code>, <code>ALREADY_PUNISHED</code>, <code>EXEMPT</code>, <code>CANCELLED</code>, <code>DENIED</code> ya da <code>FAILED</code> olur. Diğer işlemler: <code>revoke</code>, <code>revokeActive</code>, <code>revokeActiveIp</code>, <code>edit</code>, <code>byId</code>, <code>byCode</code>, <code>query</code>, <code>count</code>, <code>activeBan</code>, <code>activeMute</code>, veritabanına gitmeyen <code>cachedMute</code> ve cezanın kanıtını veren <code>evidence(id)</code>. Gölge susturmayı <code>punishment.shadow()</code> söyler. Oyuncu bilgisi için <code>players()</code>: <code>byUuid</code>, <code>byName</code>, <code>ipHistory</code>, <code>playersOnIp</code>, <code>alts</code>.</p>
+<p>Sonucun durumu <code translate="no">SUCCESS</code>, <code translate="no">ALREADY_PUNISHED</code>, <code translate="no">EXEMPT</code>, <code translate="no">CANCELLED</code>, <code translate="no">DENIED</code> ya da <code translate="no">FAILED</code> olur. Diğer işlemler: <code translate="no">revoke</code>, <code translate="no">revokeActive</code>, <code translate="no">revokeActiveIp</code>, <code translate="no">edit</code>, <code translate="no">byId</code>, <code translate="no">byCode</code>, <code translate="no">query</code>, <code translate="no">count</code>, <code translate="no">activeBan</code>, <code translate="no">activeMute</code>, veritabanına gitmeyen <code translate="no">cachedMute</code> ve cezanın kanıtını veren <code translate="no">evidence(id)</code>. Gölge susturmayı <code translate="no">punishment.shadow()</code> söyler. Oyuncu bilgisi için <code translate="no">players()</code>: <code translate="no">byUuid</code>, <code translate="no">byName</code>, <code translate="no">ipHistory</code>, <code translate="no">playersOnIp</code>, <code translate="no">alts</code>.</p>
 
 <h2>Olaylar</h2>
-<pre><code>// Kaydedilmeden önce engelle ya da değiştir
+<pre translate="no"><code translate="no">// Kaydedilmeden önce engelle ya da değiştir
 themis.events().subscribe(this, PunishmentIssueEvent.class, e -&gt; {
     if (e.request().reason().isBlank()) e.cancel("Sebep zorunlu");
 });
@@ -76,39 +76,39 @@ themis.events().subscribe(this, PunishmentIssuedEvent.class, EventPriority.MONIT
 themis.events().unsubscribeAll(this);</code></pre>
 <div class="table"><table>
 <tr><th>OLAY</th><th>NE ZAMAN</th></tr>
-<tr><td><code>PunishmentIssueEvent</code></td><td>Kaydedilmeden önce. İptal edilebilir; <code>request(…)</code> ile değiştirilebilir.</td></tr>
-<tr><td><code>PunishmentIssuedEvent</code></td><td>Kaydedildikten sonra.</td></tr>
-<tr><td><code>PunishmentRevokeEvent</code></td><td>Kaldırılmadan önce. İptal edilebilir.</td></tr>
-<tr><td><code>PunishmentRevokedEvent</code></td><td>Kaldırıldıktan sonra.</td></tr>
-<tr><td><code>PunishmentEditedEvent</code></td><td>Düzenlendikten sonra.</td></tr>
-<tr><td><code>PunishmentExpiredEvent</code></td><td>Süresi dolunca.</td></tr>
-<tr><td><code>PlayerBlockedEvent</code></td><td>Giriş, sohbet ya da komut engellendiğinde.</td></tr>
-<tr><td><code>AltJoinEvent</code></td><td>Cezalı bir hesapla IP paylaşan biri girdiğinde.</td></tr>
+<tr><td><code translate="no">PunishmentIssueEvent</code></td><td>Kaydedilmeden önce. İptal edilebilir; <code translate="no">request(…)</code> ile değiştirilebilir.</td></tr>
+<tr><td><code translate="no">PunishmentIssuedEvent</code></td><td>Kaydedildikten sonra.</td></tr>
+<tr><td><code translate="no">PunishmentRevokeEvent</code></td><td>Kaldırılmadan önce. İptal edilebilir.</td></tr>
+<tr><td><code translate="no">PunishmentRevokedEvent</code></td><td>Kaldırıldıktan sonra.</td></tr>
+<tr><td><code translate="no">PunishmentEditedEvent</code></td><td>Düzenlendikten sonra.</td></tr>
+<tr><td><code translate="no">PunishmentExpiredEvent</code></td><td>Süresi dolunca.</td></tr>
+<tr><td><code translate="no">PlayerBlockedEvent</code></td><td>Giriş, sohbet ya da komut engellendiğinde.</td></tr>
+<tr><td><code translate="no">AltJoinEvent</code></td><td>Cezalı bir hesapla IP paylaşan biri girdiğinde.</td></tr>
 </table></div>
-<div class="note"><b>İŞ PARÇACIKLARI</b>Future'lar ve olaylar Themis'in arka plan iş parçacıklarında çalışır. Paper'da oyuncuya ya da dünyaya dokunmadan önce ana iş parçacığına geçin (<code>Bukkit.getScheduler().runTask(…)</code>).</div>
+<div class="note"><b>İŞ PARÇACIKLARI</b>Future'lar ve olaylar Themis'in arka plan iş parçacıklarında çalışır. Paper'da oyuncuya ya da dünyaya dokunmadan önce ana iş parçacığına geçin (<code translate="no">Bukkit.getScheduler().runTask(…)</code>).</div>
 
 <h2>Kanıt</h2>
-<pre><code>themis.punishments().evidence(punishment.id()).thenAccept(lines -&gt; lines.forEach(e -&gt;
+<pre translate="no"><code translate="no">themis.punishments().evidence(punishment.id()).thenAccept(lines -&gt; lines.forEach(e -&gt;
         logger.info(e.at() + " [" + e.server() + "] " + e.content())));</code></pre>
 
 <h2>Sorgu</h2>
-<pre><code>themis.punishments().query(PunishmentQuery.builder()
+<pre translate="no"><code translate="no">themis.punishments().query(PunishmentQuery.builder()
         .target(uuid).types(PunishmentType.BAN, PunishmentType.MUTE).activeOnly().limit(20).build())
     .thenAccept(list -&gt; list.forEach(p -&gt; logger.info(p.code() + " " + p.reason())));</code></pre>
 
 <h2 id="sablon">Kendi şablonun</h2>
-<pre><code>themis.templates().register(new Template("griefing", "Griefing", "Griefing", List.of(
+<pre translate="no"><code translate="no">themis.templates().register(new Template("griefing", "Griefing", "Griefing", List.of(
         new TemplateStep(PunishmentType.BAN, Duration.ofDays(3), false, null),
         new TemplateStep(PunishmentType.BAN, null, false, null)),
         "themis.template.griefing", Duration.ofDays(90)));
 
 themis.templates().apply(Target.player(uuid, "Steve"), "griefing", Actor.plugin("MyPlugin"), null, false);</code></pre>
-<p>Eklentinin kaydettiği şablonlar <code>/themis reload</code> sonrasında da kalır.</p>
+<p>Eklentinin kaydettiği şablonlar <code translate="no">/themis reload</code> sonrasında da kalır.</p>
 <div class="pager" id="pager"></div>
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

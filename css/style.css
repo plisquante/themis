@@ -116,6 +116,7 @@ h2 em{font-style:italic;color:var(--gold);font-weight:400}
 .term pre{padding:22px 24px;font-family:var(--pix);font-size:17px;line-height:1.62;color:var(--muted);
   white-space:pre;flex:1;overflow:hidden}
 .term .g{color:var(--gold)} .term .c{color:var(--cream)} .term .r{color:#e0866b} .term .d{color:var(--dim)}
+.term .ln[hidden]{display:none}
 .cursor{display:inline-block;width:9px;height:18px;background:var(--gold);vertical-align:-3px}
 
 footer{padding:70px 0 70px;text-align:center;position:relative}
@@ -126,9 +127,8 @@ footer .quote{font-family:var(--serif);font-size:54px;margin:30px 0 14px;letter-
 footer .quote em{color:var(--gold);font-style:italic}
 footer .q2{color:var(--muted);font-size:17px}
 footer .btns{justify-content:center}
-footer .bottom{margin-top:96px;display:flex;justify-content:space-between;width:1360px;margin-left:auto;margin-right:auto;
+footer .bottom{margin-top:96px;display:flex;justify-content:center;width:1360px;margin-left:auto;margin-right:auto;
   font-family:var(--pix);font-size:14px;color:var(--dim);border-top:1px solid var(--line);padding-top:26px}
-footer .bottom .sig{color:var(--gold)}
 
 /* links keep the look of the original blocks */
 a{color:inherit;text-decoration:none}
@@ -210,7 +210,6 @@ code{font-family:var(--pix);color:var(--cream);font-size:.95em}
   footer .q2{padding:0 18px}
   footer .btns{margin-left:auto;margin-right:auto}
   footer .bottom{flex-direction:column;gap:10px;align-items:center;margin-top:64px;text-align:center}
-  footer .bottom span:nth-child(2){font-size:12px;word-break:break-all}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

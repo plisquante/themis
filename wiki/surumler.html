@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -33,27 +33,29 @@
 <h2>1.0.0</h2>
 <p>İlk sürüm.</p>
 <ul>
-<li>Tek jar: Paper 1.21 – 26.x, Velocity 3.4+ ve BungeeCord.</li>
+<li>Tek jar: Paper 1.21 – 26.x, Folia, Velocity 3.4+ ve BungeeCord.</li>
 <li>Yalnızca proxy'ye kurulum: giriş banları, sunucuya özel ban ve susturmalar, sohbet ve komut engelleme, kick, duyurular. Velocity için isteğe bağlı backend köprüsü.</li>
 <li>Ban, süreli ban, IP ban, susturma, süreli susturma, IP susturma, uyarı, kick ve yetkili notları; her ceza için dosya kodu.</li>
-<li>Kendiliğinden kademelenen ceza şablonları (<code>/punish</code>) ve unutma süresi.</li>
-<li>Rütbe başına süre sınırları ve saatlik ceza sınırı, <code>/themis rollback</code> ile toplu geri alma, muafiyetler, sessiz cezalar.</li>
-<li>Ceza anındaki sohbetin otomatik kanıt olarak saklanması (<code>/case … evidence</code>, REST, webhook'lar).</li>
-<li>Gölge susturma (<code>-shadow</code>).</li>
+<li>Kendiliğinden kademelenen ceza şablonları (<code translate="no">/punish</code>) ve unutma süresi.</li>
+<li>Rütbe başına süre sınırları ve saatlik ceza sınırı, <code translate="no">/themis rollback</code> ile toplu geri alma, muafiyetler, sessiz cezalar.</li>
+<li>Ceza anındaki sohbetin otomatik kanıt olarak saklanması (<code translate="no">/case … evidence</code>, REST, webhook'lar).</li>
+<li>Gölge susturma (<code translate="no">-shadow</code>).</li>
 <li>Ban kaçağı koruması: uyar, girişi engelle ya da yeni hesabı da yasakla.</li>
 <li>Girişte bildirim: aktif susturma ve çevrimdışıyken alınan uyarılar; dosya kodlu itiraz bağlantısı.</li>
 <li>H2, SQLite, MySQL, MariaDB ve PostgreSQL; SQL ya da Redis ile ağ senkronu.</li>
-<li>Alt hesap tespiti ve uyarısı, <code>/check</code>, <code>/alts</code>, <code>/history</code>, <code>/staffhistory</code>, <code>/case</code>, <code>/editcase</code>.</li>
+<li>Alt hesap tespiti ve uyarısı, <code translate="no">/check</code>, <code translate="no">/alts</code>, <code translate="no">/history</code>, <code translate="no">/staffhistory</code>, <code translate="no">/case</code>, <code translate="no">/editcase</code>.</li>
 <li>17 uç noktalı REST API, canlı olay akışı, Discord ve HMAC imzalı webhook'lar.</li>
 <li>MIT lisanslı Java API ve PlaceholderAPI desteği.</li>
 <li>Vanilla, LiteBans ve AdvancedBan'dan aktarma.</li>
-<li>Türkçe ve İngilizce mesajlar.</li>
+<li>Dokuz dil (Türkçe, İngilizce, Almanca, İspanyolca, Fransızca, Portekizce, Rusça, Lehçe, Çince); her oyuncuya kendi oyun dili, konsola kendi dili, <code translate="no">/themis language</code> ile oyun içinden değiştirme.</li>
+<li>AutoMod: reklam, flood, tekrar ve yasak isim filtresi; engelle, uyar ya da ceza şablonu uygula.</li>
+<li>Bot saldırılarına karşı <code translate="no">/themis lockdown</code>: yeni hesaplar giremez, tanıdık oyuncular etkilenmez.</li>
 </ul>
 <div class="pager" id="pager"></div>
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -33,43 +33,43 @@
 <h2>Komut listesi</h2>
 <div class="table"><table>
 <tr><th>KOMUT</th><th>KISA YOL</th><th>YETKİ</th><th>NE YAPAR</th></tr>
-<tr><td><code>/ban &lt;oyuncu&gt; [süre] [sebep]</code></td><td>—</td><td><code>themis.command.ban</code></td><td>Yasaklar. Süre yazılmazsa kalıcıdır (<code>themis.ban.permanent</code> gerekir).</td></tr>
-<tr><td><code>/tempban &lt;oyuncu&gt; &lt;süre&gt; [sebep]</code></td><td>—</td><td><code>themis.command.ban</code></td><td>Süreli yasak; süre zorunludur.</td></tr>
-<tr><td><code>/ipban &lt;oyuncu|ip&gt; [süre] [sebep]</code></td><td>banip</td><td><code>themis.command.ipban</code></td><td>Oyuncunun son IP'sini ya da doğrudan bir IP'yi yasaklar.</td></tr>
-<tr><td><code>/mute &lt;oyuncu&gt; [süre] [sebep]</code></td><td>—</td><td><code>themis.command.mute</code></td><td>Susturur. Sohbet ve <code>muted-blocked-commands</code> listesindeki komutlar engellenir. <code>-shadow</code> ile gölge susturma.</td></tr>
-<tr><td><code>/tempmute &lt;oyuncu&gt; &lt;süre&gt; [sebep]</code></td><td>—</td><td><code>themis.command.mute</code></td><td>Süreli susturma; süre zorunludur.</td></tr>
-<tr><td><code>/ipmute &lt;oyuncu|ip&gt; [süre] [sebep]</code></td><td>muteip</td><td><code>themis.command.ipmute</code></td><td>IP'ye susturma: aynı IP'den giren her hesap susturulur.</td></tr>
-<tr><td><code>/warn &lt;oyuncu&gt; [süre] [sebep]</code></td><td>—</td><td><code>themis.command.warn</code></td><td>Uyarı. Süre verilirse uyarı o süre sonunda düşer.</td></tr>
-<tr><td><code>/kick &lt;oyuncu&gt; [sebep]</code></td><td>—</td><td><code>themis.command.kick</code></td><td>Sunucudan (proxy'de ağdan) atar.</td></tr>
-<tr><td><code>/note &lt;oyuncu&gt; &lt;metin&gt;</code></td><td>—</td><td><code>themis.command.note</code></td><td>Yalnızca yetkililerin gördüğü not ekler.</td></tr>
-<tr><td><code>/unban &lt;oyuncu|ip|#kod&gt; [sebep]</code></td><td>pardon</td><td><code>themis.command.unban</code></td><td>Etkin yasağı kaldırır.</td></tr>
-<tr><td><code>/unmute &lt;oyuncu|ip|#kod&gt; [sebep]</code></td><td>—</td><td><code>themis.command.unmute</code></td><td>Etkin susturmayı kaldırır.</td></tr>
-<tr><td><code>/unwarn &lt;#kod|oyuncu&gt; [sebep]</code></td><td>delwarn</td><td><code>themis.command.unwarn</code></td><td>Bir uyarıyı kaldırır; oyuncu adıyla en son etkin uyarıyı.</td></tr>
-<tr><td><code>/punish &lt;oyuncu&gt; &lt;şablon&gt; [ek sebep]</code></td><td>p</td><td><code>themis.command.punish</code></td><td>Ceza merdiveninin sıradaki basamağını uygular.</td></tr>
-<tr><td><code>/history &lt;oyuncu&gt; [sayfa] [tür]</code></td><td>hist, warnings</td><td><code>themis.command.history</code></td><td>Sayfalı sicil. <code>/warnings</code> yalnızca uyarıları gösterir.</td></tr>
-<tr><td><code>/staffhistory &lt;yetkili&gt; [sayfa]</code></td><td>shistory</td><td><code>themis.command.staffhistory</code></td><td>Bir yetkilinin verdiği cezalar. <code>console</code> konsolun verdiklerini gösterir.</td></tr>
-<tr><td><code>/check &lt;oyuncu&gt;</code></td><td>lookupplayer</td><td><code>themis.command.check</code></td><td>Durum, ceza sayıları, ilk/son giriş, IP ve alt hesap sayısı.</td></tr>
-<tr><td><code>/alts &lt;oyuncu&gt;</code></td><td>dupeip</td><td><code>themis.command.alts</code></td><td>Aynı IP'yi paylaşan hesaplar; yasaklı ve susturulmuş olanlar renklidir.</td></tr>
-<tr><td><code>/case &lt;#kod&gt; [evidence]</code></td><td>—</td><td><code>themis.command.case</code></td><td>Tek bir cezanın bütün ayrıntıları; <code>evidence</code> ile ceza anındaki sohbet.</td></tr>
-<tr><td><code>/editcase &lt;#kod&gt; reason|duration &lt;değer&gt;</code></td><td>—</td><td><code>themis.command.edit</code></td><td>Sebebi ya da süreyi değiştirir. Süre cezanın verildiği andan ölçülür.</td></tr>
-<tr><td><code>/themis &lt;alt komut&gt;</code></td><td>—</td><td><code>themis.command.admin</code></td><td>Yönetim: about, reload, templates, token, import, webhook test, rollback.</td></tr>
+<tr><td><code translate="no">/ban &lt;oyuncu&gt; [süre] [sebep]</code></td><td>—</td><td><code translate="no">themis.command.ban</code></td><td>Yasaklar. Süre yazılmazsa kalıcıdır (<code translate="no">themis.ban.permanent</code> gerekir).</td></tr>
+<tr><td><code translate="no">/tempban &lt;oyuncu&gt; &lt;süre&gt; [sebep]</code></td><td>—</td><td><code translate="no">themis.command.ban</code></td><td>Süreli yasak; süre zorunludur.</td></tr>
+<tr><td><code translate="no">/ipban &lt;oyuncu|ip&gt; [süre] [sebep]</code></td><td>banip</td><td><code translate="no">themis.command.ipban</code></td><td>Oyuncunun son IP'sini ya da doğrudan bir IP'yi yasaklar.</td></tr>
+<tr><td><code translate="no">/mute &lt;oyuncu&gt; [süre] [sebep]</code></td><td>—</td><td><code translate="no">themis.command.mute</code></td><td>Susturur. Sohbet ve <code translate="no">muted-blocked-commands</code> listesindeki komutlar engellenir. <code translate="no">-shadow</code> ile gölge susturma.</td></tr>
+<tr><td><code translate="no">/tempmute &lt;oyuncu&gt; &lt;süre&gt; [sebep]</code></td><td>—</td><td><code translate="no">themis.command.mute</code></td><td>Süreli susturma; süre zorunludur.</td></tr>
+<tr><td><code translate="no">/ipmute &lt;oyuncu|ip&gt; [süre] [sebep]</code></td><td>muteip</td><td><code translate="no">themis.command.ipmute</code></td><td>IP'ye susturma: aynı IP'den giren her hesap susturulur.</td></tr>
+<tr><td><code translate="no">/warn &lt;oyuncu&gt; [süre] [sebep]</code></td><td>—</td><td><code translate="no">themis.command.warn</code></td><td>Uyarı. Süre verilirse uyarı o süre sonunda düşer.</td></tr>
+<tr><td><code translate="no">/kick &lt;oyuncu&gt; [sebep]</code></td><td>—</td><td><code translate="no">themis.command.kick</code></td><td>Sunucudan (proxy'de ağdan) atar.</td></tr>
+<tr><td><code translate="no">/note &lt;oyuncu&gt; &lt;metin&gt;</code></td><td>—</td><td><code translate="no">themis.command.note</code></td><td>Yalnızca yetkililerin gördüğü not ekler.</td></tr>
+<tr><td><code translate="no">/unban &lt;oyuncu|ip|#kod&gt; [sebep]</code></td><td>pardon</td><td><code translate="no">themis.command.unban</code></td><td>Etkin yasağı kaldırır.</td></tr>
+<tr><td><code translate="no">/unmute &lt;oyuncu|ip|#kod&gt; [sebep]</code></td><td>—</td><td><code translate="no">themis.command.unmute</code></td><td>Etkin susturmayı kaldırır.</td></tr>
+<tr><td><code translate="no">/unwarn &lt;#kod|oyuncu&gt; [sebep]</code></td><td>delwarn</td><td><code translate="no">themis.command.unwarn</code></td><td>Bir uyarıyı kaldırır; oyuncu adıyla en son etkin uyarıyı.</td></tr>
+<tr><td><code translate="no">/punish &lt;oyuncu&gt; &lt;şablon&gt; [ek sebep]</code></td><td>p</td><td><code translate="no">themis.command.punish</code></td><td>Ceza merdiveninin sıradaki basamağını uygular.</td></tr>
+<tr><td><code translate="no">/history &lt;oyuncu&gt; [sayfa] [tür]</code></td><td>hist, warnings</td><td><code translate="no">themis.command.history</code></td><td>Sayfalı sicil. <code translate="no">/warnings</code> yalnızca uyarıları gösterir.</td></tr>
+<tr><td><code translate="no">/staffhistory &lt;yetkili&gt; [sayfa]</code></td><td>shistory</td><td><code translate="no">themis.command.staffhistory</code></td><td>Bir yetkilinin verdiği cezalar. <code translate="no">console</code> konsolun verdiklerini gösterir.</td></tr>
+<tr><td><code translate="no">/check &lt;oyuncu&gt;</code></td><td>lookupplayer</td><td><code translate="no">themis.command.check</code></td><td>Durum, ceza sayıları, ilk/son giriş, IP ve alt hesap sayısı.</td></tr>
+<tr><td><code translate="no">/alts &lt;oyuncu&gt;</code></td><td>dupeip</td><td><code translate="no">themis.command.alts</code></td><td>Aynı IP'yi paylaşan hesaplar; yasaklı ve susturulmuş olanlar renklidir.</td></tr>
+<tr><td><code translate="no">/case &lt;#kod&gt; [evidence]</code></td><td>—</td><td><code translate="no">themis.command.case</code></td><td>Tek bir cezanın bütün ayrıntıları; <code translate="no">evidence</code> ile ceza anındaki sohbet.</td></tr>
+<tr><td><code translate="no">/editcase &lt;#kod&gt; reason|duration &lt;değer&gt;</code></td><td>—</td><td><code translate="no">themis.command.edit</code></td><td>Sebebi ya da süreyi değiştirir. Süre cezanın verildiği andan ölçülür.</td></tr>
+<tr><td><code translate="no">/themis &lt;alt komut&gt;</code></td><td>—</td><td><code translate="no">themis.command.admin</code></td><td>Yönetim: about, reload, templates, token, import, webhook test, rollback, language, lockdown.</td></tr>
 </table></div>
 
 <h2>Bayraklar</h2>
 <p>Ceza komutlarında bayraklar argümanların herhangi bir yerine yazılabilir.</p>
 <div class="table"><table>
 <tr><th>BAYRAK</th><th>ANLAMI</th></tr>
-<tr><td><code>-s</code>, <code>--silent</code></td><td>Sessiz ceza: duyuru yalnızca <code>themis.notify.silent</code> yetkisi olanlara gider.</td></tr>
-<tr><td><code>-p</code>, <code>--public</code></td><td><code>silent-by-default: true</code> iken cezayı herkese duyurur.</td></tr>
-<tr><td><code>-ip</code></td><td>Oyuncunun kayıtlı IP'sine de uygular (ban ve mute).</td></tr>
-<tr><td><code>-r</code>, <code>--replace</code></td><td>Oyuncunun etkin aynı türdeki cezasını yenisiyle değiştirir.</td></tr>
-<tr><td><code>-shadow</code></td><td>Gölge susturma (yalnızca susturmalar): oyuncu kendi mesajlarını görür, başkası görmez. Bkz. <a href="koruma.html#golge">Kanıt ve koruma</a>.</td></tr>
-<tr><td><code>-scope=&lt;sunucu&gt;</code></td><td>Cezayı tek bir sunucuyla sınırlar. Proxy'de bu, backend sunucusunun adıdır.</td></tr>
+<tr><td><code translate="no">-s</code>, <code translate="no">--silent</code></td><td>Sessiz ceza: duyuru yalnızca <code translate="no">themis.notify.silent</code> yetkisi olanlara gider.</td></tr>
+<tr><td><code translate="no">-p</code>, <code translate="no">--public</code></td><td><code translate="no">silent-by-default: true</code> iken cezayı herkese duyurur.</td></tr>
+<tr><td><code translate="no">-ip</code></td><td>Oyuncunun kayıtlı IP'sine de uygular (ban ve mute).</td></tr>
+<tr><td><code translate="no">-r</code>, <code translate="no">--replace</code></td><td>Oyuncunun etkin aynı türdeki cezasını yenisiyle değiştirir.</td></tr>
+<tr><td><code translate="no">-shadow</code></td><td>Gölge susturma (yalnızca susturmalar): oyuncu kendi mesajlarını görür, başkası görmez. Bkz. <a href="koruma.html#golge">Kanıt ve koruma</a>.</td></tr>
+<tr><td><code translate="no">-scope=&lt;sunucu&gt;</code></td><td>Cezayı tek bir sunucuyla sınırlar. Proxy'de bu, backend sunucusunun adıdır.</td></tr>
 </table></div>
 
 <h2>Süre yazımı</h2>
-<p>Birimler: <code>s</code> saniye, <code>m</code> dakika, <code>h</code> saat, <code>d</code> gün, <code>w</code> hafta, <code>mo</code> ay, <code>y</code> yıl. Birleştirilebilir: <code>1d12h</code>. Kalıcı ceza için <code>perm</code> yazın ya da süreyi hiç yazmayın.</p>
-<pre><code>/ban Steve 7d Hile kullanımı
+<p>Birimler: <code translate="no">s</code> saniye, <code translate="no">m</code> dakika, <code translate="no">h</code> saat, <code translate="no">d</code> gün, <code translate="no">w</code> hafta, <code translate="no">mo</code> ay, <code translate="no">y</code> yıl. Birleştirilebilir: <code translate="no">1d12h</code>. Kalıcı ceza için <code translate="no">perm</code> yazın ya da süreyi hiç yazmayın.</p>
+<pre translate="no"><code translate="no">/ban Steve 7d Hile kullanımı
 /mute Steve 1h30m Spam -s
 /mute Steve 1d Trol -shadow
 /case #7KQ2MX evidence
@@ -79,25 +79,27 @@
 /unban #7KQ2MX İtiraz kabul edildi</code></pre>
 
 <h2>Dosya kodları</h2>
-<p>Her cezanın <code>#7KQ2MX</code> gibi altı karakterli bir kodu vardır. Kod ban ekranında, susturma mesajında ve duyurularda görünür. <code>/case</code>, <code>/editcase</code>, <code>/unban</code>, <code>/unmute</code>, <code>/unwarn</code> ve REST API bu kodu kabul eder.</p>
+<p>Her cezanın <code translate="no">#7KQ2MX</code> gibi altı karakterli bir kodu vardır. Kod ban ekranında, susturma mesajında ve duyurularda görünür. <code translate="no">/case</code>, <code translate="no">/editcase</code>, <code translate="no">/unban</code>, <code translate="no">/unmute</code>, <code translate="no">/unwarn</code> ve REST API bu kodu kabul eder.</p>
 
 <h2>/themis</h2>
 <div class="table"><table>
 <tr><th>ALT KOMUT</th><th>NE YAPAR</th></tr>
-<tr><td><code>/themis about</code></td><td>Sürüm, platform, veritabanı, senkron, REST durumu ve sunucu adı.</td></tr>
-<tr><td><code>/themis reload</code></td><td>config.yml ve mesajları yeniden okur. Veritabanı ve senkron değişiklikleri yeniden başlatma ister.</td></tr>
-<tr><td><code>/themis templates</code></td><td>Yüklü ceza şablonları ve basamakları.</td></tr>
-<tr><td><code>/themis token create &lt;ad&gt; &lt;kapsamlar&gt;</code></td><td>REST API anahtarı oluşturur (bir kez gösterilir).</td></tr>
-<tr><td><code>/themis token list</code> · <code>revoke &lt;ad&gt;</code></td><td>Anahtarları listeler, iptal eder.</td></tr>
-<tr><td><code>/themis import …</code></td><td>Vanilla, LiteBans ve AdvancedBan'dan aktarma. Bkz. <a href="aktarma.html">geçiş</a>.</td></tr>
-<tr><td><code>/themis webhook test</code></td><td>Açık webhook'lara örnek bir olay gönderir.</td></tr>
-<tr><td><code>/themis rollback &lt;yetkili&gt; &lt;süre&gt; [sebep] [-confirm]</code></td><td>Bir yetkilinin son verdiği etkin cezaları önce sayar, <code>-confirm</code> ile kaldırır. Bkz. <a href="koruma.html#yetkili">yetkili güvenliği</a>.</td></tr>
+<tr><td><code translate="no">/themis about</code></td><td>Sürüm, platform, veritabanı, senkron, REST durumu ve sunucu adı.</td></tr>
+<tr><td><code translate="no">/themis reload</code></td><td>config.yml ve mesajları yeniden okur. Veritabanı ve senkron değişiklikleri yeniden başlatma ister.</td></tr>
+<tr><td><code translate="no">/themis templates</code></td><td>Yüklü ceza şablonları ve basamakları.</td></tr>
+<tr><td><code translate="no">/themis token create &lt;ad&gt; &lt;kapsamlar&gt;</code></td><td>REST API anahtarı oluşturur (bir kez gösterilir).</td></tr>
+<tr><td><code translate="no">/themis token list</code> · <code translate="no">revoke &lt;ad&gt;</code></td><td>Anahtarları listeler, iptal eder.</td></tr>
+<tr><td><code translate="no">/themis import …</code></td><td>Vanilla, LiteBans ve AdvancedBan'dan aktarma. Bkz. <a href="aktarma.html">geçiş</a>.</td></tr>
+<tr><td><code translate="no">/themis webhook test</code></td><td>Açık webhook'lara örnek bir olay gönderir.</td></tr>
+<tr><td><code translate="no">/themis rollback &lt;yetkili&gt; &lt;süre&gt; [sebep] [-confirm]</code></td><td>Bir yetkilinin son verdiği etkin cezaları önce sayar, <code translate="no">-confirm</code> ile kaldırır. Bkz. <a href="koruma.html#yetkili">yetkili güvenliği</a>.</td></tr>
+<tr><td><code translate="no">/themis language [kod]</code></td><td>Kodsuz: varsayılan dil, konsol dili ve yüklü diller. Kodla: varsayılan dili değiştirir ve config.yml'e yazar. Bkz. <a href="mesajlar.html#diller">diller</a>.</td></tr>
+<tr><td><code translate="no">/themis lockdown on [sebep]</code> · <code translate="no">off</code> · <code translate="no">status</code></td><td>Daha önce hiç girmemiş hesapları dışarıda tutar; tüm sunucular uyar. Bkz. <a href="koruma.html#lockdown">lockdown</a>.</td></tr>
 </table></div>
 <div class="pager" id="pager"></div>
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>

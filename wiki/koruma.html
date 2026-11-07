@@ -18,7 +18,7 @@
 
 <nav>
   <div class="bgfill"></div>
-  <a class="brand" href="../"><img src="../assets/logo-128.png" alt="">THEMIS</a>
+  <a class="brand" href="../" translate="no"><img src="../assets/logo-128.png" alt="">THEMIS</a>
   <ul><li><a href="../">Ana Sayfa</a></li><li><a href="../#features">Özellikler</a></li><li><a href="../#how">Nasıl Çalışır</a></li><li class="on"><a href="./">Wiki</a></li><li><a href="../#faq">SSS</a></li></ul>
   <a class="cta" href="https://builtbybit.com/">&gt; Sunucuna Ekle</a>
 </nav>
@@ -28,18 +28,18 @@
 <main class="doc" id="content">
 <div class="kicker">// KULLANIM</div>
 <h1>Kanıt ve <em>koruma</em></h1>
-<p class="lead">Bir moderasyon eklentisinin asıl işi ceza vermek değil, doğru cezayı verip arkasında durabilmektir. Bu sayfadaki özellikler bunun için var: her cezanın kanıtı, trolleri boşa konuşturan gölge susturma, ikinci hesapla dönenlere karşı koruma ve ele geçirilen bir yetkili hesabına karşı sigorta.</p>
+<p class="lead">Bir moderasyon eklentisinin asıl işi ceza vermek değil, doğru cezayı verip arkasında durabilmektir. Bu sayfadaki özellikler bunun için var: her cezanın kanıtı, trolleri boşa konuşturan gölge susturma, reklam ve flood'u kimse görmeden durduran AutoMod, bot saldırısına karşı lockdown, ikinci hesapla dönenlere karşı koruma ve ele geçirilen bir yetkili hesabına karşı sigorta.</p>
 
 <h2 id="kanit">Kanıt: ceza anındaki sohbet</h2>
 <p>Themis her oyuncunun son yazdıklarını bellekte tutar. Bir ban, susturma, uyarı ya da kick verildiği an oyuncunun son mesajları ve fısıltıları cezaya <strong>kendiliğinden</strong> eklenir. Ekran görüntüsü istemeye, sohbet kaydı aramaya gerek kalmaz.</p>
-<pre><code>/case #7KQ2MX            <span class="d"># dosyada "Kanıt 6 satır [göster]"</span>
+<pre translate="no"><code translate="no">/case #7KQ2MX            <span class="d"># dosyada "Kanıt 6 satır [göster]"</span>
 /case #7KQ2MX evidence   <span class="d"># satırlar: saat, sunucu, mesaj</span></code></pre>
 <ul>
-<li>Kanıt REST API'de (<code>GET /v1/punishments/{ref}</code> yanıtında <code>evidence</code>), THEMIS webhook'larında (<code>data.evidence</code>) ve Discord embed'inde ("Recent chat") da görünür.</li>
-<li>Oyuncu çıkış yaptıktan hemen sonra verilen cezada da çalışır: satırlar <code>max-age</code> boyunca tutulur.</li>
+<li>Kanıt REST API'de (<code translate="no">GET /v1/punishments/{ref}</code> yanıtında <code translate="no">evidence</code>), THEMIS webhook'larında (<code translate="no">data.evidence</code>) ve Discord embed'inde ("Recent chat") da görünür.</li>
+<li>Oyuncu çıkış yaptıktan hemen sonra verilen cezada da çalışır: satırlar <code translate="no">max-age</code> boyunca tutulur.</li>
 <li>Ağda her sunucu kendi gördüğünü ekler; proxy'de Themis bütün sunuculardaki sohbeti görür.</li>
 </ul>
-<pre><code>evidence:
+<pre translate="no"><code translate="no">evidence:
   enabled: true
   lines: 15          <span class="d"># oyuncu başına en fazla satır</span>
   max-age: 10m       <span class="d"># cezadan en fazla bu kadar önceki satırlar</span>
@@ -48,56 +48,107 @@
 
 <h2 id="golge">Gölge susturma</h2>
 <p>Normal susturmada oyuncu susturulduğunu anlar, yeni hesap açar ya da başka yoldan rahatsız etmeye devam eder. Gölge susturmada oyuncu yazmaya devam eder ve <strong>kendi mesajlarını görür</strong>, ama başka kimse görmez. Oyuncuya hiçbir bildirim gitmez, duyuru yalnızca yetkililere yapılır.</p>
-<pre><code>/mute Steve 1d Spam -shadow
+<pre translate="no"><code translate="no">/mute Steve 1d Spam -shadow
 /tempmute Steve 2h Trol -shadow</code></pre>
 <ul>
-<li><code>themis.notify.silent</code> yetkisi olan yetkililer gölgedeki mesajları <code>[gölge] Steve: …</code> olarak görür (<code>punishments.shadow-staff-echo</code>).</li>
-<li><code>muted-blocked-commands</code> listesindeki komutlar sessizce engellenir.</li>
-<li>PlaceholderAPI'deki <code>%themis_muted%</code> gölge susturmada <code>false</code> döner; oyuncu hiçbir yerden anlayamaz.</li>
-<li>Kaldırmak için normal <code>/unmute</code>; oyuncuya "artık yazabilirsin" mesajı gitmez.</li>
+<li><code translate="no">themis.notify.silent</code> yetkisi olan yetkililer gölgedeki mesajları <code translate="no">[gölge] Steve: …</code> olarak görür (<code translate="no">punishments.shadow-staff-echo</code>).</li>
+<li><code translate="no">muted-blocked-commands</code> listesindeki komutlar sessizce engellenir.</li>
+<li>PlaceholderAPI'deki <code translate="no">%themis_muted%</code> gölge susturmada <code translate="no">false</code> döner; oyuncu hiçbir yerden anlayamaz.</li>
+<li>Kaldırmak için normal <code translate="no">/unmute</code>; oyuncuya "artık yazabilirsin" mesajı gitmez.</li>
 </ul>
-<div class="note"><b>PROXY</b>BungeeCord'da ve imzasız sohbette proxy mesajı düşürür ve oyuncuya kendi mesajını geri gösterir (<code>proxy.shadow-echo-format</code>). Velocity'de imzalı sohbet için backend'de köprü gerekir; köprüsüz sunucuda <code>proxy.velocity-signed-chat</code> kuralı geçerli olur. Bkz. <a href="proxy.html">Velocity ve BungeeCord</a>.</div>
+<div class="note"><b>PROXY</b>BungeeCord'da ve imzasız sohbette proxy mesajı düşürür ve oyuncuya kendi mesajını geri gösterir (<code translate="no">proxy.shadow-echo-format</code>). Velocity'de imzalı sohbet için backend'de köprü gerekir; köprüsüz sunucuda <code translate="no">proxy.velocity-signed-chat</code> kuralı geçerli olur. Bkz. <a href="proxy.html">Velocity ve BungeeCord</a>.</div>
+
+<h2 id="automod">AutoMod: reklam, flood, tekrar</h2>
+<p>AutoMod her sohbet mesajını ve fısıltıyı (<code translate="no">/msg</code>, <code translate="no">/tell</code>, <code translate="no">/w</code>, <code translate="no">/r</code> …) kimse görmeden kontrol eder. Bir kural tutarsa yetkililere (<code translate="no">themis.notify.silent</code>) ve konsola mesajın kendisiyle birlikte uyarı gider; ardından kuralın eylemi uygulanır.</p>
+<div class="table"><table>
+<tr><th>KONTROL</th><th>VARSAYILAN</th></tr>
+<tr><td>Kurallar (<code translate="no">rules</code>)</td><td><code translate="no">advertising</code>: Discord davetleri ve <code translate="no">1.2.3.4:25565</code> gibi IP:port adresleri engellenir.</td></tr>
+<tr><td>Flood (<code translate="no">flood</code>)</td><td>4 saniyede 6 mesajdan fazlası engellenir.</td></tr>
+<tr><td>Tekrar (<code translate="no">repeat</code>)</td><td>30 saniye içinde aynı mesajın 3. kez yazılması engellenir. Büyük-küçük harf ve boşluk farkı sayılmaz.</td></tr>
+<tr><td>Yasak isimler (<code translate="no">blocked-names</code>)</td><td>Boş. Listeye uyan isimler sunucuya giremez.</td></tr>
+</table></div>
+<div class="table"><table>
+<tr><th>EYLEM</th><th>NE OLUR</th></tr>
+<tr><td><code translate="no">BLOCK</code></td><td>Mesaj düşer, oyuncuya "mesajın engellendi" denir, yetkililer uyarılır.</td></tr>
+<tr><td><code translate="no">ALERT</code></td><td>Mesaj geçer, yalnızca yetkililer uyarılır. Yeni bir kuralı denerken kullanın.</td></tr>
+<tr><td><code translate="no">TEMPLATE</code></td><td>Mesaj düşer ve <code translate="no">template</code> içindeki ceza merdiveni oyuncuya uygulanır. Ceza AutoMod adına verilir, engellenen mesaj kanıt olarak dosyaya eklenir. Aynı oyuncu aynı kuraldan 15 saniyede en fazla bir ceza alır.</td></tr>
+</table></div>
+<pre translate="no"><code translate="no">automod:
+  enabled: true
+  rules:
+    - name: advertising
+      pattern: "(?i)(discord(\\.gg|(app)?\\.com/invite)/[a-z0-9-]+|\\b(\\d{1,3}\\.){3}\\d{1,3}:\\d{2,5}\\b)"
+      action: BLOCK
+      template: advertising
+    - name: kufur
+      pattern: "(?i)\\b(kelime1|kelime2)\\b"
+      action: TEMPLATE
+      template: toxicity
+  flood:  {enabled: true, messages: 6, within: 4s, action: BLOCK, template: spam}
+  repeat: {enabled: true, times: 3, within: 30s, action: BLOCK, template: spam}
+  blocked-names: ["(?i)admin", "^bot_"]</code></pre>
+<ul>
+<li>Desenler Java düzenli ifadeleridir; YAML içinde ters bölüyü iki kez yazın (<code translate="no">\\b</code>). Geçersiz bir desen açılışta konsolda adıyla bildirilir ve atlanır.</li>
+<li><code translate="no">themis.automod.bypass</code> sahipleri AutoMod'a takılmaz (varsayılan: OP).</li>
+<li>Susturulmuş oyuncunun mesajı zaten susturmaya takılır; AutoMod yalnızca konuşabilen oyuncuları denetler.</li>
+<li><code translate="no">/themis reload</code> kuralları yeniden okur.</li>
+</ul>
+<div class="note"><b>VELOCITY</b>Velocity imzalı sohbet mesajını düşüremez. Çevrimiçi (premium) bir Velocity ağında imzalı mesajlar için AutoMod yetkilileri uyarır ve <code translate="no">TEMPLATE</code> eylemini uygular, ama mesajı durduramaz. İmzasız sohbette ve BungeeCord'da her şey tam çalışır. Bkz. <a href="proxy.html">Velocity ve BungeeCord</a>.</div>
+
+<h2 id="lockdown">Lockdown: bot saldırısında kapıyı kilitle</h2>
+<p>Bot saldırısında ya da bir baskında yüzlerce yeni hesap aynı anda girer. Lockdown açıkken <strong>daha önce hiç girmemiş</strong> hesaplar giremez; tanıdık oyuncular hiçbir şey fark etmez.</p>
+<pre translate="no"><code translate="no">/themis lockdown on Bot saldırısı   <span class="d"># yeni hesaplar dışarıda kalır</span>
+/themis lockdown status
+/themis lockdown off</code></pre>
+<ul>
+<li>Reddedilen hesap kaydedilmez; lockdown kapanınca normal şekilde girebilir.</li>
+<li>Durum veritabanında tutulur: aynı veritabanını kullanan her sunucu ve proxy birkaç saniye içinde aynı kararı uygular, sunucu yeniden başlasa da açık kalır.</li>
+<li>Açan ve kapatan yetkili tüm yetkililere duyurulur. <code translate="no">themis.command.admin</code> gerekir.</li>
+<li>Lockdown sırasında yine de girebilecek hesaplar (ör. yeni bir yetkili):</li>
+</ul>
+<pre translate="no"><code translate="no">lockdown:
+  allow: [YeniYetkili, 069a79f4-44e9-4726-a5be-fca90e38aaf5]</code></pre>
 
 <h2 id="kacak">Ban kaçağı koruması</h2>
 <p>Yasaklı bir oyuncu ikinci hesabıyla aynı bağlantıdan girdiğinde Themis bunu fark eder. Ne yapılacağını siz seçersiniz:</p>
 <div class="table"><table>
 <tr><th>EYLEM</th><th>NE OLUR</th></tr>
-<tr><td><code>ALERT</code></td><td>Varsayılan. Yetkililere (<code>themis.notify.alts</code>) tıklanabilir bir uyarı gider.</td></tr>
-<tr><td><code>BLOCK</code></td><td>Giriş reddedilir; ekranda bağlı yasaklı hesap ve onun dosya kodu görünür.</td></tr>
-<tr><td><code>BAN</code></td><td>Yeni hesaba <code>evasion</code> şablonu uygulanır; yeni ceza asıl dosyanın koduyla bağlanır.</td></tr>
+<tr><td><code translate="no">ALERT</code></td><td>Varsayılan. Yetkililere (<code translate="no">themis.notify.alts</code>) tıklanabilir bir uyarı gider.</td></tr>
+<tr><td><code translate="no">BLOCK</code></td><td>Giriş reddedilir; ekranda bağlı yasaklı hesap ve onun dosya kodu görünür.</td></tr>
+<tr><td><code translate="no">BAN</code></td><td>Yeni hesaba <code translate="no">evasion</code> şablonu uygulanır; yeni ceza asıl dosyanın koduyla bağlanır.</td></tr>
 </table></div>
-<pre><code>evasion:
+<pre translate="no"><code translate="no">evasion:
   action: BLOCK
   window: 30d        <span class="d"># yasaklı hesabın bu IP'yi en son kullandığı tarih bu kadar yeni olmalı</span>
   template: evasion
   exempt: [KardesHesabi]</code></pre>
-<p>Yalnızca bütün ağı kapsayan ve hesaba verilmiş banlar sayılır (IP banları zaten girişte uygulanır). Aynı evi ya da okulu paylaşan oyuncular için <code>exempt</code> listesini kullanın.</p>
+<p>Yalnızca bütün ağı kapsayan ve hesaba verilmiş banlar sayılır (IP banları zaten girişte uygulanır). Aynı evi ya da okulu paylaşan oyuncular için <code translate="no">exempt</code> listesini kullanın.</p>
 
 <h2 id="yetkili">Yetkili hesabı güvenliği</h2>
 <p>Bir yetkilinin hesabı çalınırsa ya da biri yetkisini kötüye kullanırsa, birkaç dakikada yüzlerce oyuncu yasaklanabilir. Themis buna iki önlem alır.</p>
 <h3>Saatlik sınır</h3>
-<pre><code>limits:
+<pre translate="no"><code translate="no">limits:
   helper:
     mute: 2h
     per-hour: 20     <span class="d"># saatte en fazla 20 ceza</span></code></pre>
-<p>Sınıra ulaşan yetkili bir saat dolana kadar yeni ceza veremez. Konsol, API ve <code>themis.limit.bypass</code> sahipleri sınırsızdır.</p>
+<p>Sınıra ulaşan yetkili bir saat dolana kadar yeni ceza veremez. Konsol, API ve <code translate="no">themis.limit.bypass</code> sahipleri sınırsızdır.</p>
 <h3>Toplu geri alma</h3>
-<pre><code>/themis rollback &lt;yetkili|console&gt; &lt;süre&gt; [sebep]
+<pre translate="no"><code translate="no">/themis rollback &lt;yetkili|console&gt; &lt;süre&gt; [sebep]
 /themis rollback KotuMod 2h Hesap çalındı
 /themis rollback KotuMod 2h Hesap çalındı -confirm</code></pre>
-<p>İlk komut, o yetkilinin son 2 saatte verdiği etkin ban, susturma ve uyarıları yalnızca sayar. <code>-confirm</code> ile hepsi kaldırılır; her biri sebebiyle kayda geçer ve oyunculara bildirilir. Yalnızca <code>themis.command.admin</code> yetkisiyle çalışır.</p>
+<p>İlk komut, o yetkilinin son 2 saatte verdiği etkin ban, susturma ve uyarıları yalnızca sayar. <code translate="no">-confirm</code> ile hepsi kaldırılır; her biri sebebiyle kayda geçer ve oyunculara bildirilir. Yalnızca <code translate="no">themis.command.admin</code> yetkisiyle çalışır.</p>
 
 <h2 id="bildirim">Girişte bildirim</h2>
 <ul>
 <li>Susturulmuş bir oyuncu girişte susturulduğunu, sebebini ve kalan süreyi görür; yazmaya çalışınca öğrenmez.</li>
 <li>Çevrimdışıyken aldığı uyarılar girişte listelenir: "Sen yokken 2 uyarı aldın".</li>
-<li>İtiraz bağlantısı dosya kodunu taşıyabilir: <code>appeal-url: "https://site.com/itiraz?dosya={code}"</code>. Ban ekranındaki bağlantı oyuncuyu formunuza kodu doldurulmuş olarak götürür.</li>
+<li>İtiraz bağlantısı dosya kodunu taşıyabilir: <code translate="no">appeal-url: "https://site.com/itiraz?dosya={code}"</code>. Ban ekranındaki bağlantı oyuncuyu formunuza kodu doldurulmuş olarak götürür.</li>
 </ul>
 <div class="pager" id="pager"></div>
 </main>
 </div>
 
-<footer class="wiki-foot"><span>© 2026 THEMIS · <a href="lisans.html">Lisans</a></span><span>made by cemo</span></footer>
+<footer class="wiki-foot"><span><span translate="no">© 2026 THEMIS</span> · <a href="lisans.html">Lisans</a></span></footer>
 <script src="../js/wiki.js"></script>
 </body>
 </html>
