@@ -14,7 +14,7 @@ const CARDS=[
  ["eye","KAÇAK HESAP","Alt Hesap Tespiti","IP geçmişi ve bağlı hesaplar takip edilir. Yasaklı bir oyuncunun ikinci hesabı girdiği an yetkililer uyarılır; isterseniz giriş engellenir.","girişte","uyar · engelle"],
  ["lock","RÜTBE SINIRI","Yetkisini Aşan Olmaz","Helper en fazla iki saat susturur ve saatte yirmi ceza verebilir. Çalınan bir yetkili hesabının verdiği cezalar tek komutla geri alınır.","helper","≤ 2 saat · 20/saat"],
  ["scales","CEZA MERDİVENİ","Aynı Suça Aynı Ceza","/punish Steve spam yazın; Themis oyuncunun siciline bakar ve şablondaki sıradaki basamağı uygular. Eski suçlar belirlediğiniz süre sonra unutulur.","spam şablonu","uyarı → ban"],
- ["bolt","GELİŞTİRİCİ API","Tamamen Açık API","MIT lisanslı Java API'si, iptal edilebilir olaylar, yetki kapsamlı anahtarlarla REST API, canlı olay akışı ve HMAC imzalı webhook'lar.","rest api","17 uç nokta"]];
+ ["bolt","GELİŞTİRİCİ API","Tamamen Açık API","MIT lisanslı Java API'si, iptal edilebilir olaylar, yetki kapsamlı anahtarlarla REST API, canlı olay akışı ve HMAC imzalı webhook'lar.","rest api","20 uç nokta"]];
 document.getElementById("grid").innerHTML=CARDS.map((c,i)=>`<div class="card reveal"><div class="sheen"></div>
  <div class="top">${svg(c[0])}<span class="num">0${i+1}/06</span></div><div class="tag">${c[1]}</div><h3>${c[2]}</h3><p>${c[3]}</p>
  <div class="foot"><span>${c[4]}</span><span>${c[5]}</span></div></div>`).join("");

@@ -19,7 +19,7 @@ kullanıcı dokümantasyonu yalnızca burada, `wiki/` altında tutulur. Siteden 
 - Animasyonlar yumuşak ama ağır değil (kullanıcı önce "çok hızlı ve keskin", sonra "fazla yavaş" dedi): zamana bağlı
   in-out eğriler, açılış ~2.2 sn, bölümler görününce bir kez 0.8 sn'de belirir, hover yumuşak geçer (~0.3 sn),
   sayaç 1.6 sn, CSS geçişleri .3–.35 sn. Kaydırmaya bağlı ani geçiş ekleme; süreleri bu aralıkta tut.
-- Sitedeki her iddia eklentide gerçekten var olmalı. Rakamlar (22 komut, 17 REST uç noktası, 5 veritabanı, 20$)
+- Sitedeki her iddia eklentide gerçekten var olmalı. Rakamlar (22 komut, 20 REST uç noktası, 5 veritabanı, 20$)
   eklentiden sayılmıştır; eklenti değişirse burayı da güncelle. Uydurma istatistik yazma.
 - Kullanıcı Türkçe konuşur. Site Türkçedir.
 

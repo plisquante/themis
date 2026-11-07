@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../assets/logo-128.png">
 <title>REST API · Themis Wiki</title>
-<meta name="description" content="Themis REST API: anahtarlar ve kapsamlar, 17 uç nokta, hata kodları, hız sınırı, idempotency ve canlı olay akışı.">
+<meta name="description" content="Themis REST API: anahtarlar ve kapsamlar, 20 uç nokta, hata kodları, hız sınırı, idempotency ve canlı olay akışı.">
 <meta name="theme-color" content="#13110e">
 <link rel="preload" href="../fonts/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/unifont.woff2" as="font" type="font/woff2" crossorigin>
@@ -28,7 +28,7 @@
 <main class="doc" id="content">
 <div class="kicker">// GELİŞTİRİCİ</div>
 <h1>REST API</h1>
-<p class="lead">Paneller, Discord botları ve siteler Themis'e HTTP ile bağlanır. API, OpenAPI 3.1 ile tanımlı 17 uç noktadan oluşur.</p>
+<p class="lead">Paneller, Discord botları ve siteler Themis'e HTTP ile bağlanır. API, OpenAPI 3.1 ile tanımlı 20 uç noktadan oluşur.</p>
 
 <h2>Açma</h2>
 <pre translate="no"><code translate="no">rest-api:
@@ -71,6 +71,9 @@
 <tr><td>GET</td><td><code translate="no">/v1/players/{ref}/ips</code></td><td>admin</td><td>IP geçmişi.</td></tr>
 <tr><td>GET</td><td><code translate="no">/v1/templates</code></td><td>read</td><td>Ceza şablonları.</td></tr>
 <tr><td>POST</td><td><code translate="no">/v1/templates/{key}/apply</code></td><td>write</td><td>Şablonun sıradaki basamağını uygulama.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/reports</code></td><td>read</td><td>Açık <a href="raporlar.html">oyuncu raporları</a>, en yenisi önce; <code translate="no">limit</code>, <code translate="no">offset</code>.</td></tr>
+<tr><td>GET</td><td><code translate="no">/v1/reports/{id}</code></td><td>read</td><td>Tek rapor ve raporlanan oyuncunun yazdıkları (<code translate="no">evidence</code>).</td></tr>
+<tr><td>POST</td><td><code translate="no">/v1/reports/{id}/close</code></td><td>write</td><td>Raporu kapatır. Gövde: <code translate="no">{"outcome": "…", "issuer": "Panel"}</code>; rapor eden oyuncu çevrimiçiyse teşekkür mesajı alır.</td></tr>
 </table></div>
 <p>Arama filtreleri: <code translate="no">target</code>, <code translate="no">ip</code>, <code translate="no">issuer</code>, <code translate="no">type</code> (virgüllü: <code translate="no">ban,mute</code>), <code translate="no">status</code> (<code translate="no">active,expired,revoked</code>), <code translate="no">template</code>, <code translate="no">search</code>, <code translate="no">since</code>, <code translate="no">until</code> (ISO-8601 ya da unix saniye), <code translate="no">limit</code>, <code translate="no">offset</code>, <code translate="no">order</code>.</p>
 
@@ -99,11 +102,11 @@ curl -N -H "Authorization: Bearer thm_…" http://127.0.0.1:8787/v1/stream</code
 { "error": { "code": "player_not_found", "message": "Player 'Steve' has never joined this network" } }</code></pre>
 <div class="table"><table>
 <tr><th>HTTP</th><th>KOD</th><th>ANLAMI</th></tr>
-<tr><td>400</td><td><code translate="no">invalid_request, invalid_json, invalid_type, invalid_status, invalid_duration</code></td><td>İstek hatalı.</td></tr>
+<tr><td>400</td><td><code translate="no">invalid_request, invalid_json, invalid_type, invalid_status, invalid_duration, invalid_report, invalid_outcome</code></td><td>İstek hatalı.</td></tr>
 <tr><td>401</td><td><code translate="no">unauthorized</code></td><td>Anahtar yok ya da geçersiz.</td></tr>
 <tr><td>403</td><td><code translate="no">insufficient_scope, target_exempt, denied</code></td><td>Kapsam yetmiyor, hedef muaf ya da bir eklenti reddetti.</td></tr>
-<tr><td>404</td><td><code translate="no">not_found, punishment_not_found, player_not_found, template_not_found</code></td><td>Bulunamadı.</td></tr>
-<tr><td>409</td><td><code translate="no">already_punished, not_active, cancelled</code></td><td>Zaten etkin bir ceza var (<code translate="no">error.existing</code> içinde), ceza etkin değil ya da bir eklenti iptal etti.</td></tr>
+<tr><td>404</td><td><code translate="no">not_found, punishment_not_found, player_not_found, template_not_found, report_not_found</code></td><td>Bulunamadı.</td></tr>
+<tr><td>409</td><td><code translate="no">already_punished, not_active, cancelled, not_open</code></td><td>Zaten etkin bir ceza var (<code translate="no">error.existing</code> içinde), ceza etkin değil, bir eklenti iptal etti ya da rapor zaten kapalı.</td></tr>
 <tr><td>413</td><td><code translate="no">payload_too_large</code></td><td>Gövde 64 KiB'tan büyük.</td></tr>
 <tr><td>422</td><td><code translate="no">no_known_ip</code></td><td>IP cezası için oyuncunun kayıtlı IP'si yok.</td></tr>
 <tr><td>429</td><td><code translate="no">rate_limited</code></td><td>Dakikalık sınır aşıldı; <code translate="no">Retry-After</code> başlığına bakın.</td></tr>
